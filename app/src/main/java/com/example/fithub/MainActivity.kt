@@ -10,5 +10,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         //TODO hi i am xinwei
         //no i am jingwen
+        //i m hk
     }
 }
