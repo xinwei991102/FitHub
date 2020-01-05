@@ -2,10 +2,31 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Exercise"
-        android:textSize="30sp"
-        android:layout_centerInParent="true"/>
+    <Button
+        android:id="@+id/buttonAerobic"
+        android:background="@drawable/aerobic_button"
+        android:text="@string/aerobic_exercise"
+        style="@style/ExerciseButton"
+        />
+
+    <Button
+        android:id="@+id/buttonCore"
+        android:layout_below="@id/buttonAerobic"
+        android:background="@drawable/core_button"
+        android:text="@string/core_exercise"
+        style="@style/ExerciseButton"/>
+    <Button
+        android:id="@+id/buttonArm"
+        android:layout_below="@id/buttonCore"
+        android:background="@drawable/arm_button"
+        android:text="@string/arm_exercise"
+        style="@style/ExerciseButton"
+        />
+    <Button
+        android:id="@+id/buttonLeg"
+        android:layout_below="@id/buttonArm"
+        android:background="@drawable/leg_button"
+        android:text="@string/leg_exercise"
+        style="@style/ExerciseButton"
+         />
 </RelativeLayout>

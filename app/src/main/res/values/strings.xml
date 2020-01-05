@@ -4,4 +4,8 @@
     <string name="txtViewPassword">Password</string>
     <string name="btnTextLogIn">Log In</string>
     <string name="btnTextSignUp">Sign Up</string>
+    <string name="aerobic_exercise">Aerobic Exercise</string>
+    <string name="core_exercise">Core Exercise</string>
+    <string name="arm_exercise">Arm Exercise</string>
+    <string name="leg_exercise">Leg Exercise</string>
 </resources>
