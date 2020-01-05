@@ -1,43 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".LogInActivity">
+    tools:context=".LogInActivity"
+    android:background="@drawable/login_background"
+    >
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_marginVertical="70dp">
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginVertical="80dp"
+        android:layout_gravity="center"
+        >
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:text="@string/app_name"
         android:textAlignment="center"
         android:textSize="35dp"
-        android:layout_marginVertical="100dp"/>
+        style="@style/loginText"/>
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:srcCompat="@drawable/ic_fitness_center_white_100dp"
+            android:contentDescription="TODO" />
+    </LinearLayout>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/txtViewUsername"
-        android:layout_marginHorizontal="80dp"/>
+        android:layout_marginHorizontal="80dp"
+        style="@style/loginText"
+        />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="80dp"
-        android:layout_marginBottom="50dp"/>
+        android:layout_marginBottom="50dp"
+        android:textColor="#FFFF"
+        android:hint="Username/Email"
+        android:background="@drawable/custom_edittext_linecolor"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/txtViewPassword"
-        android:layout_marginHorizontal="80dp"/>
+        android:layout_marginHorizontal="80dp"
+        style="@style/loginText"/>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="80dp"
-        android:layout_marginBottom="50dp"/>
+        android:layout_marginBottom="50dp"
+        android:hint="Password"
+        android:background="@drawable/custom_edittext_linecolor"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -45,16 +75,21 @@
         android:orientation="horizontal"
         android:layout_marginHorizontal="80dp"
         >
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/btnTextLogIn"
-        android:layout_marginHorizontal="20dp"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btnTextLogIn"
+            android:layout_marginHorizontal="20dp"
+            style="@style/transparentButton"
+            android:background="@drawable/custom_btn_border"/>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/btnTextSignUp"
-        android:layout_marginHorizontal="20dp"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btnTextSignUp"
+            android:layout_marginHorizontal="20dp"
+            style="@style/transparentButton"
+            android:background="@drawable/custom_btn_border"/>
     </LinearLayout>
 </LinearLayout>
+</RelativeLayout>
