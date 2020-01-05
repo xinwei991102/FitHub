@@ -1,32 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
-    <Button
-        android:id="@+id/buttonAerobic"
-        android:background="@drawable/aerobic_button"
-        android:text="@string/aerobic_exercise"
-        style="@style/ExerciseButton"
-        />
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/buttonCore"
-        android:layout_below="@id/buttonAerobic"
-        android:background="@drawable/core_button"
-        android:text="@string/core_exercise"
-        style="@style/ExerciseButton"/>
-    <Button
-        android:id="@+id/buttonArm"
-        android:layout_below="@id/buttonCore"
-        android:background="@drawable/arm_button"
-        android:text="@string/arm_exercise"
-        style="@style/ExerciseButton"
-        />
-    <Button
-        android:id="@+id/buttonLeg"
-        android:layout_below="@id/buttonArm"
-        android:background="@drawable/leg_button"
-        android:text="@string/leg_exercise"
-        style="@style/ExerciseButton"
-         />
-</RelativeLayout>
+        <Button
+            android:id="@+id/buttonAerobic"
+            style="@style/ExerciseButton"
+            android:background="@drawable/aerobic_button"
+            android:text="@string/aerobic_exercise" />
+
+        <Button
+            android:id="@+id/buttonCore"
+            style="@style/ExerciseButton"
+            android:layout_below="@id/buttonAerobic"
+            android:background="@drawable/core_button"
+            android:text="@string/core_exercise" />
+
+        <Button
+            android:id="@+id/buttonArm"
+            style="@style/ExerciseButton"
+            android:layout_below="@id/buttonCore"
+            android:background="@drawable/arm_button"
+            android:text="@string/arm_exercise" />
+
+        <Button
+            android:id="@+id/buttonLeg"
+            style="@style/ExerciseButton"
+            android:layout_below="@id/buttonArm"
+            android:background="@drawable/leg_button"
+            android:text="@string/leg_exercise" />
+
+    </RelativeLayout>
+</ScrollView>
