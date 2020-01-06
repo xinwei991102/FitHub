@@ -42,6 +42,7 @@
         <item name="android:textSize">22sp</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">#000000</item>
     </style>
 
     <style name="profileAlignLeft">
@@ -53,22 +54,20 @@
         <item name="android:textSize">22sp</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">#000000</item>
     </style>
 
     <style name="profileLine">
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:background="@android:color/darker_gray"
-
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1dp</item>
         <item name="android:layout_marginTop">10dp</item>
         <item name="android:layout_marginLeft">10dp</item>
         <item name="android:layout_marginRight">10dp</item>
         <item name="android:background">@android:color/darker_gray</item>
+    </style>
+
+    <style name="blackText">
+        <item name="android:textColor">#000000</item>
     </style>
 
 </resources>

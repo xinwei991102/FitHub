@@ -20,4 +20,10 @@
     <string name="bmi">BMI</string>
     <string name="bmiNo">20.2</string>
     <string name="setting">Setting</string>
+    <string name="logout">Log Out</string>
+    <string name="edit_button">Edit Button</string>
+    <string name="level">Level</string>
+    <string name="days_streak">Days Streak</string>
+    <string name="gender">Gender</string>
+    <string name="male">Male</string>
 </resources>

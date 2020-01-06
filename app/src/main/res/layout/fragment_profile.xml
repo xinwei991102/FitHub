@@ -1,220 +1,237 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:clickable="true">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textViewProfileName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_marginStart="19dp"
-        android:layout_marginLeft="19dp"
-        android:layout_marginTop="33dp"
-        android:text="@string/profile_name"
-        android:textSize="30sp" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/linearLayoutProfile"
+    <RelativeLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_below="@id/textViewProfileName">
+        android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/imageViewProfilePic"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+        <TextView
+            android:id="@+id/textViewProfileName"
+            style="@style/blackText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
             android:layout_marginStart="19dp"
             android:layout_marginLeft="19dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:contentDescription="@string/profile_pic"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/textViewLevel"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@drawable/ic_fitness_center_black_100dp" />
+            android:layout_marginTop="33dp"
+            android:text="@string/profile_name"
+            android:textSize="30sp"
+            android:layout_alignParentStart="true" />
+
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="33dp"
+            android:layout_toEndOf="@+id/textViewProfileName"
+            android:layout_toRightOf="@id/textViewProfileName"
+            app:srcCompat="@drawable/ic_edit_blue_30dp"
+            android:layout_marginStart="15dp"
+            android:contentDescription="@string/edit_button" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/linearLayoutProfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewProfileName"
+            android:layout_marginTop="16dp">
+
+            <ImageView
+                android:id="@+id/imageViewProfilePic"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginStart="19dp"
+                android:layout_marginLeft="19dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:contentDescription="@string/profile_pic"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/textViewLevel"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@drawable/ic_fitness_center_black_100dp" />
+
+            <TextView
+                android:id="@+id/textViewLevel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:text="@string/level"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toStartOf="@+id/textViewDayStreak"
+                app:layout_constraintStart_toEndOf="@+id/imageViewProfilePic"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textViewLevelNum"
+                style="@style/blackText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:text="2"
+                android:textSize="35sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/textViewLevel"
+                app:layout_constraintStart_toStartOf="@+id/textViewLevel"
+                app:layout_constraintTop_toBottomOf="@+id/textViewLevel" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="100dp"
+                android:background="@android:color/darker_gray"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/textViewDayStreak"
+                app:layout_constraintStart_toEndOf="@+id/textViewLevel"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textViewDayStreak"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="19dp"
+                android:layout_marginRight="19dp"
+                android:text="@string/days_streak"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textViewLevel"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textViewStreakNum"
+                style="@style/blackText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:text="3"
+                android:textSize="35sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/textViewDayStreak"
+                app:layout_constraintHorizontal_bias="0.48"
+                app:layout_constraintStart_toStartOf="@+id/textViewDayStreak"
+                app:layout_constraintTop_toBottomOf="@+id/textViewDayStreak" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         <TextView
-            android:id="@+id/textViewLevel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:text="Level"
-            android:textAlignment="center"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toStartOf="@+id/textViewDayStreak"
-            app:layout_constraintStart_toEndOf="@+id/imageViewProfilePic"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:id="@+id/textViewGender"
+            style="@style/profileAlignLeft"
+            android:layout_below="@+id/linearLayoutProfile"
+            android:text="@string/gender" />
 
         <TextView
-            android:id="@+id/textViewLevelNum"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            android:text="2"
-            android:textSize="35sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/textViewLevel"
-            app:layout_constraintStart_toStartOf="@+id/textViewLevel"
-            app:layout_constraintTop_toBottomOf="@+id/textViewLevel" />
+            android:id="@+id/textView1UserGender"
+            style="@style/profileAlignRight"
+            android:layout_below="@+id/linearLayoutProfile"
+            android:text="@string/male" />
 
         <View
-            android:layout_width="1dp"
-            android:layout_height="100dp"
-            android:background="@android:color/darker_gray"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/textViewDayStreak"
-            app:layout_constraintStart_toEndOf="@+id/textViewLevel"
-            app:layout_constraintTop_toTopOf="parent" />
+            style="@style/profileLine"
+            android:layout_below="@+id/textViewGender" />
 
         <TextView
-            android:id="@+id/textViewDayStreak"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="19dp"
-            android:layout_marginRight="19dp"
-            android:text="Days Streak"
-            android:textAlignment="center"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textViewLevel"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:id="@+id/textViewDailyCalories"
+            style="@style/profileAlignLeft"
+            android:layout_below="@+id/textViewGender"
+            android:text="@string/Daily_calories" />
 
         <TextView
-            android:id="@+id/textViewStreakNum"
+            android:id="@+id/textViewCalories_cal"
+            style="@style/profileAlignRight"
+            android:layout_below="@+id/textViewGender"
+            android:text="@string/calories" />
+
+        <View
+            style="@style/profileLine"
+            android:layout_below="@+id/textViewDailyCalories" />
+
+        <TextView
+            android:id="@+id/textViewHeight"
+            style="@style/profileAlignLeft"
+            android:layout_below="@+id/textViewDailyCalories"
+            android:text="@string/height" />
+
+        <TextView
+            android:id="@+id/textViewHeight_cm"
+            style="@style/profileAlignRight"
+            android:layout_below="@+id/textViewDailyCalories"
+            android:text="@string/height_cm" />
+
+        <View
+            style="@style/profileLine"
+            android:layout_below="@+id/textViewHeight" />
+
+        <TextView
+            android:id="@+id/textViewWeight"
+            style="@style/profileAlignLeft"
+            android:layout_below="@+id/textViewHeight"
+            android:text="@string/weight" />
+
+        <TextView
+            android:id="@+id/textViewWeight_kg"
+            style="@style/profileAlignRight"
+            android:layout_below="@+id/textViewHeight"
+            android:text="@string/weight_kg" />
+
+        <View
+            style="@style/profileLine"
+            android:layout_below="@+id/textViewWeight" />
+
+        <TextView
+            android:id="@+id/textViewBMI"
+            style="@style/profileAlignLeft"
+            android:layout_below="@+id/textViewWeight"
+            android:text="@string/bmi" />
+
+        <TextView
+            android:id="@+id/textViewBMI_count"
+            style="@style/profileAlignRight"
+            android:layout_below="@+id/textViewWeight"
+            android:text="@string/bmiNo" />
+
+        <View
+            style="@style/profileLine"
+            android:layout_below="@+id/textViewBMI" />
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            android:text="3"
-            android:textSize="35sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/textViewDayStreak"
-            app:layout_constraintHorizontal_bias="0.48"
-            app:layout_constraintStart_toStartOf="@+id/textViewDayStreak"
-            app:layout_constraintTop_toBottomOf="@+id/textViewDayStreak" />
+            android:layout_below="@id/textViewBMI"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="32dp"
+            android:orientation="horizontal">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <Button
+                android:id="@+id/buttonSetting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="32dp"
+                android:text="@string/setting"
+                android:layout_marginEnd="32dp" />
 
-
-
-    <TextView
-        android:id="@+id/textViewGender"
-        android:layout_below="@+id/linearLayoutProfile"
-        android:text="Gender"
-        style="@style/profileAlignLeft"/>
-
-    <TextView
-        android:id="@+id/textView1UserGender"
-        android:layout_below="@+id/linearLayoutProfile"
-        android:text="Male"
-        style="@style/profileAlignRight"/>
-
-    <View
-        android:layout_below="@+id/textViewGender"
-        style="@style/profileLine"
-         />
-
-    <TextView
-        android:id="@+id/textViewDailyCalories"
-        android:layout_below="@+id/textViewGender"
-        android:text="@string/Daily_calories"
-        style="@style/profileAlignLeft"
-        />
-
-    <TextView
-        android:id="@+id/textViewCalories_cal"
-        android:layout_below="@+id/textViewGender"
-        android:text="@string/calories"
-        style="@style/profileAlignRight"
-         />
-
-    <View
-        android:layout_below="@+id/textViewDailyCalories"
-        style="@style/profileLine" />
-
-    <TextView
-        android:id="@+id/textViewHeight"
-        android:layout_below="@+id/textViewDailyCalories"
-        android:text="@string/height"
-        style="@style/profileAlignLeft"/>
-
-    <TextView
-        android:id="@+id/textViewHeight_cm"
-        android:layout_below="@+id/textViewDailyCalories"
-        android:text="@string/height_cm"
-        style="@style/profileAlignRight" />
-
-    <View
-        android:layout_below="@+id/textViewHeight"
-        style="@style/profileLine" />
-
-    <TextView
-        android:id="@+id/textViewWeight"
-        android:layout_below="@+id/textViewHeight"
-        android:text="@string/weight"
-        style="@style/profileAlignLeft" />
-
-    <TextView
-        android:id="@+id/textViewWeight_kg"
-        android:layout_below="@+id/textViewHeight"
-        android:text="@string/weight_kg"
-        style="@style/profileAlignRight" />
-
-    <View
-        android:layout_below="@+id/textViewWeight"
-        style="@style/profileLine" />
-
-    <TextView
-        android:id="@+id/textViewBMI"
-        android:layout_below="@+id/textViewWeight"
-        android:text="@string/bmi"
-        style="@style/profileAlignLeft" />
-
-    <TextView
-        android:id="@+id/textViewBMI_count"
-        android:layout_below="@+id/textViewWeight"
-        android:text="@string/bmiNo"
-        style="@style/profileAlignRight" />
-
-    <View
-        android:layout_below="@+id/textViewBMI"
-        style="@style/profileLine" />
-
-    <TextView
-        android:id="@+id/textViewSetting"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textViewBMI"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="19dp"
-        android:layout_marginTop="10dp"
-        android:clickable="true"
-        android:text="@string/setting"
-        android:textSize="22sp" />
-
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="40dp"
-        android:layout_height="34dp"
-        android:layout_below="@+id/textViewBMI"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="19dp"
-        android:layout_marginTop="10dp"
-        app:srcCompat="@drawable/ic_settings_black_24dp" />
+            <Button
+                android:id="@+id/buttonLogOut"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/logout" />
+        </LinearLayout>
 
 
-
-
-</RelativeLayout>
+    </RelativeLayout>
+</ScrollView>
