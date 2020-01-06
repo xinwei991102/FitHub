@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="ExerciseButton">
+        <item name="android:layout_width">320dp</item>
+        <item name="android:layout_height">116dp</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:layout_marginTop">28dp</item>
+        <item name="android:textColor">#FFFF</item>
+        <item name="android:textSize">30sp</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:elevation">1dp</item>
+    </style>
+</resources>
