@@ -14,9 +14,9 @@
     <string name="Daily_calories">Daily Calories</string>
     <string name="calories">1200</string>
     <string name="height">Height</string>
-    <string name="heightcm">160cm</string>
+    <string name="height_cm">160cm</string>
     <string name="weight">Weight</string>
-    <string name="weightkg">55kg</string>
+    <string name="weight_kg">55kg</string>
     <string name="bmi">BMI</string>
     <string name="bmiNo">20.2</string>
     <string name="setting">Setting</string>
