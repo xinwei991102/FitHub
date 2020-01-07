@@ -4,4 +4,5 @@
     <color name="colorPrimaryDark">#002171</color>
     <color name="colorAccent">#5472d3</color>
     <color name="ic_launcher_fitness_background">#FFFFFF</color>
+    <color name="unselected_color">#8c8c8c</color>
 </resources>

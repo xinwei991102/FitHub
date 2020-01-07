@@ -26,4 +26,6 @@
     <string name="days_streak">Days Streak</string>
     <string name="gender">Gender</string>
     <string name="male">Male</string>
+    <string name="exercise">Exercise</string>
+    <string name="fithub_logo">FitHub Logo</string>
 </resources>
