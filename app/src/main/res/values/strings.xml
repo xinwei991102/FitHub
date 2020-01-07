@@ -15,10 +15,32 @@
     <string name="Daily_calories">Daily Calories</string>
     <string name="calories">1200</string>
     <string name="height">Height</string>
-    <string name="heightcm">160cm</string>
+    <string name="height_cm">160cm</string>
     <string name="weight">Weight</string>
-    <string name="weightkg">55kg</string>
+    <string name="weight_kg">55kg</string>
     <string name="bmi">BMI</string>
     <string name="bmiNo">20.2</string>
     <string name="setting">Setting</string>
+    <string name="logout">Log Out</string>
+    <string name="edit_button">Edit Button</string>
+    <string name="level">Level</string>
+    <string name="days_streak">Days Streak</string>
+    <string name="gender">Gender</string>
+    <string name="male">Male</string>
+    <string name="exercise">Exercise</string>
+    <string name="fit_hub_logo">FitHub Logo</string>
+
+    <!--  Youtube Video IDs -->
+    <string-array name="video_id_array">
+        <item>CqhpNxI8qYw</item>
+        <item>sasCrpgHDy8</item>
+        <item>iJeh3x09Ya8</item>
+        <item>B5zRaD7B504</item>
+        <item>9qWHzj8k-Uo</item>
+        <item>RjiK45wC924</item>
+        <item>RH3zaLO8H4E</item>
+        <item>o14pyzosjvk</item>
+        <item>5SQrpBQne7A</item>
+        <item>5WJ3r67ORxo</item>
+    </string-array>
 </resources>
