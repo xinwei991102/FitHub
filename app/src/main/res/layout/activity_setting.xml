@@ -26,5 +26,17 @@
             style="@style/settingLine"
             android:layout_below="@+id/textViewLanguage" />
 
+        <TextView
+            android:layout_below="@+id/textViewLanguage"
+            android:id="@+id/textViewChangePassword"
+            style="@style/settingText"
+            android:text="@string/changePassword" />
+
+        <View
+            style="@style/settingLine"
+            android:layout_below="@+id/textViewChangePassword" />
+
+
+
     </RelativeLayout>
 </ScrollView>

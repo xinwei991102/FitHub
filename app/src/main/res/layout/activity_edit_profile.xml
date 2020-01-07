@@ -46,23 +46,9 @@
             android:text="@string/male" />
 
         <TextView
-            android:id="@+id/textViewDailyCalories"
-            style="@style/editProfileAlignLeft"
-            android:layout_below="@+id/textViewGender"
-            android:text="@string/Daily_calories" />
-
-        <EditText
-            android:id="@+id/editTextCalories"
-            style="@style/editProfileAlignRight"
-            android:layout_below="@+id/editTextGender"
-            android:ems="5"
-            android:inputType="number"
-            android:text="@string/calories" />
-
-        <TextView
             android:id="@+id/textViewHeight"
             style="@style/editProfileAlignLeft"
-            android:layout_below="@+id/textViewDailyCalories"
+            android:layout_below="@+id/textViewGender"
             android:text="@string/height" />
 
         <TextView
@@ -74,7 +60,7 @@
         <EditText
             android:id="@+id/editTextHeight"
             style="@style/editProfileAlignRight"
-            android:layout_below="@+id/editTextCalories"
+            android:layout_below="@+id/textViewGender"
             android:ems="5"
             android:inputType="numberDecimal"
             android:text="@string/height_cm" />
