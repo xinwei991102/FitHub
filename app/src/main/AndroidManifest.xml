@@ -16,6 +16,10 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
+            android:name=".ExerciseCompleteActivity"
+            android:label="@string/exercise"
+            android:parentActivityName=".MainActivity"/>
+        <activity
             android:name=".ExerciseActivity"
             android:label="@string/exercise"
             android:parentActivityName=".MainActivity" />
