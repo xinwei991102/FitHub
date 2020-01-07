@@ -33,7 +33,7 @@
             android:layout_width="34dp"
             android:layout_height="34dp"
             android:layout_gravity="center"
-            android:contentDescription="@string/fithub_logo"
+            android:contentDescription="@string/fit_hub_logo"
             app:srcCompat="@drawable/ic_fitness_center_black_100dp" />
     </androidx.appcompat.widget.Toolbar>
 
