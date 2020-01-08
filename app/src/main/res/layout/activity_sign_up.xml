@@ -69,7 +69,8 @@
         app:layout_constraintBottom_toBottomOf="@+id/imageView6"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageView6"
-        app:layout_constraintTop_toBottomOf="@+id/editTextUsername" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextUsername"
+        style="@style/SignUpeditTextStyle"/>
 
     <ImageView
         android:id="@+id/imageView9"
@@ -117,7 +118,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/imageView10"
-        app:layout_constraintTop_toBottomOf="@+id/editTextHeight" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextHeight"
+        style="@style/SignUpeditTextStyle"/>
 
     <EditText
         android:id="@+id/editTextHeight"
@@ -133,6 +135,7 @@
         android:inputType="numberDecimal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageView9"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerGender" />
+        app:layout_constraintTop_toBottomOf="@+id/spinnerGender"
+        style="@style/SignUpeditTextStyle"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
