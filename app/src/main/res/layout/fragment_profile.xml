@@ -22,7 +22,6 @@
             android:text="@string/profile_name"
             android:textSize="30sp" />
 
-
         <ImageButton
             android:id="@+id/imageButtonEditProfile"
             android:layout_width="40dp"
@@ -136,7 +135,7 @@
             android:text="@string/gender" />
 
         <TextView
-            android:id="@+id/textView1UserGender"
+            android:id="@+id/textViewUserGender"
             style="@style/profileAlignRight"
             android:layout_below="@+id/linearLayoutProfile"
             android:text="@string/male" />
@@ -146,31 +145,15 @@
             android:layout_below="@+id/textViewGender" />
 
         <TextView
-            android:id="@+id/textViewDailyCalories"
-            style="@style/profileAlignLeft"
-            android:layout_below="@+id/textViewGender"
-            android:text="@string/daily_calories" />
-
-        <TextView
-            android:id="@+id/textViewCalories_cal"
-            style="@style/profileAlignRight"
-            android:layout_below="@+id/textViewGender"
-            android:text="@string/calories" />
-
-        <View
-            style="@style/profileLine"
-            android:layout_below="@+id/textViewDailyCalories" />
-
-        <TextView
             android:id="@+id/textViewHeight"
             style="@style/profileAlignLeft"
-            android:layout_below="@+id/textViewDailyCalories"
+            android:layout_below="@+id/textViewUserGender"
             android:text="@string/height" />
 
         <TextView
             android:id="@+id/textViewHeight_cm"
             style="@style/profileAlignRight"
-            android:layout_below="@+id/textViewDailyCalories"
+            android:layout_below="@+id/textViewUserGender"
             android:text="@string/height_cm" />
 
         <View
@@ -232,7 +215,5 @@
                 android:layout_height="wrap_content"
                 android:text="@string/logout" />
         </LinearLayout>
-
-
     </RelativeLayout>
 </ScrollView>

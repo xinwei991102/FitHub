@@ -36,4 +36,5 @@
             android:label="@string/signupdetails"
             android:parentActivityName=".MainActivity" />
     </application>
+
 </manifest>

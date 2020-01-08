@@ -30,6 +30,7 @@ class ExerciseActivity : AppCompatActivity(), YouTubePlayer.OnInitializedListene
 
         // Get a support ActionBar corresponding to this toolbar and enable the Up button
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = intent.getStringExtra("exercise_name")
 
         val youTubePlayerFragment =
             supportFragmentManager.findFragmentById(R.id.youtube_fragment) as YouTubePlayerSupportFragment
@@ -58,10 +59,29 @@ class ExerciseActivity : AppCompatActivity(), YouTubePlayer.OnInitializedListene
         if (wasRestored) {
             player.play()
         } else {
-            //TODO proper video link depend on intent
-            //startMillis = 17000
-            //player.cueVideo("XGtjACeyHtc", startMillis)
-            player.cueVideo("wUF9DeWJ0Dk")
+            var vidId = ""
+            when(intent.getStringExtra("exercise_name")){
+                getString(R.string.aerobic_exercise) -> {
+                    vidId = getString(R.string._10_min_aerobic_vid)
+                    startMillis = 17000
+                    //placeholder
+                    //vidId = getString(R.string.placeholder_vid)
+                    //startMillis = 0
+                }
+                getString(R.string.core_exercise) -> {
+                    vidId = getString(R.string._10_min_core_vid)
+                    startMillis = 16000
+                }
+                getString(R.string.arm_exercise) -> {
+                    vidId = getString(R.string._10_min_arm_vid)
+                    startMillis = 11000
+                }
+                getString(R.string.leg_exercise) -> {
+                    vidId = getString(R.string._10_min_leg_vid)
+                    startMillis = 17000
+                }
+            }
+            player.cueVideo(vidId, startMillis)
             player.setPlayerStyle(PlayerStyle.CHROMELESS)
             player.setPlayerStateChangeListener(mPlayerStateChangeListener)
             player.setPlaybackEventListener(mPlaybackEventListener)
@@ -107,10 +127,9 @@ class ExerciseActivity : AppCompatActivity(), YouTubePlayer.OnInitializedListene
             }
 
             override fun onVideoEnded() {
-                //TODO pass time and calories burnt to exercise complete activity
                 var intent = Intent(activity, ExerciseCompleteActivity::class.java)
                 intent.putExtra("exercised_time", ytplayer.durationMillis - startMillis)
-                intent.putExtra("burned_calories", totalCalories)
+                intent.putExtra("burned_calories", totalCalories.toInt())
                 activity.startActivity(intent)
             }
 
@@ -170,14 +189,15 @@ class ExerciseActivity : AppCompatActivity(), YouTubePlayer.OnInitializedListene
     }
 
     private fun displayCurrentCalories() {
-        //TODO MET from intent, weight from database
+        //TODO weight from database
+        val weight = 53.1
         val durationHours = (ytplayer.durationMillis - startMillis) / 1000.0 / 60.0 / 60.0
-        totalCalories = (2 * 53.1) * durationHours * 1000
+        totalCalories = (intent.getDoubleExtra("met_score",1.0) * weight) * durationHours * 1000
         val caloriesPerSec = totalCalories / ((ytplayer.durationMillis - startMillis) / 1000)
-        var caloriesNow = caloriesPerSec * ((ytplayer.currentTimeMillis - startMillis) / 1000)
+        var caloriesNow:Int = (caloriesPerSec * ((ytplayer.currentTimeMillis - startMillis) / 1000)).toInt()
         val calStr = java.lang.String.format(
             Locale.UK,
-            "%.02f cal",
+            "%02d cal",
             caloriesNow
         )
         textViewCaloriesBurntCounter.text =  calStr
