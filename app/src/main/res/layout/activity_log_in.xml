@@ -51,7 +51,7 @@
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
         android:ems="10"
-        android:hint="@string/Username"
+        android:hint="@string/Email"
         android:inputType="textEmailAddress"
         android:selectAllOnFocus="true"
         android:textColor="#FFFF"

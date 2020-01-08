@@ -1,5 +1,6 @@
 package com.example.fithub
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -12,19 +13,17 @@ import kotlinx.android.synthetic.main.activity_sign_up.*
 class SignUpActivity : AppCompatActivity() {
 
     lateinit var username: EditText
-    /*
-    lateinit var Gender: Spinner
-    lateinit var Height: Number
-    lateinit var Weight: Number*/
-
+    lateinit var gender: Spinner
+    lateinit var height: EditText
+    lateinit var weight: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
 
-        val gender = arrayOf("Male", "Female")
+        val genderSelection = arrayOf("Male", "Female")
         spinnerGender.adapter =
-            ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, gender)
+            ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, genderSelection)
 
         spinnerGender.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
 
@@ -43,10 +42,9 @@ class SignUpActivity : AppCompatActivity() {
         }
 
         username = findViewById<EditText>(R.id.editTextUsername)
-        /*var selectedGender = findViewById<Spinner>(R.id.spinnerGender)
-        val height = findViewById<EditText>(R.id.editTextHeight)
-        val weight = findViewById<EditText>(R.id.editTextWeight)
-*/
+        gender = findViewById<Spinner>(R.id.spinnerGender)
+        height = findViewById<EditText>(R.id.editTextHeight)
+        weight = findViewById<EditText>(R.id.editTextWeight)
 
         btnSave.setOnClickListener{
             saveDataToFirebase()
@@ -57,19 +55,25 @@ class SignUpActivity : AppCompatActivity() {
 
         //Get reference from data table Profile
         val ref = FirebaseDatabase.getInstance().getReference("Profile")
+
+        //Assign variable
         val name = username.text.toString()
+        val gender= spinnerGender.selectedItem.toString()
+        val height = height.text.toString()
+        val weight = weight.text.toString()
+
 
         val id =ref.push().key
-        val user = User(name)
+        val user = User(name, gender, height, weight)
         ref.child(FirebaseAuth.getInstance().currentUser!!.uid).setValue(user).addOnCompleteListener{
             Toast.makeText(applicationContext, "User details saved successfully", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
         }
     }
-
-
 }
 
-class User(val name: String)
+class User(val name: String, val gender: String, val height: String, val weight: String)
 
 
 

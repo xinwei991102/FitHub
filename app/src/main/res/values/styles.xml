@@ -15,12 +15,14 @@
         <item name="android:textColor">#FFFF</item>
     </style>
 
-
     <style name="loginText">
         <item name="android:textColor">#FFFF</item>
         <item name="android:editTextColor">#FFFF</item>
     </style>
 
+    <style name="SignUpeditTextStyle">
+        <item name="android:background">#B2BEB</item>
+    </style>
     <style name="ExerciseButton">
         <item name="android:layout_width">320dp</item>
         <item name="android:layout_height">116dp</item>
