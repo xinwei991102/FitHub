@@ -26,11 +26,6 @@
     <string name="days_streak">Days Streak</string>
     <string name="gender">Gender</string>
     <string name="male">Male</string>
-    <string name="textViewName">Name</string>
-    <string name="save">Save</string>
-    <string name="cancel">Cancel</string>
-    <string name="language">Language</string>
-    <string name="changePassword">Change Password</string>
     <string name="exercise">Exercise</string>
     <string name="fit_hub_logo">FitHub Logo</string>
     <string name="signupdetails">Help us know you better</string>
@@ -39,7 +34,7 @@
     <string name="start">START</string>
     <string name="calories_burnt">Calories Burnt</string>
     <string name="stop">STOP</string>
-    <string name="_0_0_cal">0.0 cal</string>
+    <string name="_0_00_cal">0.00 cal</string>
     <string name="_00_00_time">00:00</string>
     <string name="trophy">Trophy</string>
     <string name="you_exercised_for">You exercised for</string>
@@ -50,5 +45,12 @@
     <string name="_0_points">0 points</string>
     <string name="keep_it_up">Keep it up!</string>
     <string name="congratulations">Congratulations!</string>
+    <string name="Email">Email</string>
 
+    <string name="textViewName">Name</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="language">Language</string>
+    <string name="changePassword">Change Password</string>
+    <string name="daily_calories" />
 </resources>
