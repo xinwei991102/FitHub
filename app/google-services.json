@@ -1,0 +1,64 @@
+{
+  "project_info": {
+    "project_number": "507574989699",
+    "firebase_url": "https://fithub-eb675.firebaseio.com",
+    "project_id": "fithub-eb675",
+    "storage_bucket": "fithub-eb675.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:507574989699:android:8dadaf16d85dc525a5bcb6",
+        "android_client_info": {
+          "package_name": "com.example.fithub"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "507574989699-5bukstiqns4tnv12q31ropuktqerejej.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.fithub",
+            "certificate_hash": "2b9dcf5ed704296c52c989c4a37bb77720911e39"
+          }
+        },
+        {
+          "client_id": "507574989699-bran9lqpistnqimk6ocevjmufmpt9clk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.fithub",
+            "certificate_hash": "13155d4f151311f5f9184642395889cc2daaee5d"
+          }
+        },
+        {
+          "client_id": "507574989699-ofhdo5vqguduivcqog1csekg7enj6c7h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.fithub",
+            "certificate_hash": "2d43e73044f99084d6b5170667ada8edee826304"
+          }
+        },
+        {
+          "client_id": "507574989699-plfht7b8nn7mc8lenvri169u12888hsv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBP_WGhE3HksBJUTLm25kQC4B9eZA2w560"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "507574989699-plfht7b8nn7mc8lenvri169u12888hsv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

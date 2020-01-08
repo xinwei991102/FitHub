@@ -12,12 +12,11 @@
     <string name="profile_name">Ho Heu Kei</string>
     <string name="notification">Notification</string>
     <string name="profile_pic">profile picture</string>
-    <string name="daily_calories">Daily Calories</string>
     <string name="calories">1200</string>
-    <string name="height">Height</string>
-    <string name="height_cm">160cm</string>
-    <string name="weight">Weight</string>
-    <string name="weight_kg">55kg</string>
+    <string name="height">Height(cm)</string>
+    <string name="height_cm">160</string>
+    <string name="weight">Weight(kg)</string>
+    <string name="weight_kg">55</string>
     <string name="bmi">BMI</string>
     <string name="bmiNo">20.2</string>
     <string name="setting">Setting</string>
@@ -47,4 +46,9 @@
     <string name="keep_it_up">Keep it up!</string>
     <string name="congratulations">Congratulations!</string>
 
+    <string name="textViewName">Name</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="language">Language</string>
+    <string name="changePassword">Change Password</string>
 </resources>
