@@ -38,7 +38,7 @@
             android:name=".SignUpActivity"
             android:label="@string/sign_up_details"
             android:parentActivityName=".MainActivity" />
-        <activity android:name=".EditProfileActivity"></activity>
+        <activity android:name=".EditProfileActivity" />
     </application>
 
 </manifest>
