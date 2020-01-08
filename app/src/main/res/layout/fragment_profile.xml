@@ -148,7 +148,7 @@
             android:id="@+id/textViewDailyCalories"
             style="@style/profileAlignLeft"
             android:layout_below="@+id/textViewGender"
-            android:text="@string/Daily_calories" />
+            android:text="@string/daily_calories" />
 
         <TextView
             android:id="@+id/textViewCalories_cal"

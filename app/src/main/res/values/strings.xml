@@ -12,7 +12,7 @@
     <string name="profile_name">Ho Heu Kei</string>
     <string name="notification">Notification</string>
     <string name="profile_pic">profile picture</string>
-    <string name="Daily_calories">Daily Calories</string>
+    <string name="daily_calories">Daily Calories</string>
     <string name="calories">1200</string>
     <string name="height">Height</string>
     <string name="height_cm">160cm</string>
@@ -31,18 +31,20 @@
     <string name="fit_hub_logo">FitHub Logo</string>
     <string name="signupdetails">Help us know you better</string>
     <string name="Save">Save</string>
+    <string name="time_remaining">Time Remaining</string>
+    <string name="start">START</string>
+    <string name="calories_burnt">Calories Burnt</string>
+    <string name="stop">STOP</string>
+    <string name="_0_0_cal">0.0 cal</string>
+    <string name="_00_00_time">00:00</string>
+    <string name="trophy">Trophy</string>
+    <string name="you_exercised_for">You exercised for</string>
+    <string name="_0_m_0_s">0 m 0 s</string>
+    <string name="you_burned">You burned</string>
+    <string name="_0_calories">0 calories</string>
+    <string name="you_earned">You earned</string>
+    <string name="_0_points">0 points</string>
+    <string name="keep_it_up">Keep it up!</string>
+    <string name="congratulations">Congratulations!</string>
 
-    <!--  Youtube Video IDs -->
-    <string-array name="video_id_array">
-        <item>CqhpNxI8qYw</item>
-        <item>sasCrpgHDy8</item>
-        <item>iJeh3x09Ya8</item>
-        <item>B5zRaD7B504</item>
-        <item>9qWHzj8k-Uo</item>
-        <item>RjiK45wC924</item>
-        <item>RH3zaLO8H4E</item>
-        <item>o14pyzosjvk</item>
-        <item>5SQrpBQne7A</item>
-        <item>5WJ3r67ORxo</item>
-    </string-array>
 </resources>
