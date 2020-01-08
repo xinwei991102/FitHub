@@ -51,4 +51,15 @@
         app:compactCalendarTextColor="#000"
         app:compactCalendarTextSize="12sp" />
 
+    <TextView
+        android:id="@+id/textViewEvent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/background_light"
+        android:textSize="16sp"
+        android:textColor="#000"
+        android:layout_marginTop="16dp"
+        android:layout_below="@id/calendarViewCalendar"
+        />
+
 </RelativeLayout>
