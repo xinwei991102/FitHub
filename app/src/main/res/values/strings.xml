@@ -29,6 +29,8 @@
     <string name="male">Male</string>
     <string name="exercise">Exercise</string>
     <string name="fit_hub_logo">FitHub Logo</string>
+    <string name="signupdetails">Help us know you better</string>
+    <string name="Save">Save</string>
 
     <!--  Youtube Video IDs -->
     <string-array name="video_id_array">

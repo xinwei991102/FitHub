@@ -1,5 +1,6 @@
 package com.example.fithub
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -12,10 +13,11 @@ class LogInActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_log_in)
-        val email = editTextUsername.text.toString()
-        val password = editTextPassword.text.toString()
 
         btnSignUp.setOnClickListener {
+            val email = editTextUsername.text.toString()
+            val password = editTextPassword.text.toString()
+
             if (email.isEmpty() || password.isEmpty()) {
                 Toast.makeText(this, "Please enter email and password", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
@@ -26,25 +28,31 @@ class LogInActivity : AppCompatActivity() {
                     if (!it.isSuccessful) {
                         Log.d("Main", "Fail")
                         return@addOnCompleteListener
+                    } else {
+                        Toast.makeText(this, "Sign Up Successfully", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this, SignUpActivity::class.java)
+                        startActivity(intent)
                     }
-                    //else if successful
-                    Log.d("Main", "Successfully created user with uid: ${it.result?.user?.uid}")
                 }
-
         }
 
-        btnLogIn.setOnClickListener{
+        btnLogIn.setOnClickListener {
+            val email = editTextUsername.text.toString()
+            val password = editTextPassword.text.toString()
+
             FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
-                        // Sign in success, update UI with the signed-in user's information
-                        Log.d("Log in", "signInWithEmail:success")
-                        val user = FirebaseAuth.getInstance().currentUser
+                        Toast.makeText(this, "Successfully Logged In", Toast.LENGTH_LONG).show()
+                        val intent = Intent(this, MainActivity::class.java)
+                        startActivity(intent)
                     } else {
                         // If sign in fails, display a message to the user.
-                        Log.w("Log in", "signInWithEmail:failure", task.exception)
-                        Toast.makeText(baseContext, "Authentication failed.",
-                            Toast.LENGTH_SHORT).show()
+                        Log.w("Log in", "Sign In with Email:failure", task.exception)
+                        Toast.makeText(
+                            baseContext, "Wrong username or password.",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
 
                 }
