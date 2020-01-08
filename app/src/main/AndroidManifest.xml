@@ -15,7 +15,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".SettingActivity"></activity>
         <activity
             android:name=".ExerciseCompleteActivity"
             android:label="@string/exercise"
@@ -24,9 +23,8 @@
             android:name=".ExerciseActivity"
             android:label="@string/exercise"
             android:parentActivityName=".MainActivity" />
-        <activity
-            android:name=".LogInActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity android:name=".EditProfileActivity" />
+        <activity android:name=".LogInActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,9 +34,8 @@
         </activity>
         <activity
             android:name=".SignUpActivity"
-            android:label="@string/sign_up_details" />
-            android:label="@string/signupdetails" />
-        <activity android:name=".EditProfileActivity"></activity>
+            android:label="@string/signupdetails"
+            android:parentActivityName=".MainActivity" />
     </application>
 
 </manifest>
