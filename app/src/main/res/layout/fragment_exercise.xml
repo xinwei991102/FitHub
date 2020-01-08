@@ -11,7 +11,7 @@
             android:id="@+id/buttonAerobic"
             style="@style/ExerciseButton"
             android:background="@drawable/aerobic_button"
-            android:text="@string/aerobic_exercise" />
+            android:text="@string/aerobic_exercise"/>
 
         <Button
             android:id="@+id/buttonCore"

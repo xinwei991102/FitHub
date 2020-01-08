@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.fithub">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -12,9 +13,20 @@
         android:logo="@mipmap/ic_launcher_fitness"
         android:roundIcon="@mipmap/ic_launcher_fitness_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".EditProfileActivity"></activity>
-        <activity android:name=".LogInActivity" />
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+        tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".SettingActivity"></activity>
+        <activity
+            android:name=".ExerciseCompleteActivity"
+            android:label="@string/exercise"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".ExerciseActivity"
+            android:label="@string/exercise"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".LogInActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,6 +34,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".SignUpActivity"
+            android:label="@string/signupdetails" />
+        <activity android:name=".EditProfileActivity"></activity>
     </application>
 
 </manifest>

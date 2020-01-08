@@ -6,25 +6,38 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_profile.*
 
 
-class ProfileFragment : Fragment() {
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? =
+class ProfileFragment:Fragment() {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
         inflater.inflate(R.layout.fragment_profile, container, false)
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        
+
+        val user = FirebaseAuth.getInstance().currentUser
+
+        buttonLogOut.setOnClickListener{
+            FirebaseAuth.getInstance().signOut()
+            val intent = Intent(requireContext(),LogInActivity::class.java)
+            requireContext().startActivity(intent)
+        }
+
         imageButtonEditProfile.setOnClickListener {
             val intent = Intent(requireContext(), EditProfileActivity::class.java)
             requireContext().startActivity(intent)
 
         }
+
+        buttonSetting.setOnClickListener {
+            val intent = Intent(requireContext(), SettingActivity::class.java)
+            requireContext().startActivity(intent)
+        }
+
+
     }
+
 
 }

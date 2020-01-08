@@ -60,7 +60,7 @@
         <EditText
             android:id="@+id/editTextHeight"
             style="@style/editProfileAlignRight"
-            android:layout_below="@+id/textViewGender"
+            android:layout_below="@+id/editTextGender"
             android:ems="5"
             android:inputType="numberDecimal"
             android:text="@string/height_cm" />

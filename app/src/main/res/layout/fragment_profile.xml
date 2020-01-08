@@ -145,32 +145,17 @@
             style="@style/profileLine"
             android:layout_below="@+id/textViewGender" />
 
-        <TextView
-            android:id="@+id/textViewDailyCalories"
-            style="@style/profileAlignLeft"
-            android:layout_below="@+id/textViewGender"
-            android:text="@string/Daily_calories" />
-
-        <TextView
-            android:id="@+id/textViewCalories_cal"
-            style="@style/profileAlignRight"
-            android:layout_below="@+id/textViewGender"
-            android:text="@string/calories" />
-
-        <View
-            style="@style/profileLine"
-            android:layout_below="@+id/textViewDailyCalories" />
 
         <TextView
             android:id="@+id/textViewHeight"
             style="@style/profileAlignLeft"
-            android:layout_below="@+id/textViewDailyCalories"
+            android:layout_below="@+id/textViewGender"
             android:text="@string/height" />
 
         <TextView
             android:id="@+id/textViewHeight_cm"
             style="@style/profileAlignRight"
-            android:layout_below="@+id/textViewDailyCalories"
+            android:layout_below="@+id/textViewGender"
             android:text="@string/height_cm" />
 
         <View
