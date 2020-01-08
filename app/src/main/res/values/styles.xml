@@ -15,10 +15,13 @@
         <item name="android:textColor">#FFFF</item>
     </style>
 
-
     <style name="loginText">
         <item name="android:textColor">#FFFF</item>
         <item name="android:editTextColor">#FFFF</item>
+    </style>
+
+    <style name="SignUpeditTextStyle">
+        <item name="android:background">#e0dce7</item>
     </style>
 
     <style name="ExerciseButton">

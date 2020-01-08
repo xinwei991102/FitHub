@@ -15,14 +15,6 @@
       },
       "oauth_client": [
         {
-          "client_id": "507574989699-5bukstiqns4tnv12q31ropuktqerejej.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.fithub",
-            "certificate_hash": "2b9dcf5ed704296c52c989c4a37bb77720911e39"
-          }
-        },
-        {
           "client_id": "507574989699-bran9lqpistnqimk6ocevjmufmpt9clk.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
