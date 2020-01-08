@@ -62,7 +62,6 @@ class SignUpActivity : AppCompatActivity() {
         val height = height.text.toString()
         val weight = weight.text.toString()
 
-
         val id =ref.push().key
         val user = User(name, gender, height, weight)
         ref.child(FirebaseAuth.getInstance().currentUser!!.uid).setValue(user).addOnCompleteListener{
