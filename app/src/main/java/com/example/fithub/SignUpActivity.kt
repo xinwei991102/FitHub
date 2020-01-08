@@ -55,7 +55,7 @@ class SignUpActivity : AppCompatActivity() {
 
     private fun saveDataToFirebase() {
 
-        //Get reference from data table Profile 
+        //Get reference from data table Profile
         val ref = FirebaseDatabase.getInstance().getReference("Profile")
         val name = username.text.toString()
 
