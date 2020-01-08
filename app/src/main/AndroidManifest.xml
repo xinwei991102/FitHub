@@ -33,7 +33,7 @@
         </activity>
         <activity
             android:name=".SignUpActivity"
-            android:label="@string/signupdetails" />
+            android:label="@string/sign_up_details" />
     </application>
 
 </manifest>

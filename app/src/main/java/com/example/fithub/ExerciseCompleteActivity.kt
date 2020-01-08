@@ -16,17 +16,20 @@ class ExerciseCompleteActivity : AppCompatActivity() {
         // Get a support ActionBar corresponding to this toolbar and enable the Up button
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         imageViewTrophy.setOnClickListener {
-            it.startAnimation(AnimationUtils.loadAnimation(this,R.anim.wobble_anim))
+            it.startAnimation(AnimationUtils.loadAnimation(this, R.anim.wobble_anim))
         }
         setTextViews()
+
         //TODO calculate points
+        var points: Int = (intent.getIntExtra("burned_calories", 0) / 1000).toInt()
+        textViewPointsEarned.text = "$points points"
     }
 
-    private fun setTextViews(){
-        val exercisedTime =intent.getIntExtra("exercised_time",0)
-        val burnedCalories = intent.getDoubleExtra("burned_calories", 0.0)
-        val exercisedSec = exercisedTime/1000
-        val exercisedMin = exercisedSec/60
+    private fun setTextViews() {
+        val exercisedTime = intent.getIntExtra("exercised_time", 0)
+        val burnedCalories = intent.getIntExtra("burned_calories", 0)
+        val exercisedSec = exercisedTime / 1000
+        val exercisedMin = exercisedSec / 60
         val timeStr = java.lang.String.format(
             Locale.UK,
             "%02d m %02d s",
@@ -35,16 +38,17 @@ class ExerciseCompleteActivity : AppCompatActivity() {
         )
         val calStr = java.lang.String.format(
             Locale.UK,
-            "%.02f calories",
+            "%02d calories",
             burnedCalories
         )
         textViewExercisedTime.text = timeStr
         textViewCaloriesCount.text = calStr
+
     }
 
     override fun onResume() {
         super.onResume()
-        val animation = AnimationUtils.loadAnimation( this, R.anim.wobble_anim)
+        val animation = AnimationUtils.loadAnimation(this, R.anim.wobble_anim)
         imageViewTrophy.startAnimation(animation)
     }
 
