@@ -1,17 +1,26 @@
 package com.example.fithub
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.youtube.player.YouTubeInitializationResult
 import com.google.android.youtube.player.YouTubePlayer
+import com.google.android.youtube.player.YouTubePlayer.*
 import com.google.android.youtube.player.YouTubePlayerSupportFragment
 import kotlinx.android.synthetic.main.activity_exercise.*
+import java.util.*
+
 
 class ExerciseActivity : AppCompatActivity(), YouTubePlayer.OnInitializedListener {
 
-    private lateinit var ytplayer:YouTubePlayer
+    var activity = this
+    private lateinit var ytplayer: YouTubePlayer
+    private lateinit var mHandler: Handler
+    private var startMillis: Int = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_exercise)
@@ -22,7 +31,7 @@ class ExerciseActivity : AppCompatActivity(), YouTubePlayer.OnInitializedListene
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val youTubePlayerFragment =
-            supportFragmentManager.findFragmentById(R.id.youtube_fragment) as YouTubePlayerSupportFragment;
+            supportFragmentManager.findFragmentById(R.id.youtube_fragment) as YouTubePlayerSupportFragment
         youTubePlayerFragment.initialize("AIzaSyALK-JnsLHtjznQ_1ngrkc7W776f5EHTgM", this)
 
         buttonStartStopExercise.setOnCheckedChangeListener { _, isChecked ->
@@ -34,25 +43,31 @@ class ExerciseActivity : AppCompatActivity(), YouTubePlayer.OnInitializedListene
                     ytplayer.pause()
             }
         }
+        mHandler = Handler()
     }
 
     override fun onInitializationSuccess(
-        provider: YouTubePlayer.Provider?,
+        provider: Provider?,
         player: YouTubePlayer?,
         wasRestored: Boolean
     ) {
         if (player == null) return
         ytplayer = player
+
         if (wasRestored) {
             player.play()
         } else {
-            player.cueVideo("oHg5SJYRHA0")
-            player.setPlayerStyle(YouTubePlayer.PlayerStyle.CHROMELESS)
+            //TODO proper video link depend on intent
+            startMillis = 17000
+            player.cueVideo("XGtjACeyHtc", startMillis)
+            player.setPlayerStyle(PlayerStyle.CHROMELESS)
+            player.setPlayerStateChangeListener(mPlayerStateChangeListener)
+            player.setPlaybackEventListener(mPlaybackEventListener)
         }
     }
 
     override fun onInitializationFailure(
-        provider: YouTubePlayer.Provider?,
+        provider: Provider?,
         result: YouTubeInitializationResult?
     ) {
         Log.d("Youtube Player", "Failed to initialize")
@@ -67,6 +82,99 @@ class ExerciseActivity : AppCompatActivity(), YouTubePlayer.OnInitializedListene
             }
         }
         return (super.onOptionsItemSelected(item))
+    }
+
+    private var mPlayerStateChangeListener: PlayerStateChangeListener =
+        object : PlayerStateChangeListener {
+            override fun onAdStarted() {
+
+            }
+
+            override fun onLoading() {
+
+            }
+
+            override fun onVideoStarted() {
+                displayCurrentTime()
+                displayCurrentCalories()
+            }
+
+            override fun onLoaded(p0: String?) {
+                displayCurrentTime()
+                displayCurrentCalories()
+            }
+
+            override fun onVideoEnded() {
+                //TODO pass time and calories burnt to exercise complete activity
+                var intent = Intent(activity, ExerciseCompleteActivity::class.java)
+                activity.startActivity(intent)
+            }
+
+            override fun onError(p0: ErrorReason?) {
+
+            }
+        }
+
+    private var mPlaybackEventListener: PlaybackEventListener =
+        object : PlaybackEventListener {
+            override fun onSeekTo(p0: Int) {
+                mHandler.post(runnable)
+            }
+
+            override fun onBuffering(p0: Boolean) {
+
+            }
+
+            override fun onPlaying() {
+                mHandler.post(runnable)
+                displayCurrentTime()
+                displayCurrentCalories()
+            }
+
+            override fun onStopped() {
+                mHandler.removeCallbacks(runnable)
+            }
+
+            override fun onPaused() {
+                mHandler.removeCallbacks(runnable)
+            }
+
+        }
+
+    private fun displayCurrentTime() {
+        val formattedTime = formatTime(ytplayer.durationMillis - ytplayer.currentTimeMillis)
+        textViewTimer.text = formattedTime
+    }
+
+    private fun formatTime(millis: Int): String {
+        val seconds = millis / 1000
+        val minutes = seconds / 60
+
+
+        return java.lang.String.format(
+            Locale.UK,
+            "%02d:%02d",
+            minutes % 60,
+            seconds % 60
+        )
+    }
+
+    private var runnable: Runnable = object : Runnable {
+        override fun run() {
+            displayCurrentTime()
+            displayCurrentCalories()
+            mHandler.post(this)
+        }
+
+    }
+
+    private fun displayCurrentCalories(){
+        //TODO MET from intent, weight from database
+        val durationHours = (ytplayer.durationMillis-startMillis)/1000.0/60.0/60.0
+        val caloriesTotal = (2 * 53.1)*durationHours*1000
+        val caloriesPerSec = caloriesTotal/((ytplayer.durationMillis-startMillis)/1000)
+        var caloriesNow  = caloriesPerSec * ((ytplayer.currentTimeMillis - startMillis)/1000)
+        textViewCaloriesBurntCounter.text = "$caloriesNow cal"
     }
 }
 

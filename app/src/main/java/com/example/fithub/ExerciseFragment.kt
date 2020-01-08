@@ -18,7 +18,7 @@ class ExerciseFragment:Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         buttonAerobic.setOnClickListener {
-            it.startAnimation(AnimationUtils.loadAnimation(requireContext(),R.anim.bounce_anim))
+            it.startAnimation(AnimationUtils.loadAnimation(requireContext(),R.anim.bounce_anim_quick))
             var intent = Intent(requireContext(), ExerciseActivity::class.java)
             requireContext().startActivity(intent)
         }
