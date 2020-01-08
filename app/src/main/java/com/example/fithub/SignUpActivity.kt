@@ -41,10 +41,10 @@ class SignUpActivity : AppCompatActivity() {
             }
         }
 
-        username = findViewById<EditText>(R.id.editTextUsername)
-        gender = findViewById<Spinner>(R.id.spinnerGender)
-        height = findViewById<EditText>(R.id.editTextHeight)
-        weight = findViewById<EditText>(R.id.editTextWeight)
+        username = findViewById(R.id.editTextUsername)
+        gender = findViewById(R.id.spinnerGender)
+        height = findViewById(R.id.editTextHeight)
+        weight = findViewById(R.id.editTextWeight)
 
         btnSave.setOnClickListener{
             saveDataToFirebase()
@@ -52,7 +52,6 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun saveDataToFirebase() {
-
         //Get reference from data table Profile
         val ref = FirebaseDatabase.getInstance().getReference("Profile")
 
