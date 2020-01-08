@@ -28,7 +28,7 @@ class SignUpActivity : AppCompatActivity() {
         spinnerGender.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                //TODO
+                //TODO: hello
             }
 
             override fun onItemSelected(
