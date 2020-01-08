@@ -1,5 +1,6 @@
 package com.example.fithub
 
+import android.annotation.TargetApi
 import android.content.Context
 import android.graphics.Color
 import android.icu.text.SimpleDateFormat
@@ -15,6 +16,7 @@ import com.github.sundeepk.compactcalendarview.CompactCalendarView
 import com.github.sundeepk.compactcalendarview.CompactCalendarView.CompactCalendarViewListener
 import com.github.sundeepk.compactcalendarview.domain.Event
 import kotlinx.android.synthetic.main.fragment_home.*
+import java.time.LocalDateTime
 import java.util.*
 
 class HomeFragment:Fragment() {
@@ -26,29 +28,36 @@ class HomeFragment:Fragment() {
 
     return inflater.inflate(R.layout.fragment_home, container, false)}
 
+    @TargetApi(Build.VERSION_CODES.O)
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
         val compactCalendar: CompactCalendarView = view?.findViewById(R.id.calendarViewCalendar)!!
-        val dateFormatMonth = SimpleDateFormat("mm yyyy", Locale.getDefault())
+        val dateFormatMonth = SimpleDateFormat("Mon yyyy", Locale.getDefault())
+        val dateFormatCompare = SimpleDateFormat("YYMMDD", Locale.getDefault())
 
         compactCalendar.setUseThreeLetterAbbreviation(true)
+        val c = GregorianCalendar()
+        c.set(Calendar.HOUR_OF_DAY, 0) //anything 0 - 23
+        c.set(Calendar.MINUTE, 0)
+        c.set(Calendar.SECOND, 0)
+        c.set(Calendar.MILLISECOND, 0)
+        val currentTimeInLong = c.time.time
 
-        //val date:Date = dateFormatMonth.get2DigitYearStart()
-        //textViewMonth.text = dateFormatMonth.format(date)
-
-        //set an event
         val event1 = Event(Color.BLUE, 1578537000000L, "test")
-        val event2 = Event(Color.BLUE, 1578537000000L, "test2")
         compactCalendar.addEvent(event1)
+
+        //set current event //milliseconds in one week-604800000L
+        val event2 = Event(Color.RED, currentTimeInLong, "test2")
         compactCalendar.addEvent(event2)
 
         compactCalendar.setListener(object : CompactCalendarViewListener{
             override fun onDayClick(dateClicked: Date?) {
-                //Toast.makeText(context, dateClicked.toString(), Toast.LENGTH_SHORT).show()
-                if(dateClicked.toString().compareTo("Thu Jan 09 00:00:00 GMT+08:00 2020") == 0){
-                    Toast.makeText(context, event1.data.toString(), Toast.LENGTH_SHORT).show()
+                //val dateClickedFormatted = dateFormatCompare.format(dateClicked)
+                //val eventTimeInString= dateFormatCompare.format(event2.timeInMillis)
+                if(dateClicked?.time == event2.timeInMillis){
+                    Toast.makeText(context, event2.data.toString(), Toast.LENGTH_SHORT).show()
                 }else{
                     Toast.makeText(context, "No event", Toast.LENGTH_SHORT).show()
                 }
