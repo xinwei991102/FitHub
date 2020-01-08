@@ -59,8 +59,8 @@ class SignUpActivity : AppCompatActivity() {
         //Assign variable
         val name = username.text.toString()
         val gender= spinnerGender.selectedItem.toString()
-        val height = height.text.toString()
-        val weight = weight.text.toString()
+        val height = height.text.toString().toDouble()
+        val weight = weight.text.toString().toDouble()
 
         val id =ref.push().key
         val user = User(name, gender, height, weight)
@@ -72,7 +72,7 @@ class SignUpActivity : AppCompatActivity() {
     }
 }
 
-class User(val name: String, val gender: String, val height: String, val weight: String)
+class User(val name: String, val gender: String, val height: Double, val weight: Double)
 
 
 
