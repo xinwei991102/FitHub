@@ -32,7 +32,7 @@
     <string name="start">START</string>
     <string name="calories_burnt">Calories Burnt</string>
     <string name="stop">STOP</string>
-    <string name="_0_0_cal">0.0 cal</string>
+    <string name="_0_00_cal">0.00 cal</string>
     <string name="_00_00_time">00:00</string>
     <string name="trophy">Trophy</string>
     <string name="you_exercised_for">You exercised for</string>

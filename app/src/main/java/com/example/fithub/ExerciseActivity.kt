@@ -20,6 +20,7 @@ class ExerciseActivity : AppCompatActivity(), YouTubePlayer.OnInitializedListene
     private lateinit var ytplayer: YouTubePlayer
     private lateinit var mHandler: Handler
     private var startMillis: Int = 0
+    private var totalCalories: Double = 0.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,8 +59,9 @@ class ExerciseActivity : AppCompatActivity(), YouTubePlayer.OnInitializedListene
             player.play()
         } else {
             //TODO proper video link depend on intent
-            startMillis = 17000
-            player.cueVideo("XGtjACeyHtc", startMillis)
+            //startMillis = 17000
+            //player.cueVideo("XGtjACeyHtc", startMillis)
+            player.cueVideo("wUF9DeWJ0Dk")
             player.setPlayerStyle(PlayerStyle.CHROMELESS)
             player.setPlayerStateChangeListener(mPlayerStateChangeListener)
             player.setPlaybackEventListener(mPlaybackEventListener)
@@ -107,6 +109,8 @@ class ExerciseActivity : AppCompatActivity(), YouTubePlayer.OnInitializedListene
             override fun onVideoEnded() {
                 //TODO pass time and calories burnt to exercise complete activity
                 var intent = Intent(activity, ExerciseCompleteActivity::class.java)
+                intent.putExtra("exercised_time", ytplayer.durationMillis - startMillis)
+                intent.putExtra("burned_calories", totalCalories)
                 activity.startActivity(intent)
             }
 
@@ -149,8 +153,6 @@ class ExerciseActivity : AppCompatActivity(), YouTubePlayer.OnInitializedListene
     private fun formatTime(millis: Int): String {
         val seconds = millis / 1000
         val minutes = seconds / 60
-
-
         return java.lang.String.format(
             Locale.UK,
             "%02d:%02d",
@@ -165,16 +167,20 @@ class ExerciseActivity : AppCompatActivity(), YouTubePlayer.OnInitializedListene
             displayCurrentCalories()
             mHandler.post(this)
         }
-
     }
 
-    private fun displayCurrentCalories(){
+    private fun displayCurrentCalories() {
         //TODO MET from intent, weight from database
-        val durationHours = (ytplayer.durationMillis-startMillis)/1000.0/60.0/60.0
-        val caloriesTotal = (2 * 53.1)*durationHours*1000
-        val caloriesPerSec = caloriesTotal/((ytplayer.durationMillis-startMillis)/1000)
-        var caloriesNow  = caloriesPerSec * ((ytplayer.currentTimeMillis - startMillis)/1000)
-        textViewCaloriesBurntCounter.text = "$caloriesNow cal"
+        val durationHours = (ytplayer.durationMillis - startMillis) / 1000.0 / 60.0 / 60.0
+        totalCalories = (2 * 53.1) * durationHours * 1000
+        val caloriesPerSec = totalCalories / ((ytplayer.durationMillis - startMillis) / 1000)
+        var caloriesNow = caloriesPerSec * ((ytplayer.currentTimeMillis - startMillis) / 1000)
+        val calStr = java.lang.String.format(
+            Locale.UK,
+            "%.02f cal",
+            caloriesNow
+        )
+        textViewCaloriesBurntCounter.text =  calStr
     }
 }
 
