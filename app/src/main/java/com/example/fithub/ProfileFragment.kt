@@ -47,8 +47,8 @@ class ProfileFragment:Fragment() {
 
         }
 
-        buttonSetting.setOnClickListener {
-            val intent = Intent(requireContext(), SettingActivity::class.java)
+        buttonChangePassword.setOnClickListener {
+            val intent = Intent(requireContext(), ChangePasswordActivity::class.java)
             requireContext().startActivity(intent)
         }
 
