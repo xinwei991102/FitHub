@@ -2,6 +2,7 @@ package com.example.fithub
 
 import android.annotation.TargetApi
 import android.content.Context
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.icu.text.SimpleDateFormat
 import android.os.Build
@@ -41,8 +42,8 @@ class HomeFragment:Fragment() {
 
         compactCalendar.setUseThreeLetterAbbreviation(true)
 
-        val eventColor = arrayOf(Color.BLUE, Color.RED, Color.CYAN, Color.GREEN, Color.TRANSPARENT)
-        val eventData = arrayOf("Aerobic Exercise done", "Core Exercise done", "Arm Exercise done", "Leg Exercise done", "No record...")
+        val eventColor = arrayOf(Color.BLUE, Color.RED, Color.CYAN, Color.GREEN)
+        val eventData = arrayOf("Aerobic Exercise", "Core Exercise", "Arm Exercise", "Leg Exercise", "No record...")
 
         //set date into 12mn in term milliseconds
         val c = GregorianCalendar()
@@ -54,46 +55,41 @@ class HomeFragment:Fragment() {
 
         textViewMonth.text = dateFormatMonth.format(c.time)
 
-        //testing purpose
-        //val event1 = Event(Color.BLUE, 1578537000000L, "test")
-        //compactCalendar.addEvent(event1)
-        //set current event //milliseconds in one week-604800000L
-        //val event2 = Event(Color.RED, currentTimeInLong - 604800000L, "test2")
-        //compactCalendar.addEvent(event2)
-
         //set event
         var events = ArrayList<Event>()
         var event:Event
-        val i = 0
-        //if(i == 0 || i == 1 || i == 2 || i == 3){
-            event = Event(eventColor[i], currentTimeInLong - 86400000L, eventData[i])
-            events.add(event)
-            event = Event(eventColor[1], currentTimeInLong - 86400000L, eventData[1])
-            events.add(event)
-            event = Event(eventColor[2], currentTimeInLong - 86400000L, eventData[2])
-            events.add(event)
-            compactCalendar.addEvents(events)
-        //}
-        //else{
-        //    event = Event(eventColor[4], currentTimeInLong, eventData[4])
-        //}
-        //compactCalendar.addEvents(events)
-        //compactCalendar.addEvent(event)
+        val sharedPref: SharedPreferences
 
+        val workout = 0
 
+        //TODO - loop to add more event
+        event = Event(eventColor[workout], currentTimeInLong - 86400000L, eventData[workout])
+        events.add(event)
+        event = Event(eventColor[1], currentTimeInLong - 86400000L - 86400000L, eventData[1])
+        events.add(event)
+        event = Event(eventColor[2], currentTimeInLong - 86400000L - 86400000L - 86400000L, eventData[2])
+        events.add(event)
+        event = Event(eventColor[2], currentTimeInLong - 86400000L - 86400000L - 86400000L, eventData[2])
+        events.add(event)
+        event = Event(eventColor[3], currentTimeInLong - 86400000L - 86400000L - 86400000L, eventData[3])
+        events.add(event)
+
+        compactCalendar.addEvents(events)
         compactCalendar.setListener(object : CompactCalendarViewListener{
             override fun onDayClick(dateClicked: Date?) {
-                if(dateClicked?.time == event.timeInMillis){
-                    var eventString = ""
+
+                var eventString = eventData[4]
+                if (compactCalendar.getEvents(dateClicked?.time!!).isNotEmpty()) {
+                    eventString = "Congratulation! You done the: \n"
                     for(event in compactCalendar.getEvents(dateClicked.time)){
                         eventString += event.data.toString() + "\n"
                     }
-                    textViewEvent.text = eventString
-                }else{
-                    textViewEvent.text = eventData[4]
+                }else if(dateClicked.time == currentTimeInLong){
+                    eventString += "\nLet's start do an activity now!"
                 }
-            }
+                textViewEvent.text = eventString
 
+            }
             override fun onMonthScroll(firstDayOfNewMonth: Date?) {
                 textViewMonth.text = dateFormatMonth.format(firstDayOfNewMonth)
             }
