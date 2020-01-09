@@ -15,19 +15,24 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".SettingActivity"></activity>
+        <activity android:name=".SettingActivity"
+            android:configChanges="orientation|screenSize"/>
         <activity
             android:name=".ExerciseCompleteActivity"
             android:label="@string/exercise"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".MainActivity"
+            android:configChanges="orientation|screenSize"/>
         <activity
             android:name=".ExerciseActivity"
             android:label="@string/exercise"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".MainActivity"
+            android:configChanges="orientation|screenSize"/>
         <activity
             android:name=".LogInActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <activity android:name=".MainActivity">
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:configChanges="orientation|screenSize"/>
+        <activity android:name=".MainActivity"
+            android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -37,8 +42,10 @@
         <activity
             android:name=".SignUpActivity"
             android:label="@string/sign_up_details"
-            android:parentActivityName=".MainActivity" />
-        <activity android:name=".EditProfileActivity" />
+            android:parentActivityName=".MainActivity"
+            android:configChanges="orientation|screenSize"/>
+        <activity android:name=".EditProfileActivity"
+            android:configChanges="orientation|screenSize"/>
     </application>
 
 </manifest>

@@ -21,7 +21,7 @@
     <string name="logout">Log Out</string>
     <string name="edit_button">Edit Button</string>
     <string name="level">Level</string>
-    <string name="days_streak">Days Streak</string>
+    <string name="points_earned">Points Earned</string>
     <string name="gender">Gender</string>
     <string name="male">Male</string>
     <string name="exercise">Exercise</string>
@@ -61,5 +61,6 @@
     <string name="_0_points">0 points</string>
     <string name="keep_it_up">Keep it up!</string>
     <string name="congratulations">Congratulations!</string>
+
 
 </resources>

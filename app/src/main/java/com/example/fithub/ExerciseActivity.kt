@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.activity_exercise.*
 import java.util.*
 
 
-class ExerciseActivity : AppCompatActivity(), YouTubePlayer.OnInitializedListener {
+class ExerciseActivity : AppCompatActivity(), OnInitializedListener {
 
     var activity = this
     private lateinit var ytplayer: YouTubePlayer
@@ -46,6 +46,8 @@ class ExerciseActivity : AppCompatActivity(), YouTubePlayer.OnInitializedListene
             }
         }
         mHandler = Handler()
+
+
     }
 
     override fun onInitializationSuccess(
@@ -60,7 +62,7 @@ class ExerciseActivity : AppCompatActivity(), YouTubePlayer.OnInitializedListene
             player.play()
         } else {
             var vidId = ""
-            when(intent.getStringExtra("exercise_name")){
+            when (intent.getStringExtra("exercise_name")) {
                 getString(R.string.aerobic_exercise) -> {
                     vidId = getString(R.string._10_min_aerobic_vid)
                     startMillis = 17000
@@ -85,6 +87,7 @@ class ExerciseActivity : AppCompatActivity(), YouTubePlayer.OnInitializedListene
             player.setPlayerStyle(PlayerStyle.CHROMELESS)
             player.setPlayerStateChangeListener(mPlayerStateChangeListener)
             player.setPlaybackEventListener(mPlaybackEventListener)
+            player.fullscreenControlFlags = FULLSCREEN_FLAG_CUSTOM_LAYOUT
         }
     }
 
@@ -127,10 +130,11 @@ class ExerciseActivity : AppCompatActivity(), YouTubePlayer.OnInitializedListene
             }
 
             override fun onVideoEnded() {
-                var intent = Intent(activity, ExerciseCompleteActivity::class.java)
-                intent.putExtra("exercised_time", ytplayer.durationMillis - startMillis)
-                intent.putExtra("burned_calories", totalCalories.toInt())
-                activity.startActivity(intent)
+                val intent2 = Intent(activity, ExerciseCompleteActivity::class.java)
+                intent2.putExtra("exercised_time", ytplayer.durationMillis - startMillis)
+                intent2.putExtra("burned_calories", totalCalories.toInt())
+                intent2.putExtra("exercise_name",intent.getStringExtra("exercise_name"))
+                activity.startActivity(intent2)
             }
 
             override fun onError(p0: ErrorReason?) {
@@ -192,15 +196,16 @@ class ExerciseActivity : AppCompatActivity(), YouTubePlayer.OnInitializedListene
         //TODO weight from database
         val weight = 53.1
         val durationHours = (ytplayer.durationMillis - startMillis) / 1000.0 / 60.0 / 60.0
-        totalCalories = (intent.getDoubleExtra("met_score",1.0) * weight) * durationHours * 1000
+        totalCalories = (intent.getDoubleExtra("met_score", 1.0) * weight) * durationHours * 1000
         val caloriesPerSec = totalCalories / ((ytplayer.durationMillis - startMillis) / 1000)
-        var caloriesNow:Int = (caloriesPerSec * ((ytplayer.currentTimeMillis - startMillis) / 1000)).toInt()
+        var caloriesNow: Int =
+            (caloriesPerSec * ((ytplayer.currentTimeMillis - startMillis) / 1000)).toInt()
         val calStr = java.lang.String.format(
             Locale.UK,
             "%02d cal",
             caloriesNow
         )
-        textViewCaloriesBurntCounter.text =  calStr
+        textViewCaloriesBurntCounter.text = calStr
     }
 }
 

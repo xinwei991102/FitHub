@@ -1,5 +1,6 @@
 package com.example.fithub
 
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.animation.AnimationUtils
@@ -7,6 +8,9 @@ import kotlinx.android.synthetic.main.activity_exercise_complete.*
 import java.util.*
 
 class ExerciseCompleteActivity : AppCompatActivity() {
+
+    private lateinit var pref: SharedPreferences
+    private lateinit var editor: SharedPreferences.Editor
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,8 +25,17 @@ class ExerciseCompleteActivity : AppCompatActivity() {
         setTextViews()
 
         //TODO calculate points
-        var points: Int = (intent.getIntExtra("burned_calories", 0) / 1000).toInt()
+        val points: Int = (intent.getIntExtra("burned_calories", 0) / 1000)
         textViewPointsEarned.text = "$points points"
+
+        pref = applicationContext.getSharedPreferences("MyPref", 0) // 0 - for private mode
+        editor = pref.edit()
+
+        editor.putString("completed_exercise_name",intent.getStringExtra("exercise_name"))
+        val prevPoints = pref.getInt("total_points", 0)
+        val newTotalPoints = prevPoints + points
+        editor.putInt("total_points", newTotalPoints)
+        editor.commit()
     }
 
     private fun setTextViews() {

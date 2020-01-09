@@ -17,6 +17,8 @@ class MainActivity : AppCompatActivity() {
         if (FirebaseAuth.getInstance().currentUser == null) {
             val intent = Intent(this, LogInActivity::class.java)
             startActivity(intent)
+        } else {
+            //TODO get user points from database
         }
 
         val navListener =
