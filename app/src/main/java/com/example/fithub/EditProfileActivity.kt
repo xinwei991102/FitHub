@@ -46,16 +46,14 @@ class EditProfileActivity : AppCompatActivity() {
             ) {
                 //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
-
         }
 
-        name = findViewById<EditText>(R.id.editTextName)
-        gender = findViewById<Spinner>(R.id.spinnerEditGender)
-        height = findViewById<EditText>(R.id.editTextHeight)
-        weight = findViewById<EditText>(R.id.editTextWeight)
+        name = findViewById(R.id.editTextName)
+        gender = findViewById(R.id.spinnerEditGender)
+        height = findViewById(R.id.editTextHeight)
+        weight = findViewById(R.id.editTextWeight)
 
         buttonProfileSave.setOnClickListener {
-
             writeProfile()
         }
 
@@ -74,16 +72,16 @@ class EditProfileActivity : AppCompatActivity() {
 
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     profile = dataSnapshot.getValue(Profile::class.java)!!
-                    editTextName.setText(profile!!.name.toString())
-                    editTextHeight.setText(profile!!.height.toString())
-                    editTextWeight.setText(profile!!.weight.toString())
+                    editTextName.setText(profile.name.toString())
+                    editTextHeight.setText(profile.height.toString())
+                    editTextWeight.setText(profile.weight.toString())
 
-                    var genderDb = profile.gender.toString()
+                    val genderDb = profile.gender.toString()
                     var genderSelect: Int? = 0
-                    if (genderDb.equals("Male")) {
-                        genderSelect = 0
-                    }else{
-                        genderSelect = 1
+                    genderSelect = if (genderDb == "Male") {
+                        0
+                    } else {
+                        1
                     }
                     spinnerEditGender.setSelection(genderSelect)
                 }
@@ -105,7 +103,7 @@ class EditProfileActivity : AppCompatActivity() {
             .addOnCompleteListener {
                 Toast.makeText(
                     applicationContext,
-                    "Profile details edit successfuly",
+                    "Profile details edit successfully",
                     Toast.LENGTH_SHORT
                 ).show()
             }

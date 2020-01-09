@@ -30,10 +30,8 @@ class ProfileFragment:Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        pref = requireContext().getSharedPreferences("MyPref", 0) // 0 - for private mode
-        editor = pref.edit()
-
         val user = FirebaseAuth.getInstance().currentUser
+        pref = requireContext().getSharedPreferences(user?.uid, 0) // 0 - for private mode
 
         buttonLogOut.setOnClickListener{
             FirebaseAuth.getInstance().signOut()
@@ -44,7 +42,6 @@ class ProfileFragment:Fragment() {
         imageButtonEditProfile.setOnClickListener {
             val intent = Intent(requireContext(), EditProfileActivity::class.java)
             requireContext().startActivity(intent)
-
         }
 
         buttonSetting.setOnClickListener {
@@ -66,14 +63,13 @@ class ProfileFragment:Fragment() {
                     textViewWeight_kg.text = profile.weight.toString()
                     textViewUserGender.text = profile.gender.toString()
 
-                    var heightCm = profile.height
-                    var weightKg = profile.weight
-                    var bmi: Double
-                    var heightM = (heightCm/100.0)
-                    var heightSquare = heightM.pow(2)
+                    val heightCm = profile.height
+                    val weightKg = profile.weight
+                    val bmi: Double
+                    val heightM = (heightCm/100.0)
+                    val heightSquare = heightM.pow(2)
 
                     bmi = (weightKg / heightSquare)
-
                     textViewBMI_count.text = String.format("%.1f", bmi)
                 }
 

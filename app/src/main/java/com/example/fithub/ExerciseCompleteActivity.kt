@@ -4,6 +4,7 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.animation.AnimationUtils
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_exercise_complete.*
 import java.util.*
 
@@ -28,7 +29,8 @@ class ExerciseCompleteActivity : AppCompatActivity() {
         val points: Int = (intent.getIntExtra("burned_calories", 0) / 1000)
         textViewPointsEarned.text = "$points points"
 
-        pref = applicationContext.getSharedPreferences("MyPref", 0) // 0 - for private mode
+        val user = FirebaseAuth.getInstance().currentUser
+        pref = applicationContext.getSharedPreferences(user?.uid, 0) // 0 - for private mode
         editor = pref.edit()
 
         val prevPoints = pref.getInt("total_points", 0)

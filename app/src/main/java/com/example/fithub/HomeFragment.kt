@@ -1,29 +1,28 @@
 package com.example.fithub
 
 import android.annotation.TargetApi
-import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.icu.text.SimpleDateFormat
 import android.os.Build
 import android.os.Bundle
-import android.provider.CalendarContract
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.github.sundeepk.compactcalendarview.CompactCalendarView
 import com.github.sundeepk.compactcalendarview.CompactCalendarView.CompactCalendarViewListener
-import com.github.sundeepk.compactcalendarview.EventsContainer
 import com.github.sundeepk.compactcalendarview.domain.Event
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_home.*
-import java.time.LocalDateTime
 import java.util.*
 import kotlin.collections.ArrayList
 
 class HomeFragment:Fragment() {
+    private lateinit var pref: SharedPreferences
+    private lateinit var editor: SharedPreferences.Editor
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -58,7 +57,8 @@ class HomeFragment:Fragment() {
         //set event
         var events = ArrayList<Event>()
         var event:Event
-        val sharedPref: SharedPreferences
+        val user = FirebaseAuth.getInstance().currentUser
+        pref = requireContext().getSharedPreferences(user?.uid, 0) // 0 - for private mode
 
         val workout = 0
 
