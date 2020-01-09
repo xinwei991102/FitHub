@@ -54,13 +54,11 @@ class ProfileFragment:Fragment() {
 
         val database = FirebaseDatabase.getInstance().getReference("Profile")
         var profile: Profile
-
         database.child(user!!.uid)
             .addValueEventListener(object : ValueEventListener {
                 override fun onCancelled(p0: DatabaseError) {
                     //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
                 }
-
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     profile = dataSnapshot.getValue(Profile::class.java)!!
                     textViewProfileName.text = profile.name.toString()
