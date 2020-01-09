@@ -22,7 +22,7 @@ class SignUpActivity : AppCompatActivity() {
     lateinit var image: ImageView
     lateinit var imageUri: Uri
     var downloadUrl = ""
-    
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
