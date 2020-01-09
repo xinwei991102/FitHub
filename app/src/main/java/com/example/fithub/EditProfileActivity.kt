@@ -1,5 +1,6 @@
 package com.example.fithub
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -15,8 +16,6 @@ import android.widget.ArrayAdapter
 import androidx.core.app.ComponentActivity.ExtraData
 import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-
-
 
 
 class EditProfileActivity : AppCompatActivity() {
@@ -60,6 +59,10 @@ class EditProfileActivity : AppCompatActivity() {
             writeProfile()
         }
 
+        buttonProfileCancel.setOnClickListener {
+            finish()
+        }
+
         val database = FirebaseDatabase.getInstance().getReference("Profile")
         var profile: Profile
 
@@ -75,7 +78,14 @@ class EditProfileActivity : AppCompatActivity() {
                     editTextHeight.setText(profile!!.height.toString())
                     editTextWeight.setText(profile!!.weight.toString())
 
-
+                    var genderDb = profile.gender.toString()
+                    var genderSelect: Int? = 0
+                    if (genderDb.equals("Male")) {
+                        genderSelect = 0
+                    }else{
+                        genderSelect = 1
+                    }
+                    spinnerEditGender.setSelection(genderSelect)
                 }
 
             })

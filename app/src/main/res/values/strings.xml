@@ -61,6 +61,9 @@
     <string name="_0_points">0 points</string>
     <string name="keep_it_up">Keep it up!</string>
     <string name="congratulations">Congratulations!</string>
+    <string name="new_password">New Password</string>
+    <string name="confirm_new_password">Confirm New Password</string>
+    <string name="confirm">Confirm</string>
 
 
 </resources>

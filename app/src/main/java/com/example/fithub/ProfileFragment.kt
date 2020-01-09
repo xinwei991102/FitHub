@@ -8,15 +8,23 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
-import kotlinx.android.synthetic.main.activity_exercise_complete.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.fragment_profile.*
+import kotlin.math.pow
 
 
 class ProfileFragment:Fragment() {
     private lateinit var pref: SharedPreferences
     private lateinit var editor: SharedPreferences.Editor
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? =
         inflater.inflate(R.layout.fragment_profile, container, false)
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -36,6 +44,7 @@ class ProfileFragment:Fragment() {
         imageButtonEditProfile.setOnClickListener {
             val intent = Intent(requireContext(), EditProfileActivity::class.java)
             requireContext().startActivity(intent)
+
         }
 
         buttonSetting.setOnClickListener {
@@ -43,6 +52,34 @@ class ProfileFragment:Fragment() {
             requireContext().startActivity(intent)
         }
 
+        val database = FirebaseDatabase.getInstance().getReference("Profile")
+        var profile: Profile
+
+        database.child(user!!.uid)
+            .addValueEventListener(object : ValueEventListener {
+                override fun onCancelled(p0: DatabaseError) {
+                    //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                }
+
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    profile = dataSnapshot.getValue(Profile::class.java)!!
+                    textViewProfileName.text = profile.name.toString()
+                    textViewHeight_cm.text = profile.height.toString()
+                    textViewWeight_kg.text = profile.weight.toString()
+                    textViewUserGender.text = profile.gender.toString()
+
+                    var heightCm = profile.height
+                    var weightKg = profile.weight
+                    var bmi: Double
+                    var heightM = (heightCm/100.0)
+                    var heightSquare = heightM.pow(2)
+
+                    bmi = (weightKg / heightSquare)
+
+                    textViewBMI_count.text = String.format("%.1f", bmi)
+                }
+
+            })
         textViewLevelNum.text = calcLevel().toString()
         textViewPointsNum.text = pref.getInt("total_points",0).toString()
 
@@ -85,6 +122,13 @@ class ProfileFragment:Fragment() {
         }
         return level
     }
+
+    data class Profile(
+        var gender: String? = "",
+        var height: Double = 0.0,
+        var name: String? = "",
+        var weight: Double = 0.0
+    )
 
 
 }
