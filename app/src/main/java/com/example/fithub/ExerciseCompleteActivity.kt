@@ -31,11 +31,11 @@ class ExerciseCompleteActivity : AppCompatActivity() {
         pref = applicationContext.getSharedPreferences("MyPref", 0) // 0 - for private mode
         editor = pref.edit()
 
-        editor.putString("completed_exercise_name",intent.getStringExtra("exercise_name"))
         val prevPoints = pref.getInt("total_points", 0)
         val newTotalPoints = prevPoints + points
         editor.putInt("total_points", newTotalPoints)
-        editor.commit()
+        editor.putString("completed_exercise_name",intent.getStringExtra("exercise_name"))
+        editor.apply()
     }
 
     private fun setTextViews() {
@@ -56,7 +56,6 @@ class ExerciseCompleteActivity : AppCompatActivity() {
         )
         textViewExercisedTime.text = timeStr
         textViewCaloriesCount.text = calStr
-
     }
 
     override fun onResume() {
