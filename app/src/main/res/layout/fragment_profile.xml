@@ -20,7 +20,6 @@
             android:layout_marginStart="19dp"
             android:layout_marginLeft="19dp"
             android:layout_marginTop="33dp"
-            android:text="@string/profile_name"
             android:textSize="30sp" />
 
         <ImageButton
@@ -138,8 +137,7 @@
         <TextView
             android:id="@+id/textViewUserGender"
             style="@style/profileAlignRight"
-            android:layout_below="@+id/linearLayoutProfile"
-            android:text="@string/male" />
+            android:layout_below="@+id/linearLayoutProfile"/>
 
         <View
             style="@style/profileLine"
@@ -154,8 +152,7 @@
         <TextView
             android:id="@+id/textViewHeight_cm"
             style="@style/profileAlignRight"
-            android:layout_below="@+id/textViewUserGender"
-            android:text="@string/height_cm" />
+            android:layout_below="@+id/textViewUserGender" />
 
         <View
             style="@style/profileLine"
@@ -170,8 +167,7 @@
         <TextView
             android:id="@+id/textViewWeight_kg"
             style="@style/profileAlignRight"
-            android:layout_below="@+id/textViewHeight"
-            android:text="@string/weight_kg" />
+            android:layout_below="@+id/textViewHeight"/>
 
         <View
             style="@style/profileLine"
@@ -187,8 +183,7 @@
             android:id="@+id/textViewBMI_count"
             style="@style/profileAlignRight"
             android:layout_below="@+id/textViewWeight"
-            android:layout_marginTop="16dp"
-            android:text="@string/bmiNo" />
+            android:layout_marginTop="16dp"/>
 
         <View
             style="@style/profileLine"
