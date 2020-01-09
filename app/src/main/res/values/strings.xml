@@ -46,11 +46,12 @@
     <string name="keep_it_up">Keep it up!</string>
     <string name="congratulations">Congratulations!</string>
     <string name="Email">Email</string>
-
     <string name="textViewName">Name</string>
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
     <string name="language">Language</string>
     <string name="changePassword">Change Password</string>
-    <string name="daily_calories" />
+    <string name="newPassword">New Password</string>
+    <string name="confirmNewPassword">Confirm New Password</string>
+    <string name="confirm">Confirm</string>
 </resources>
