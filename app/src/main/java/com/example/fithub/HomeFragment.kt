@@ -2,7 +2,6 @@ package com.example.fithub
 
 import android.annotation.TargetApi
 import android.content.Context
-import android.content.SharedPreferences
 import android.graphics.Color
 import android.icu.text.SimpleDateFormat
 import android.os.Build
@@ -58,8 +57,6 @@ class HomeFragment:Fragment() {
         //set event
         var events = ArrayList<Event>()
         var event:Event
-        val sharedPref: SharedPreferences
-
         val workout = 0
 
         //TODO - loop to add more event
