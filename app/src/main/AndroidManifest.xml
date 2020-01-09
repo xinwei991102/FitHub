@@ -15,7 +15,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".SettingActivity"></activity>
+        <activity android:name=".ChangePasswordActivity"></activity>
+        <activity android:name=".SettingActivity" />
         <activity
             android:name=".ExerciseCompleteActivity"
             android:label="@string/exercise"
@@ -37,7 +38,7 @@
         <activity
             android:name=".SignUpActivity"
             android:label="@string/signupdetails" />
-        <activity android:name=".EditProfileActivity"></activity>
+        <activity android:name=".EditProfileActivity" />
     </application>
 
 </manifest>

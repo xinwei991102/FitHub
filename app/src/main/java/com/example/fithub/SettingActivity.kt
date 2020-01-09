@@ -12,7 +12,8 @@ class SettingActivity : AppCompatActivity() {
         setContentView(R.layout.activity_setting)
 
         textViewChangePassword.setOnClickListener {
-
+            val intent = Intent(this,  ChangePasswordActivity::class.java)
+            startActivity(intent)
         }
     }
 
