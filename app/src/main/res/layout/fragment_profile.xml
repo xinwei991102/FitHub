@@ -55,7 +55,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/textViewLevel"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@drawable/ic_fitness_center_black_100dp" />
+                tools:srcCompat="@drawable/ic_child_face" />
 
             <TextView
                 android:id="@+id/textViewLevel"

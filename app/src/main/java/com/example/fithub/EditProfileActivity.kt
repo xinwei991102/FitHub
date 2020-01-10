@@ -1,33 +1,42 @@
 package com.example.fithub
 
+import android.app.Activity
+import android.app.Application
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.net.Uri
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.View
-import android.widget.*
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.storage.FirebaseStorage
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_edit_profile.*
-import kotlinx.android.synthetic.main.activity_edit_profile.view.*
-import android.widget.ArrayAdapter
-import androidx.core.app.ComponentActivity.ExtraData
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-
 
 class EditProfileActivity : AppCompatActivity() {
 
-    lateinit var name: EditText
-    lateinit var gender: Spinner
-    lateinit var height: EditText
-    lateinit var weight: EditText
+    lateinit var imageUri: Uri
+    var oldDownloadUrl = ""
+    var newDownloadUrl = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_profile)
+        // my_child_toolbar is defined in the layout file
+        setSupportActionBar(findViewById(R.id.my_child_toolbar))
+
+        // Get a support ActionBar corresponding to this toolbar and enable the Up button
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = intent.getStringExtra("exercise_name")
+
+        val context = this
 
         val genderArr = arrayOf("Male", "Female")
         spinnerEditGender.adapter =
@@ -46,21 +55,42 @@ class EditProfileActivity : AppCompatActivity() {
             ) {
                 //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
-
         }
 
-        name = findViewById<EditText>(R.id.editTextName)
-        gender = findViewById<Spinner>(R.id.spinnerEditGender)
-        height = findViewById<EditText>(R.id.editTextHeight)
-        weight = findViewById<EditText>(R.id.editTextWeight)
-
         buttonProfileSave.setOnClickListener {
+            var isValid = true
 
-            writeProfile()
+            if (TextUtils.isEmpty(editTextName.text.toString().trim())) {
+                isValid = false
+                editTextName.error = "This field cannot be empty"
+            }
+
+            if (TextUtils.isEmpty(editTextHeight.text.toString().trim())) {
+                isValid = false
+                editTextHeight.error = "This field cannot be empty"
+            }
+
+            if (TextUtils.isEmpty(editTextWeight.text.toString().trim())) {
+                isValid = false
+                editTextWeight.error = "This field cannot be empty"
+            }
+
+            if(isValid){
+                writeProfile()
+                finish()
+            }
+
         }
 
         buttonProfileCancel.setOnClickListener {
             finish()
+        }
+
+        imageViewEditProfilePic.setOnClickListener {
+            val intent = Intent()
+            intent.type = "image/*"
+            intent.action = Intent.ACTION_GET_CONTENT
+            startActivityForResult(intent, SignUpActivity.PICK_IMAGE_REQUEST)
         }
 
         val database = FirebaseDatabase.getInstance().getReference("Profile")
@@ -69,53 +99,113 @@ class EditProfileActivity : AppCompatActivity() {
         database.child(FirebaseAuth.getInstance().currentUser!!.uid)
             .addValueEventListener(object : ValueEventListener {
                 override fun onCancelled(p0: DatabaseError) {
-                    //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                    Toast.makeText(context, p0.message, Toast.LENGTH_LONG).show()
                 }
 
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    //update fields from firebase
                     profile = dataSnapshot.getValue(Profile::class.java)!!
-                    editTextName.setText(profile!!.name.toString())
-                    editTextHeight.setText(profile!!.height.toString())
-                    editTextWeight.setText(profile!!.weight.toString())
+                    editTextName.setText(profile.name.toString())
+                    editTextHeight.setText(profile.height.toString())
+                    editTextWeight.setText(profile.weight.toString())
+                    oldDownloadUrl = profile.downloadUrl
+                    Picasso.get().load(oldDownloadUrl).placeholder(R.drawable.ic_child_face)
+                        .into(imageViewEditProfilePic)
 
-                    var genderDb = profile.gender.toString()
+                    val genderDb = profile.gender.toString()
                     var genderSelect: Int? = 0
-                    if (genderDb.equals("Male")) {
-                        genderSelect = 0
-                    }else{
-                        genderSelect = 1
+                    genderSelect = if (genderDb == "Male") {
+                        0
+                    } else {
+                        1
                     }
                     spinnerEditGender.setSelection(genderSelect)
                 }
-
             })
+    }
 
+    private fun uploadImage() {
+        val storage = FirebaseStorage.getInstance()
+        val storageRef = storage.reference
+        val file = imageUri
+        val imagesRef = storageRef.child("images/${file.lastPathSegment}")
+        val uploadTask = imagesRef.putFile(file)
+        var downloadUri: Uri
+
+        val urlTask = uploadTask.continueWithTask { task ->
+            if (!task.isSuccessful) {
+                Toast.makeText(applicationContext, task.exception?.message, Toast.LENGTH_SHORT)
+                    .show()
+            }
+            imagesRef.downloadUrl
+        }.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                downloadUri = task.result!!
+                newDownloadUrl = downloadUri.toString()
+            } else {
+                Toast.makeText(applicationContext, task.exception?.message, Toast.LENGTH_SHORT)
+                    .show()
+            }
+        }
+
+//
+//        // Register observers to listen for when the download is done or if it fails
+//        uploadTask.addOnFailureListener {
+//            Toast.makeText(applicationContext, it.message, Toast.LENGTH_SHORT).show()
+//        }.addOnSuccessListener {
+//            // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
+//            // ...
+//        }.addOnCompleteListener {
+//            if (uploadTask.isSuccessful) {
+//                newDownloadUrl = imagesRef.downloadUrl.toString()
+//            }
+//        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == SignUpActivity.PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.data != null) {
+            //Get back uri of the image picked
+            imageUri = data.data!!
+            //load picture to image view
+            Picasso.get().load(imageUri).into(imageViewEditProfilePic)
+            uploadImage()
+        }
     }
 
     private fun writeProfile() {
-
         val database = FirebaseDatabase.getInstance().getReference("Profile")
-        val name = name.text.toString()
-        val gender = gender.spinnerEditGender.selectedItem.toString()
-        val height = height.text.toString().toDouble()
-        val weight = weight.text.toString().toDouble()
+        val name = editTextName.text.toString()
+        val gender = spinnerEditGender.selectedItem.toString()
+        val height = editTextHeight.text.toString().toDouble()
+        val weight = editTextWeight.text.toString().toDouble()
 
-        val profile = Profile(gender, height, name, weight)
+        //get and store points
+        val user = FirebaseAuth.getInstance().currentUser
+        val pref = this.getSharedPreferences(user?.uid, 0) // 0 - for private mode
+        val points = pref.getInt("total_points", 0)
+
+        val profile: Profile
+        profile = if (newDownloadUrl.isNotEmpty()) {
+            Profile(name, gender, height, weight, newDownloadUrl, points)
+        } else {
+            Profile(name, gender, height, weight, oldDownloadUrl, points)
+        }
+
         database.child(FirebaseAuth.getInstance().currentUser!!.uid).setValue(profile)
-            .addOnCompleteListener {
-                Toast.makeText(
-                    applicationContext,
-                    "Profile details edit successfuly",
-                    Toast.LENGTH_SHORT
-                ).show()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Toast.makeText(
+                        applicationContext,
+                        "Profile details edit successfully",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    Toast.makeText(applicationContext, task.exception?.message, Toast.LENGTH_LONG)
+                        .show()
+                }
+
             }
     }
 }
-
-data class Profile(
-    var gender: String? = "",
-    var height: Double = 0.0,
-    var name: String? = "",
-    var weight: Double = 0.0
-)
 

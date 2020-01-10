@@ -1,58 +1,71 @@
 package com.example.fithub
 
+import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_profile.*
-import java.net.URI
-import java.net.URL
 import kotlin.math.pow
-
 
 class ProfileFragment:Fragment() {
     private lateinit var pref: SharedPreferences
-    private lateinit var editor: SharedPreferences.Editor
+    private lateinit var thisContext:Context
+    private lateinit var textViewProfileName: TextView
+    private lateinit var textViewHeightCm:TextView
+    private lateinit var textViewWeightKg:TextView
+    private lateinit var textViewUserGender:TextView
+    private lateinit var imageViewProfilePic:ImageView
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? =
-        inflater.inflate(R.layout.fragment_profile, container, false)
+    ): View? {
+
+        val view = inflater.inflate(R.layout.fragment_profile, container, false)
+
+        //TODO getViewByID
+        textViewProfileName = view.findViewById(R.id.textViewProfileName)
+        textViewHeightCm = view.findViewById(R.id.textViewHeight_cm)
+        textViewWeightKg = view.findViewById(R.id.textViewWeight_kg)
+        textViewUserGender = view.findViewById(R.id.textViewUserGender)
+        imageViewProfilePic = view.findViewById(R.id.imageViewProfilePic)
+        return view
+    }
+
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-        pref = requireContext().getSharedPreferences("MyPref", 0) // 0 - for private mode
-        editor = pref.edit()
+        thisContext = requireContext()
 
         val user = FirebaseAuth.getInstance().currentUser
+        pref = requireContext().getSharedPreferences(user?.uid, 0) // 0 - for private mode
 
         buttonLogOut.setOnClickListener{
             FirebaseAuth.getInstance().signOut()
-            val intent = Intent(requireContext(),LogInActivity::class.java)
-            requireContext().startActivity(intent)
         }
 
         imageButtonEditProfile.setOnClickListener {
             val intent = Intent(requireContext(), EditProfileActivity::class.java)
             requireContext().startActivity(intent)
-
         }
 
         buttonChangePassword.setOnClickListener {
-            val intent = Intent(requireContext(), ChangePasswordActivity::class.java)
-            requireContext().startActivity(intent)
+            val intent = Intent(requireContext(),  ChangePasswordActivity::class.java)
+            startActivity(intent)
         }
 
         val database = FirebaseDatabase.getInstance().getReference("Profile")
@@ -60,26 +73,26 @@ class ProfileFragment:Fragment() {
         database.child(user!!.uid)
             .addValueEventListener(object : ValueEventListener {
                 override fun onCancelled(p0: DatabaseError) {
-                    //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                    Toast.makeText(thisContext,p0.message,Toast.LENGTH_LONG)
                 }
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     profile = dataSnapshot.getValue(Profile::class.java)!!
-                    textViewProfileName.text = profile.name.toString()
-                    textViewHeight_cm.text = profile.height.toString()
-                    textViewWeight_kg.text = profile.weight.toString()
-                    textViewUserGender.text = profile.gender.toString()
+                    textViewProfileName.text = profile.name
+                    textViewHeightCm.text = profile.height.toString()
+                    textViewWeightKg.text = profile.weight.toString()
+                    textViewUserGender.text = profile.gender
+                    //textViewPointsNum.text = profile.points.toString()
+                    Picasso.get().load(profile.downloadUrl).placeholder(R.drawable.ic_child_face).into(imageViewProfilePic)
 
-                    var heightCm = profile.height
-                    var weightKg = profile.weight
-                    var bmi: Double
-                    var heightM = (heightCm/100.0)
-                    var heightSquare = heightM.pow(2)
+                    val heightCm = profile.height
+                    val weightKg = profile.weight
+                    val bmi: Double
+                    val heightM = (heightCm/100.0)
+                    val heightSquare = heightM.pow(2)
 
                     bmi = (weightKg / heightSquare)
-
                     textViewBMI_count.text = String.format("%.1f", bmi)
                 }
-
             })
         textViewLevelNum.text = calcLevel().toString()
         textViewPointsNum.text = pref.getInt("total_points",0).toString()
@@ -123,13 +136,6 @@ class ProfileFragment:Fragment() {
         }
         return level
     }
-
-    data class Profile(
-        var gender: String? = "",
-        var height: Double = 0.0,
-        var name: String? = "",
-        var weight: Double = 0.0
-    )
 
 
 }

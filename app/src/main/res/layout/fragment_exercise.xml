@@ -33,6 +33,14 @@
             android:layout_below="@id/buttonArm"
             android:background="@drawable/leg_button"
             android:text="@string/leg_exercise"
+            />
+
+        <Button
+            android:id="@+id/buttonTest"
+            style="@style/ExerciseButton"
+            android:layout_below="@id/buttonLeg"
+            android:background="@drawable/leg_button"
+            android:text="@string/testing_exercise"
             android:layout_marginBottom="32dp"/>
 
     </RelativeLayout>

@@ -14,12 +14,6 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_sign_up.*
 
 class SignUpActivity : AppCompatActivity() {
-
-    lateinit var username: EditText
-    lateinit var gender: Spinner
-    lateinit var height: EditText
-    lateinit var weight: EditText
-    lateinit var image: ImageView
     lateinit var imageUri: Uri
     var downloadUrl = ""
 
@@ -33,9 +27,8 @@ class SignUpActivity : AppCompatActivity() {
             ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, genderSelection)
 
         spinnerGender.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                //TODO: hello
+                //TODO
             }
 
             override fun onItemSelected(
@@ -48,7 +41,7 @@ class SignUpActivity : AppCompatActivity() {
         }
 
         imageViewProfilePic.setOnClickListener {
-            var intent = Intent()
+            val intent = Intent()
             intent.type = "image/*"
             intent.action = Intent.ACTION_GET_CONTENT
             startActivityForResult(intent, PICK_IMAGE_REQUEST)
@@ -61,27 +54,41 @@ class SignUpActivity : AppCompatActivity() {
 
     private fun uploadImage() {
         val storage = FirebaseStorage.getInstance()
-        var storageRef = storage.reference
-        var file = imageUri
+        val storageRef = storage.reference
+        val file = imageUri
         val imagesRef = storageRef.child("images/${file.lastPathSegment}")
-        var uploadTask = imagesRef.putFile(file)
+        val uploadTask = imagesRef.putFile(file)
+        var downloadUri:Uri
 
-        // Register observers to listen for when the download is done or if it fails
-        uploadTask.addOnFailureListener {
-            Toast.makeText(applicationContext, it.message, Toast.LENGTH_SHORT).show()
-        }.addOnSuccessListener {
-            // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
-            // ...
-        }.addOnCompleteListener{
-            if(uploadTask.isSuccessful){
-                 downloadUrl = imagesRef.downloadUrl.toString()
+        val urlTask = uploadTask.continueWithTask { task ->
+            if (!task.isSuccessful) {
+                Toast.makeText(applicationContext, task.exception?.message, Toast.LENGTH_SHORT).show()
+            }
+            imagesRef.downloadUrl
+        }.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                downloadUri = task.result!!
+                downloadUrl = downloadUri.toString()
+            } else {
+                Toast.makeText(applicationContext, task.exception?.message, Toast.LENGTH_SHORT).show()
             }
         }
+
+        // Register observers to listen for when the download is done or if it fails
+//        uploadTask.addOnFailureListener {
+//            Toast.makeText(applicationContext, it.message, Toast.LENGTH_SHORT).show()
+//        }.addOnSuccessListener {
+//            // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
+//            // ...
+//        }.addOnCompleteListener {
+//            if (uploadTask.isSuccessful) {
+//                downloadUrl = imagesRef.downloadUrl.toString()
+//            }
+//        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.data != null) {
             //Get back uri of the image picked
             imageUri = data.data!!
@@ -90,7 +97,6 @@ class SignUpActivity : AppCompatActivity() {
             uploadImage()
         }
     }
-
 
     private fun saveDataToFirebase() {
         //Get reference from data table Profile
@@ -101,9 +107,10 @@ class SignUpActivity : AppCompatActivity() {
         val gender = spinnerGender.selectedItem.toString()
         val height = editTextHeight.text.toString().toDouble()
         val weight = editTextWeight.text.toString().toDouble()
+        val points = 0
 
         //val id =ref.push().key
-        val user = User(name, gender, height, weight, downloadUrl)
+        val user = Profile(name, gender, height, weight, downloadUrl, points)
         ref.child(FirebaseAuth.getInstance().currentUser!!.uid).setValue(user)
             .addOnCompleteListener {
                 Toast.makeText(
@@ -121,8 +128,6 @@ class SignUpActivity : AppCompatActivity() {
     }
 
 }
-
-class User(val name: String, val gender: String, val height: Double, val weight: Double, val imageUri:  String)
 
 
 
