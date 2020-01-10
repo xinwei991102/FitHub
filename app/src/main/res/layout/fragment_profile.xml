@@ -55,7 +55,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/textViewLevel"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@drawable/ic_fitness_center_black_100dp" />
+                tools:srcCompat="@drawable/ic_child_face" />
 
             <TextView
                 android:id="@+id/textViewLevel"
@@ -199,12 +199,12 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/buttonSetting"
+                android:id="@+id/buttonChangePassword"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="32dp"
                 android:layout_marginRight="32dp"
-                android:text="@string/setting" />
+                android:text="@string/changePassword" />
 
             <Button
                 android:id="@+id/buttonLogOut"

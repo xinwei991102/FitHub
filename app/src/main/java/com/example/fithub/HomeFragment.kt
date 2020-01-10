@@ -31,7 +31,7 @@ class HomeFragment:Fragment() {
 
     //array
     private val eventColor = arrayOf(Color.BLUE, Color.RED, Color.CYAN, Color.GREEN)
-    private val eventData = arrayOf("Aerobic Exercise", "Core Exercise", "Arm Exercise", "Leg Exercise")
+    //private val eventData = arrayOf("Aerobic Exercise", "Core Exercise", "Arm Exercise", "Leg Exercise")
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -62,44 +62,41 @@ class HomeFragment:Fragment() {
         textViewMonth.text = dateFormatMonth.format(c.time)
 
         //set event
-        var events = ArrayList<Event>()
-        var event:Event
+        val events = ArrayList<Event>()
+        val event:Event
         val user = FirebaseAuth.getInstance().currentUser
         pref = requireContext().getSharedPreferences(user?.uid, 0) // 0 - for private mode
         var workout = 0
         editor = pref.edit()
-
+        var eventData =""
         if(pref.getString("completed_exercise_name", "").isNotEmpty()){
             when (pref.getString("completed_exercise_name", "")) {
                 getString(R.string.aerobic_exercise) -> {
                     workout = 0  //0 aerobic exercise
+                    eventData = getString(R.string.aerobic_exercise)
                 }
                 getString(R.string.core_exercise) -> {
                     workout = 1  //1 core exercise
+                    eventData = getString(R.string.core_exercise)
                 }
                 getString(R.string.arm_exercise) -> {
                     workout = 2 //2 arm exercise
+                    eventData = getString(R.string.arm_exercise)
                 }
                 getString(R.string.leg_exercise) -> {
                     workout = 3  //3 leg exercise
+                    eventData = getString(R.string.leg_exercise)
                 }
+                getString(R.string.testing_exercise) -> {
+                    eventData = getString(R.string.testing_exercise)
+                }
+
             }
-            event = Event(eventColor[workout], currentTimeInLong, eventData[workout])
+            event = Event(eventColor[workout], currentTimeInLong, eventData)
             events.add(event)
-            editor.clear()
+            editor.remove("completed_exercise_name")
             editor.apply()
         }
-        //test data
-        /*
-        event = Event(eventColor[workout], currentTimeInLong, eventData[workout])
-        events.add(event)
-        event = Event(eventColor[1], currentTimeInLong, eventData[1])
-        events.add(event)
-        event = Event(eventColor[2], currentTimeInLong, eventData[2])
-        events.add(event)
-        event = Event(eventColor[3], currentTimeInLong, eventData[3])
-        events.add(event)
-        */
 
         compactCalendar.addEvents(events)
 

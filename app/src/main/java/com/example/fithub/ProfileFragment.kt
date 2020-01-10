@@ -1,11 +1,13 @@
 package com.example.fithub
 
+import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -18,7 +20,7 @@ import kotlin.math.pow
 
 class ProfileFragment:Fragment() {
     private lateinit var pref: SharedPreferences
-    private lateinit var editor: SharedPreferences.Editor
+    private lateinit var thisContext:Context
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,6 +31,7 @@ class ProfileFragment:Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        thisContext = requireContext()
 
         val user = FirebaseAuth.getInstance().currentUser
         pref = requireContext().getSharedPreferences(user?.uid, 0) // 0 - for private mode
@@ -42,9 +45,9 @@ class ProfileFragment:Fragment() {
             requireContext().startActivity(intent)
         }
 
-        buttonSetting.setOnClickListener {
-            val intent = Intent(requireContext(), SettingActivity::class.java)
-            requireContext().startActivity(intent)
+        buttonChangePassword.setOnClickListener {
+            val intent = Intent(requireContext(),  ChangePasswordActivity::class.java)
+            startActivity(intent)
         }
 
         val database = FirebaseDatabase.getInstance().getReference("Profile")
@@ -52,7 +55,7 @@ class ProfileFragment:Fragment() {
         database.child(user!!.uid)
             .addValueEventListener(object : ValueEventListener {
                 override fun onCancelled(p0: DatabaseError) {
-                    //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                    Toast.makeText(thisContext,p0.message,Toast.LENGTH_LONG)
                 }
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     profile = dataSnapshot.getValue(Profile::class.java)!!
@@ -60,8 +63,8 @@ class ProfileFragment:Fragment() {
                     textViewHeight_cm.text = profile.height.toString()
                     textViewWeight_kg.text = profile.weight.toString()
                     textViewUserGender.text = profile.gender
-                    textViewPointsNum.text = profile.points.toString()
-                    Picasso.get().load(profile.downloadUrl).into(imageViewProfilePic)
+                    //textViewPointsNum.text = profile.points.toString()
+                    Picasso.get().load(profile.downloadUrl).placeholder(R.drawable.ic_child_face).into(imageViewProfilePic)
 
                     val heightCm = profile.height
                     val weightKg = profile.weight

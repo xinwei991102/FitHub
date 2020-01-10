@@ -48,5 +48,13 @@ class ExerciseFragment:Fragment() {
             intent.putExtra("met_score", 4.0)
             requireContext().startActivity(intent)
         }
+
+        buttonTest.setOnClickListener {
+            it.startAnimation(AnimationUtils.loadAnimation(requireContext(),R.anim.bounce_anim_quick))
+            var intent = Intent(requireContext(), ExerciseActivity::class.java)
+            intent.putExtra("exercise_name",getString(R.string.testing_exercise))
+            intent.putExtra("met_score", 100.0)
+            requireContext().startActivity(intent)
+        }
     }
 }

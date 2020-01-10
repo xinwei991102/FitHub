@@ -58,18 +58,33 @@ class SignUpActivity : AppCompatActivity() {
         val file = imageUri
         val imagesRef = storageRef.child("images/${file.lastPathSegment}")
         val uploadTask = imagesRef.putFile(file)
+        var downloadUri:Uri
 
-        // Register observers to listen for when the download is done or if it fails
-        uploadTask.addOnFailureListener {
-            Toast.makeText(applicationContext, it.message, Toast.LENGTH_SHORT).show()
-        }.addOnSuccessListener {
-            // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
-            // ...
-        }.addOnCompleteListener {
-            if (uploadTask.isSuccessful) {
-                downloadUrl = imagesRef.downloadUrl.toString()
+        val urlTask = uploadTask.continueWithTask { task ->
+            if (!task.isSuccessful) {
+                Toast.makeText(applicationContext, task.exception?.message, Toast.LENGTH_SHORT).show()
+            }
+            imagesRef.downloadUrl
+        }.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                downloadUri = task.result!!
+                downloadUrl = downloadUri.toString()
+            } else {
+                Toast.makeText(applicationContext, task.exception?.message, Toast.LENGTH_SHORT).show()
             }
         }
+
+        // Register observers to listen for when the download is done or if it fails
+//        uploadTask.addOnFailureListener {
+//            Toast.makeText(applicationContext, it.message, Toast.LENGTH_SHORT).show()
+//        }.addOnSuccessListener {
+//            // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
+//            // ...
+//        }.addOnCompleteListener {
+//            if (uploadTask.isSuccessful) {
+//                downloadUrl = imagesRef.downloadUrl.toString()
+//            }
+//        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

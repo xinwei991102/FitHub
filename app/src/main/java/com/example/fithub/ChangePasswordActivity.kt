@@ -12,6 +12,12 @@ class ChangePasswordActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_change_password)
+        // my_child_toolbar is defined in the layout file
+        setSupportActionBar(findViewById(R.id.my_child_toolbar))
+
+        // Get a support ActionBar corresponding to this toolbar and enable the Up button
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = intent.getStringExtra("exercise_name")
 
         buttonConfirm.setOnClickListener {
             changePassword()

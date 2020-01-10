@@ -24,8 +24,6 @@ class MainActivity : AppCompatActivity() {
         if (FirebaseAuth.getInstance().currentUser == null) {
             val intent = Intent(this, LogInActivity::class.java)
             startActivity(intent)
-        } else {
-            //TODO get user points from database
         }
 
         val navListener =
@@ -65,6 +63,7 @@ class MainActivity : AppCompatActivity() {
                 false
             }
         bottom_navigation.setOnNavigationItemSelectedListener(navListener)
+
         if (savedInstanceState == null) {
             val fragment = HomeFragment()
             supportFragmentManager.beginTransaction()
@@ -73,8 +72,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onPause() {
-        super.onPause()
+    override fun onDestroy() {
+        super.onDestroy()
         if (FirebaseAuth.getInstance().currentUser != null)
             writeProfile()
     }
@@ -87,7 +86,7 @@ class MainActivity : AppCompatActivity() {
         database.child(user!!.uid).addValueEventListener(object :
             ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
-                //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                Toast.makeText(applicationContext,p0.message, Toast.LENGTH_LONG).show()
             }
 
             override fun onDataChange(dataSnapshot: DataSnapshot) {

@@ -28,6 +28,13 @@ class EditProfileActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_profile)
+        // my_child_toolbar is defined in the layout file
+        setSupportActionBar(findViewById(R.id.my_child_toolbar))
+
+        // Get a support ActionBar corresponding to this toolbar and enable the Up button
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = intent.getStringExtra("exercise_name")
+
         val context = this
 
         val genderArr = arrayOf("Male", "Female")
@@ -78,7 +85,7 @@ class EditProfileActivity : AppCompatActivity() {
                     editTextHeight.setText(profile.height.toString())
                     editTextWeight.setText(profile.weight.toString())
                     oldDownloadUrl = profile.downloadUrl
-                    Picasso.get().load(oldDownloadUrl).into(imageViewEditProfilePic)
+                    Picasso.get().load(oldDownloadUrl).placeholder(R.drawable.ic_child_face).into(imageViewEditProfilePic)
 
                     val genderDb = profile.gender.toString()
                     var genderSelect: Int? = 0
@@ -90,7 +97,6 @@ class EditProfileActivity : AppCompatActivity() {
                     spinnerEditGender.setSelection(genderSelect)
                 }
             })
-
     }
 
     private fun uploadImage() {
@@ -99,18 +105,34 @@ class EditProfileActivity : AppCompatActivity() {
         val file = imageUri
         val imagesRef = storageRef.child("images/${file.lastPathSegment}")
         val uploadTask = imagesRef.putFile(file)
+        var downloadUri:Uri
 
-        // Register observers to listen for when the download is done or if it fails
-        uploadTask.addOnFailureListener {
-            Toast.makeText(applicationContext, it.message, Toast.LENGTH_SHORT).show()
-        }.addOnSuccessListener {
-            // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
-            // ...
-        }.addOnCompleteListener {
-            if (uploadTask.isSuccessful) {
-                newDownloadUrl = imagesRef.downloadUrl.toString()
+        val urlTask = uploadTask.continueWithTask { task ->
+            if (!task.isSuccessful) {
+                Toast.makeText(applicationContext, task.exception?.message, Toast.LENGTH_SHORT).show()
+            }
+            imagesRef.downloadUrl
+        }.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                downloadUri = task.result!!
+                newDownloadUrl = downloadUri.toString()
+            } else {
+                Toast.makeText(applicationContext, task.exception?.message, Toast.LENGTH_SHORT).show()
             }
         }
+
+//
+//        // Register observers to listen for when the download is done or if it fails
+//        uploadTask.addOnFailureListener {
+//            Toast.makeText(applicationContext, it.message, Toast.LENGTH_SHORT).show()
+//        }.addOnSuccessListener {
+//            // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
+//            // ...
+//        }.addOnCompleteListener {
+//            if (uploadTask.isSuccessful) {
+//                newDownloadUrl = imagesRef.downloadUrl.toString()
+//            }
+//        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
