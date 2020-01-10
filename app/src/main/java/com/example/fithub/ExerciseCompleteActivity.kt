@@ -26,7 +26,6 @@ class ExerciseCompleteActivity : AppCompatActivity() {
         }
         setTextViews()
 
-        //TODO calculate points
         val points: Int = (intent.getIntExtra("burned_calories", 0) / 1000)
         textViewPointsEarned.text = "$points points"
 

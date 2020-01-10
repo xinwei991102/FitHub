@@ -5,21 +5,28 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.youtube.player.YouTubeInitializationResult
 import com.google.android.youtube.player.YouTubePlayer
 import com.google.android.youtube.player.YouTubePlayer.*
 import com.google.android.youtube.player.YouTubePlayerSupportFragment
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_exercise.*
 import java.util.*
 
 class ExerciseActivity : AppCompatActivity(), OnInitializedListener {
 
-    var activity = this
+    var context = this
     private lateinit var ytplayer: YouTubePlayer
     private lateinit var mHandler: Handler
     private var startMillis: Int = 0
     private var totalCalories: Double = 0.0
+    var weight = 0.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +52,21 @@ class ExerciseActivity : AppCompatActivity(), OnInitializedListener {
             }
         }
         mHandler = Handler()
+
+        val user = FirebaseAuth.getInstance().currentUser
+        val database = FirebaseDatabase.getInstance().getReference("Profile")
+        var profile: Profile
+        weight = 0.0
+        database.child(user!!.uid)
+            .addValueEventListener(object : ValueEventListener {
+                override fun onCancelled(p0: DatabaseError) {
+                    Toast.makeText(context, p0.message, Toast.LENGTH_LONG).show()
+                }
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    profile = dataSnapshot.getValue(Profile::class.java)!!
+                    weight = profile.weight
+                }
+            })
     }
 
     override fun onInitializationSuccess(
@@ -126,11 +148,11 @@ class ExerciseActivity : AppCompatActivity(), OnInitializedListener {
             }
 
             override fun onVideoEnded() {
-                val intent2 = Intent(activity, ExerciseCompleteActivity::class.java)
+                val intent2 = Intent(context, ExerciseCompleteActivity::class.java)
                 intent2.putExtra("exercised_time", ytplayer.durationMillis - startMillis)
                 intent2.putExtra("burned_calories", totalCalories.toInt())
                 intent2.putExtra("exercise_name",intent.getStringExtra("exercise_name"))
-                activity.startActivity(intent2)
+                context.startActivity(intent2)
             }
 
             override fun onError(p0: ErrorReason?) {
@@ -189,8 +211,6 @@ class ExerciseActivity : AppCompatActivity(), OnInitializedListener {
     }
 
     private fun displayCurrentCalories() {
-        //TODO weight from database
-        val weight = 53.1
         val durationHours = (ytplayer.durationMillis - startMillis) / 1000.0 / 60.0 / 60.0
         totalCalories = (intent.getDoubleExtra("met_score", 1.0) * weight) * durationHours * 1000
         val caloriesPerSec = totalCalories / ((ytplayer.durationMillis - startMillis) / 1000)

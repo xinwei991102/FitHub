@@ -28,6 +28,7 @@ class ProfileFragment:Fragment() {
     private lateinit var textViewWeightKg:TextView
     private lateinit var textViewUserGender:TextView
     private lateinit var imageViewProfilePic:ImageView
+    private lateinit var textViewBMICount:TextView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,12 +38,12 @@ class ProfileFragment:Fragment() {
 
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
 
-        //TODO getViewByID
         textViewProfileName = view.findViewById(R.id.textViewProfileName)
         textViewHeightCm = view.findViewById(R.id.textViewHeight_cm)
         textViewWeightKg = view.findViewById(R.id.textViewWeight_kg)
         textViewUserGender = view.findViewById(R.id.textViewUserGender)
         imageViewProfilePic = view.findViewById(R.id.imageViewProfilePic)
+        textViewBMICount = view.findViewById(R.id.textViewBMI_count)
         return view
     }
 
@@ -67,7 +68,6 @@ class ProfileFragment:Fragment() {
             val intent = Intent(requireContext(),  ChangePasswordActivity::class.java)
             startActivity(intent)
         }
-
         val database = FirebaseDatabase.getInstance().getReference("Profile")
         var profile: Profile
         database.child(user!!.uid)
@@ -83,15 +83,13 @@ class ProfileFragment:Fragment() {
                     textViewUserGender.text = profile.gender
                     //textViewPointsNum.text = profile.points.toString()
                     Picasso.get().load(profile.downloadUrl).placeholder(R.drawable.ic_child_face).into(imageViewProfilePic)
-
                     val heightCm = profile.height
                     val weightKg = profile.weight
                     val bmi: Double
                     val heightM = (heightCm/100.0)
                     val heightSquare = heightM.pow(2)
-
                     bmi = (weightKg / heightSquare)
-                    textViewBMI_count.text = String.format("%.1f", bmi)
+                    textViewBMICount.text = String.format("%.1f", bmi)
                 }
             })
         textViewLevelNum.text = calcLevel().toString()

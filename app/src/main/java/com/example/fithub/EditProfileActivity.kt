@@ -46,7 +46,6 @@ class EditProfileActivity : AppCompatActivity() {
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
-
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,
@@ -101,7 +100,6 @@ class EditProfileActivity : AppCompatActivity() {
                 override fun onCancelled(p0: DatabaseError) {
                     Toast.makeText(context, p0.message, Toast.LENGTH_LONG).show()
                 }
-
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     //update fields from firebase
                     profile = dataSnapshot.getValue(Profile::class.java)!!

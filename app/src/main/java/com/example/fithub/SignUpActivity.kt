@@ -30,7 +30,6 @@ class SignUpActivity : AppCompatActivity() {
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 //TODO
             }
-
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,
