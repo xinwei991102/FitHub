@@ -96,7 +96,6 @@ class ProfileFragment:Fragment() {
             })
         textViewLevelNum.text = calcLevel().toString()
         textViewPointsNum.text = pref.getInt("total_points",0).toString()
-
     }
 
     private fun calcLevel(): Int {

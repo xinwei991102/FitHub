@@ -13,7 +13,6 @@ import com.google.android.youtube.player.YouTubePlayerSupportFragment
 import kotlinx.android.synthetic.main.activity_exercise.*
 import java.util.*
 
-
 class ExerciseActivity : AppCompatActivity(), OnInitializedListener {
 
     var activity = this
@@ -46,8 +45,6 @@ class ExerciseActivity : AppCompatActivity(), OnInitializedListener {
             }
         }
         mHandler = Handler()
-
-
     }
 
     override fun onInitializationSuccess(
@@ -66,9 +63,6 @@ class ExerciseActivity : AppCompatActivity(), OnInitializedListener {
                 getString(R.string.aerobic_exercise) -> {
                     vidId = getString(R.string._10_min_aerobic_vid)
                     startMillis = 17000
-                    //placeholder
-                    //vidId = getString(R.string.placeholder_vid)
-                    //startMillis = 0
                 }
                 getString(R.string.core_exercise) -> {
                     vidId = getString(R.string._10_min_core_vid)
@@ -116,11 +110,9 @@ class ExerciseActivity : AppCompatActivity(), OnInitializedListener {
     private var mPlayerStateChangeListener: PlayerStateChangeListener =
         object : PlayerStateChangeListener {
             override fun onAdStarted() {
-
             }
 
             override fun onLoading() {
-
             }
 
             override fun onVideoStarted() {

@@ -6,6 +6,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
+import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -34,7 +35,6 @@ class EditProfileActivity : AppCompatActivity() {
 
         // Get a support ActionBar corresponding to this toolbar and enable the Up button
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.title = intent.getStringExtra("exercise_name")
 
         val context = this
 
@@ -122,6 +122,16 @@ class EditProfileActivity : AppCompatActivity() {
                     spinnerEditGender.setSelection(genderSelect)
                 }
             })
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item!!.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
+        }
+        return (super.onOptionsItemSelected(item))
     }
 
     private fun uploadImage() {

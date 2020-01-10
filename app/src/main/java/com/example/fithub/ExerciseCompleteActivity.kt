@@ -20,6 +20,7 @@ class ExerciseCompleteActivity : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.my_child_toolbar))
         // Get a support ActionBar corresponding to this toolbar and enable the Up button
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         imageViewTrophy.setOnClickListener {
             it.startAnimation(AnimationUtils.loadAnimation(this, R.anim.wobble_anim))
         }

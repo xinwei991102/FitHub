@@ -3,6 +3,7 @@ package com.example.fithub
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
+import android.view.MenuItem
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -18,7 +19,6 @@ class ChangePasswordActivity : AppCompatActivity() {
 
         // Get a support ActionBar corresponding to this toolbar and enable the Up button
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.title = intent.getStringExtra("exercise_name")
 
         buttonConfirm.setOnClickListener {
             changePassword()
@@ -27,6 +27,16 @@ class ChangePasswordActivity : AppCompatActivity() {
         buttonCancel.setOnClickListener {
             finish()
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item!!.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
+        }
+        return (super.onOptionsItemSelected(item))
     }
 
     private fun changePassword() {
