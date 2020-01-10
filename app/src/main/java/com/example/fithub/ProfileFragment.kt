@@ -35,8 +35,6 @@ class ProfileFragment:Fragment() {
 
         buttonLogOut.setOnClickListener{
             FirebaseAuth.getInstance().signOut()
-            val intent = Intent(requireContext(),LogInActivity::class.java)
-            requireContext().startActivity(intent)
         }
 
         imageButtonEditProfile.setOnClickListener {
@@ -58,10 +56,11 @@ class ProfileFragment:Fragment() {
                 }
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     profile = dataSnapshot.getValue(Profile::class.java)!!
-                    textViewProfileName.text = profile.name.toString()
+                    textViewProfileName.text = profile.name
                     textViewHeight_cm.text = profile.height.toString()
                     textViewWeight_kg.text = profile.weight.toString()
-                    textViewUserGender.text = profile.gender.toString()
+                    textViewUserGender.text = profile.gender
+                    textViewPointsNum.text = profile.points.toString()
                     Picasso.get().load(profile.downloadUrl).into(imageViewProfilePic)
 
                     val heightCm = profile.height

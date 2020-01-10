@@ -1,11 +1,14 @@
 package com.example.fithub
 
 import android.app.Activity
+import android.app.Application
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import android.widget.*
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -15,16 +18,17 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_edit_profile.*
-import kotlinx.android.synthetic.main.activity_edit_profile.view.*
 
 class EditProfileActivity : AppCompatActivity() {
 
     lateinit var imageUri: Uri
-    var downloadUrl = ""
+    var oldDownloadUrl = ""
+    var newDownloadUrl = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_profile)
+        val context = this
 
         val genderArr = arrayOf("Male", "Female")
         spinnerEditGender.adapter =
@@ -34,7 +38,6 @@ class EditProfileActivity : AppCompatActivity() {
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
-
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,
@@ -66,14 +69,16 @@ class EditProfileActivity : AppCompatActivity() {
         database.child(FirebaseAuth.getInstance().currentUser!!.uid)
             .addValueEventListener(object : ValueEventListener {
                 override fun onCancelled(p0: DatabaseError) {
-                    //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                    Toast.makeText( context,p0.message,Toast.LENGTH_LONG).show()
                 }
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    //update fields from firebase
                     profile = dataSnapshot.getValue(Profile::class.java)!!
                     editTextName.setText(profile.name.toString())
                     editTextHeight.setText(profile.height.toString())
                     editTextWeight.setText(profile.weight.toString())
-                    Picasso.get().load(profile.downloadUrl).into(imageViewEditProfilePic)
+                    oldDownloadUrl = profile.downloadUrl
+                    Picasso.get().load(oldDownloadUrl).into(imageViewEditProfilePic)
 
                     val genderDb = profile.gender.toString()
                     var genderSelect: Int? = 0
@@ -103,7 +108,7 @@ class EditProfileActivity : AppCompatActivity() {
             // ...
         }.addOnCompleteListener {
             if (uploadTask.isSuccessful) {
-                downloadUrl = imagesRef.downloadUrl.toString()
+                newDownloadUrl = imagesRef.downloadUrl.toString()
             }
         }
     }
@@ -120,14 +125,24 @@ class EditProfileActivity : AppCompatActivity() {
     }
 
     private fun writeProfile() {
-
         val database = FirebaseDatabase.getInstance().getReference("Profile")
         val name = editTextName.text.toString()
         val gender = spinnerEditGender.selectedItem.toString()
-        val height = textViewHeight.text.toString().toDouble()
-        val weight = textViewWeight.text.toString().toDouble()
+        val height = editTextHeight.text.toString().toDouble()
+        val weight = editTextWeight.text.toString().toDouble()
 
-        val profile = Profile(name, gender, height,  weight, downloadUrl)
+        //get and store points
+        val user = FirebaseAuth.getInstance().currentUser
+        val pref = this.getSharedPreferences(user?.uid, 0) // 0 - for private mode
+        val points = pref.getInt("total_points",0)
+
+        val profile:Profile
+        profile = if (newDownloadUrl.isNotEmpty()){
+            Profile(name, gender, height,  weight, newDownloadUrl,points)
+        } else {
+            Profile(name, gender, height,  weight, oldDownloadUrl,points)
+        }
+
         database.child(FirebaseAuth.getInstance().currentUser!!.uid).setValue(profile)
             .addOnCompleteListener {
                 Toast.makeText(

@@ -14,12 +14,6 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_sign_up.*
 
 class SignUpActivity : AppCompatActivity() {
-
-    lateinit var username: EditText
-    lateinit var gender: Spinner
-    lateinit var height: EditText
-    lateinit var weight: EditText
-    lateinit var image: ImageView
     lateinit var imageUri: Uri
     var downloadUrl = ""
 
@@ -33,9 +27,8 @@ class SignUpActivity : AppCompatActivity() {
             ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, genderSelection)
 
         spinnerGender.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                //TODO: hello
+                //TODO
             }
 
             override fun onItemSelected(
@@ -48,7 +41,7 @@ class SignUpActivity : AppCompatActivity() {
         }
 
         imageViewProfilePic.setOnClickListener {
-            var intent = Intent()
+            val intent = Intent()
             intent.type = "image/*"
             intent.action = Intent.ACTION_GET_CONTENT
             startActivityForResult(intent, PICK_IMAGE_REQUEST)
@@ -61,10 +54,10 @@ class SignUpActivity : AppCompatActivity() {
 
     private fun uploadImage() {
         val storage = FirebaseStorage.getInstance()
-        var storageRef = storage.reference
-        var file = imageUri
+        val storageRef = storage.reference
+        val file = imageUri
         val imagesRef = storageRef.child("images/${file.lastPathSegment}")
-        var uploadTask = imagesRef.putFile(file)
+        val uploadTask = imagesRef.putFile(file)
 
         // Register observers to listen for when the download is done or if it fails
         uploadTask.addOnFailureListener {
@@ -99,9 +92,10 @@ class SignUpActivity : AppCompatActivity() {
         val gender = spinnerGender.selectedItem.toString()
         val height = editTextHeight.text.toString().toDouble()
         val weight = editTextWeight.text.toString().toDouble()
+        val points = 0
 
         //val id =ref.push().key
-        val user = Profile(name, gender, height, weight, downloadUrl)
+        val user = Profile(name, gender, height, weight, downloadUrl, points)
         ref.child(FirebaseAuth.getInstance().currentUser!!.uid).setValue(user)
             .addOnCompleteListener {
                 Toast.makeText(
