@@ -7,6 +7,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
@@ -21,13 +23,28 @@ import kotlin.math.pow
 class ProfileFragment:Fragment() {
     private lateinit var pref: SharedPreferences
     private lateinit var thisContext:Context
+    private lateinit var textViewProfileName: TextView
+    private lateinit var textViewHeightCm:TextView
+    private lateinit var textViewWeightKg:TextView
+    private lateinit var textViewUserGender:TextView
+    private lateinit var imageViewProfilePic:ImageView
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? =
-        inflater.inflate(R.layout.fragment_profile, container, false)
+    ): View? {
+
+        val view = inflater.inflate(R.layout.fragment_profile, container, false)
+
+        //TODO getViewByID
+        textViewProfileName.findViewById<TextView>(R.id.textViewProfileName)
+        textViewHeightCm.findViewById<TextView>(R.id.textViewHeight)
+        textViewWeightKg.findViewById<TextView>(R.id.textViewWeight)
+        imageViewProfilePic.findViewById<ImageView>(R.id.imageViewProfilePic)
+        return view
+    }
+
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -60,8 +77,8 @@ class ProfileFragment:Fragment() {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     profile = dataSnapshot.getValue(Profile::class.java)!!
                     textViewProfileName.text = profile.name
-                    textViewHeight_cm.text = profile.height.toString()
-                    textViewWeight_kg.text = profile.weight.toString()
+                    textViewHeightCm.text = profile.height.toString()
+                    textViewWeightKg.text = profile.weight.toString()
                     textViewUserGender.text = profile.gender
                     //textViewPointsNum.text = profile.points.toString()
                     Picasso.get().load(profile.downloadUrl).placeholder(R.drawable.ic_child_face).into(imageViewProfilePic)
