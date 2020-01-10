@@ -90,8 +90,7 @@ class SignUpActivity : AppCompatActivity() {
             uploadImage()
         }
     }
-
-
+    
     private fun saveDataToFirebase() {
         //Get reference from data table Profile
         val ref = FirebaseDatabase.getInstance().getReference("Profile")

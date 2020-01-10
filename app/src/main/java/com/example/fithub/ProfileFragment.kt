@@ -117,12 +117,12 @@ class ProfileFragment:Fragment() {
         return level
     }
 
-    data class Profile(
+/*    data class Profile(
         var gender: String? = "",
         var height: Double = 0.0,
         var name: String? = "",
         var weight: Double = 0.0
-    )
+    )*/
 
 
 }
