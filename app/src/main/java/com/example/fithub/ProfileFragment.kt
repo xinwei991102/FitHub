@@ -38,10 +38,11 @@ class ProfileFragment:Fragment() {
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
 
         //TODO getViewByID
-        textViewProfileName.findViewById<TextView>(R.id.textViewProfileName)
-        textViewHeightCm.findViewById<TextView>(R.id.textViewHeight)
-        textViewWeightKg.findViewById<TextView>(R.id.textViewWeight)
-        imageViewProfilePic.findViewById<ImageView>(R.id.imageViewProfilePic)
+        textViewProfileName = view.findViewById(R.id.textViewProfileName)
+        textViewHeightCm = view.findViewById(R.id.textViewHeight)
+        textViewWeightKg = view.findViewById(R.id.textViewWeight)
+        textViewUserGender = view.findViewById(R.id.textViewUserGender)
+        imageViewProfilePic = view.findViewById(R.id.imageViewProfilePic)
         return view
     }
 
