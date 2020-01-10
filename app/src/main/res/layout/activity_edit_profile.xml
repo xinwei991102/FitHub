@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imageViewEditProfilePic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="50dp"
+            android:contentDescription="@string/profile_pic"
+            app:srcCompat="@drawable/ic_fitness_center_black_100dp" />
+
+        <TextView
+            android:id="@+id/textViewName"
+            style="@style/editProfileAlignLeft"
+            android:layout_below="@+id/imageViewEditProfilePic"
+            android:text="@string/textViewName" />
+
+        <EditText
+            android:id="@+id/editTextName"
+            style="@style/editProfileAlignRight"
+            android:layout_below="@+id/imageViewEditProfilePic"
+            android:ems="7"
+            android:inputType="text" />
+
+        <TextView
+            android:id="@+id/textViewGender"
+            style="@style/editProfileAlignLeft"
+            android:layout_below="@+id/textViewName"
+            android:text="@string/gender" />
+
+
+        <Spinner
+            android:id="@+id/spinnerEditGender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/editTextName"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="28dp"
+            android:layout_marginRight="19dp"
+            android:dropDownWidth="wrap_content"
+            android:scrollbarSize="4dp"
+
+            android:spinnerMode="dropdown" />
+
+        <TextView
+            android:id="@+id/textViewHeight"
+            style="@style/editProfileAlignLeft"
+            android:layout_below="@+id/textViewGender"
+            android:text="@string/height" />
+
+        <TextView
+            android:id="@+id/textViewWeight"
+            style="@style/editProfileAlignLeft"
+            android:layout_below="@+id/textViewHeight"
+            android:text="@string/weight" />
+
+        <EditText
+            android:id="@+id/editTextHeight"
+            style="@style/editProfileAlignRight"
+            android:layout_below="@+id/spinnerEditGender"
+            android:ems="5"
+            android:inputType="numberDecimal" />
+
+        <EditText
+            android:id="@+id/editTextWeight"
+            style="@style/editProfileAlignRight"
+            android:layout_below="@+id/editTextHeight"
+            android:ems="5"
+            android:inputType="numberDecimal"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewWeight"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="32dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/buttonProfileSave"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="32dp"
+                android:layout_marginRight="32dp"
+                android:text="@string/save" />
+
+            <Button
+                android:id="@+id/buttonProfileCancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cancel" />
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+</ScrollView>

@@ -1,24 +1,69 @@
 <resources>
     <string name="app_name">FitHub</string>
-    <string name="txtViewUsername">Username</string>
-    <string name="txtViewPassword">Password</string>
+    <string name="Email">Email</string>
+    <string name="Username">Username</string>
+    <string name="password">Password</string>
+    <string name="logoDesc">FitHub Logo</string>
     <string name="btnTextLogIn">Log In</string>
     <string name="btnTextSignUp">Sign Up</string>
-    <string name="aerobic_exercise">Aerobic Exercise</string>
-    <string name="core_exercise">Core Exercise</string>
-    <string name="arm_exercise">Arm Exercise</string>
-    <string name="leg_exercise">Leg Exercise</string>
+
     <string name="profile_name">Ho Heu Kei</string>
     <string name="notification">Notification</string>
     <string name="profile_pic">profile picture</string>
-    <string name="Daily_calories">Daily Calories</string>
     <string name="calories">1200</string>
-    <string name="height">Height</string>
-    <string name="heightcm">160cm</string>
-    <string name="weight">Weight</string>
-    <string name="weightkg">55kg</string>
+    <string name="height">Height(cm)</string>
+    <string name="height_cm">160</string>
+    <string name="weight">Weight(kg)</string>
+    <string name="weight_kg">55</string>
     <string name="bmi">BMI</string>
     <string name="bmiNo">20.2</string>
     <string name="setting">Setting</string>
-    <string name="calender">Calender</string>
+    <string name="logout">Log Out</string>
+    <string name="edit_button">Edit Button</string>
+    <string name="level">Level</string>
+    <string name="points_earned">Points Earned</string>
+    <string name="gender">Gender</string>
+    <string name="male">Male</string>
+    <string name="exercise">Exercise</string>
+    <string name="fit_hub_logo">FitHub Logo</string>
+    <string name="sign_up_details">Help us know you better</string>
+    <string name="Save">Save</string>
+
+    <string name="textViewName">Name</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="language">Language</string>
+    <string name="changePassword">Change Password</string>
+
+    <string name="aerobic_exercise">10-Minutes\nAerobic Exercise</string>
+    <string name="core_exercise">10-Minutes\nCore Exercise</string>
+    <string name="arm_exercise">5-Minutes\nArm Exercise</string>
+    <string name="leg_exercise">10-Minutes\nLeg Exercise</string>
+
+    <string name="_10_min_aerobic_vid">c-xUk444SWc</string>
+    <string name="_10_min_core_vid">3320EhbImLY</string>
+    <string name="_10_min_arm_vid">SsJqlHFFsEk</string>
+    <string name="_10_min_leg_vid">UTLu85-GLrQ</string>
+    <string name="placeholder_vid">wUF9DeWJ0Dk</string>
+
+    <string name="time_remaining">Time Remaining</string>
+    <string name="start">START</string>
+    <string name="calories_burnt">Calories Burnt</string>
+    <string name="stop">STOP</string>
+    <string name="_0_cal">0 cal</string>
+    <string name="_00_00_time">00:00</string>
+    <string name="trophy">Trophy</string>
+    <string name="you_exercised_for">You exercised for</string>
+    <string name="_0_m_0_s">0 m 0 s</string>
+    <string name="you_burned">You burned</string>
+    <string name="_0_calories">0 calories</string>
+    <string name="you_earned">You earned</string>
+    <string name="_0_points">0 points</string>
+    <string name="keep_it_up">Keep it up!</string>
+    <string name="congratulations">Congratulations!</string>
+    <string name="new_password">New Password</string>
+    <string name="confirm_new_password">Confirm New Password</string>
+    <string name="confirm">Confirm</string>
+
+
 </resources>

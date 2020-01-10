@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".SignUpActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/my_child_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:titleTextColor="#000000" />
+
+    <ImageView
+        android:id="@+id/imageViewProfilePic"
+        android:layout_width="101dp"
+        android:layout_height="90dp"
+        android:layout_below="@id/my_child_toolbar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        app:srcCompat="@drawable/ic_male" />
+
+    <ImageView
+        android:id="@+id/imageViewName"
+        android:layout_width="82dp"
+        android:layout_height="47dp"
+        android:layout_below="@id/imageViewProfilePic"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="30dp"
+        app:srcCompat="@drawable/ic_child_face" />
+
+    <EditText
+        android:id="@+id/editTextUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imageViewProfilePic"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="20dp"
+        android:ems="10"
+        android:hint="@string/Username"
+        android:inputType="textPersonName" />
+
+    <ImageView
+        android:id="@+id/imageViewGender"
+        android:layout_width="83dp"
+        android:layout_height="46dp"
+        android:layout_below="@id/editTextUsername"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="30dp"
+        app:srcCompat="@drawable/ic_sex" />
+
+    <Spinner
+        android:id="@+id/spinnerGender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editTextUsername"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="20dp"
+        android:dropDownWidth="wrap_content" />
+
+    <ImageView
+        android:id="@+id/imageViewHeight"
+        android:layout_width="80dp"
+        android:layout_height="47dp"
+        android:layout_below="@id/imageViewGender"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="30dp"
+        app:srcCompat="@drawable/ic_height" />
+
+    <EditText
+        android:id="@+id/editTextHeight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imageViewGender"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="20dp"
+        android:ems="10"
+        android:hint="@string/height"
+        android:inputType="numberDecimal" />
+
+    <ImageView
+        android:id="@+id/imageViewWeight"
+        android:layout_width="81dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/editTextHeight"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="30dp"
+        app:srcCompat="@drawable/ic_body_weighing_scale_tool" />
+
+    <EditText
+        android:id="@+id/editTextWeight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/weight"
+        android:inputType="numberDecimal"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_below="@id/editTextHeight"/>
+
+    <Button
+        android:id="@+id/btnSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Save"
+        android:layout_below="@id/editTextWeight"
+        android:layout_marginTop="40dp"
+        android:layout_centerInParent="true"/>
+
+
+</RelativeLayout>

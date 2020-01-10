@@ -1,202 +1,216 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:clickable="true">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textViewProfileName"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="19dp"
-        android:layout_marginLeft="19dp"
-        android:layout_marginTop="33dp"
-        android:text="@string/profile_name"
-        android:textSize="30sp" />
+        android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/textViewProfileName"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="19dp"
-        android:layout_marginLeft="19dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="277dp"
-        android:layout_marginRight="277dp"
-        android:layout_marginBottom="519dp"
-        android:contentDescription="@string/profile_pic"
-        tools:srcCompat="@tools:sample/avatars" />
 
-    <TextView
-        android:id="@+id/textViewNotification"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="19dp"
-        android:layout_marginLeft="19dp"
-        android:layout_marginBottom="461dp"
-        android:clickable="true"
-        android:text="@string/notification"
-        android:textSize="22sp" />
+        <TextView
+            android:id="@+id/textViewProfileName"
+            style="@style/blackText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginStart="19dp"
+            android:layout_marginLeft="19dp"
+            android:layout_marginTop="33dp"
+            android:textSize="30sp" />
 
-    <TextView
-        android:id="@+id/textViewDailyCalories"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="19dp"
-        android:layout_marginLeft="19dp"
-        android:layout_marginBottom="413dp"
-        android:clickable="true"
-        android:text="@string/Daily_calories"
-        android:textSize="22sp" />
+        <ImageButton
+            android:id="@+id/imageButtonEditProfile"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="33dp"
+            android:layout_toEndOf="@+id/textViewProfileName"
+            android:layout_toRightOf="@id/textViewProfileName"
+            android:background="@null"
+            android:contentDescription="@string/edit_button"
+            app:srcCompat="@drawable/ic_edit_blue_30dp" />
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="53dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="358dp"
-        android:layout_marginLeft="358dp"
-        android:layout_marginBottom="413dp"
-        android:text="@string/calories"
-        android:textSize="22sp" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/linearLayoutProfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewProfileName"
+            android:layout_marginTop="16dp">
 
-    <TextView
-        android:id="@+id/textViewHeight"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="19dp"
-        android:layout_marginLeft="19dp"
-        android:layout_marginBottom="365dp"
-        android:clickable="true"
-        android:text="@string/height"
-        android:textSize="22sp" />
+            <ImageView
+                android:id="@+id/imageViewProfilePic"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginStart="19dp"
+                android:layout_marginLeft="19dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:contentDescription="@string/profile_pic"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/textViewLevel"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@drawable/ic_fitness_center_black_100dp" />
 
-    <TextView
-        android:id="@+id/textViewHeightcm"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="330dp"
-        android:layout_marginLeft="330dp"
-        android:layout_marginBottom="365dp"
-        android:text="@string/heightcm"
-        android:textSize="22sp" />
+            <TextView
+                android:id="@+id/textViewLevel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:text="@string/level"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toStartOf="@+id/textViewPointsEarned"
+                app:layout_constraintStart_toEndOf="@+id/imageViewProfilePic"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textViewWeight"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="19dp"
-        android:layout_marginLeft="19dp"
-        android:layout_marginBottom="320dp"
-        android:clickable="true"
-        android:text="@string/weight"
-        android:textSize="22sp" />
+            <TextView
+                android:id="@+id/textViewLevelNum"
+                style="@style/blackText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:text="2"
+                android:textSize="35sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/textViewLevel"
+                app:layout_constraintStart_toStartOf="@+id/textViewLevel"
+                app:layout_constraintTop_toBottomOf="@+id/textViewLevel" />
 
-    <TextView
-        android:id="@+id/textViewWeightkg"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="351dp"
-        android:layout_marginLeft="351dp"
-        android:layout_marginBottom="321dp"
-        android:text="@string/weightkg"
-        android:textSize="22sp" />
+            <View
+                android:layout_width="1dp"
+                android:layout_height="100dp"
+                android:background="@android:color/darker_gray"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/textViewPointsEarned"
+                app:layout_constraintStart_toEndOf="@+id/textViewLevel"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textViewBMI"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="18dp"
-        android:layout_marginLeft="18dp"
-        android:layout_marginBottom="274dp"
-        android:clickable="true"
-        android:text="@string/bmi"
-        android:textSize="22sp" />
+            <TextView
+                android:id="@+id/textViewPointsEarned"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="19dp"
+                android:layout_marginRight="19dp"
+                android:text="@string/points_earned"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textViewLevel"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textView10"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="364dp"
-        android:layout_marginLeft="364dp"
-        android:layout_marginBottom="274dp"
-        android:text="@string/bmiNo"
-        android:textSize="22sp" />
+            <TextView
+                android:id="@+id/textViewPointsNum"
+                style="@style/blackText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:text="0"
+                android:textSize="35sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/textViewPointsEarned"
+                app:layout_constraintHorizontal_bias="0.48"
+                app:layout_constraintStart_toStartOf="@+id/textViewPointsEarned"
+                app:layout_constraintTop_toBottomOf="@+id/textViewPointsEarned" />
 
-    <TextView
-        android:id="@+id/textView11"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="18dp"
-        android:layout_marginLeft="18dp"
-        android:layout_marginBottom="225dp"
-        android:text="@string/setting"
-        android:textSize="22sp" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="40dp"
-        android:layout_height="34dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="368dp"
-        android:layout_marginLeft="368dp"
-        android:layout_marginBottom="222dp"
-        app:srcCompat="@drawable/ic_settings_black_24dp" />
 
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="37dp"
-        android:layout_height="35dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="369dp"
-        android:layout_marginLeft="369dp"
-        android:layout_marginBottom="460dp"
-        app:srcCompat="@drawable/ic_notifications_none_black_24dp" />
+        <TextView
+            android:id="@+id/textViewGender"
+            style="@style/profileAlignLeft"
+            android:layout_below="@+id/linearLayoutProfile"
+            android:text="@string/gender" />
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/textViewUserGender"
+            style="@style/profileAlignRight"
+            android:layout_below="@+id/linearLayoutProfile"/>
+
+        <View
+            style="@style/profileLine"
+            android:layout_below="@+id/textViewGender" />
+
+        <TextView
+            android:id="@+id/textViewHeight"
+            style="@style/profileAlignLeft"
+            android:layout_below="@+id/textViewUserGender"
+            android:text="@string/height" />
+
+        <TextView
+            android:id="@+id/textViewHeight_cm"
+            style="@style/profileAlignRight"
+            android:layout_below="@+id/textViewUserGender" />
+
+        <View
+            style="@style/profileLine"
+            android:layout_below="@+id/textViewHeight" />
+
+        <TextView
+            android:id="@+id/textViewWeight"
+            style="@style/profileAlignLeft"
+            android:layout_below="@+id/textViewHeight"
+            android:text="@string/weight" />
+
+        <TextView
+            android:id="@+id/textViewWeight_kg"
+            style="@style/profileAlignRight"
+            android:layout_below="@+id/textViewHeight"/>
+
+        <View
+            style="@style/profileLine"
+            android:layout_below="@+id/textViewWeight" />
+
+        <TextView
+            android:id="@+id/textViewBMI"
+            style="@style/profileAlignLeft"
+            android:layout_below="@+id/textViewWeight"
+            android:text="@string/bmi" />
+
+        <TextView
+            android:id="@+id/textViewBMI_count"
+            style="@style/profileAlignRight"
+            android:layout_below="@+id/textViewWeight"
+            android:layout_marginTop="16dp"/>
+
+        <View
+            style="@style/profileLine"
+            android:layout_below="@+id/textViewBMI" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewBMI"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="32dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/buttonSetting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="32dp"
+                android:layout_marginRight="32dp"
+                android:text="@string/setting" />
+
+            <Button
+                android:id="@+id/buttonLogOut"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/logout" />
+        </LinearLayout>
+    </RelativeLayout>
+</ScrollView>

@@ -3,15 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <Button
             android:id="@+id/buttonAerobic"
             style="@style/ExerciseButton"
             android:background="@drawable/aerobic_button"
-            android:text="@string/aerobic_exercise" />
+            android:text="@string/aerobic_exercise"/>
 
         <Button
             android:id="@+id/buttonCore"
