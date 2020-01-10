@@ -72,16 +72,15 @@ class SignUpActivity : AppCompatActivity() {
         }.addOnSuccessListener {
             // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
             // ...
-        }.addOnCompleteListener{
-            if(uploadTask.isSuccessful){
-                 downloadUrl = imagesRef.downloadUrl.toString()
+        }.addOnCompleteListener {
+            if (uploadTask.isSuccessful) {
+                downloadUrl = imagesRef.downloadUrl.toString()
             }
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.data != null) {
             //Get back uri of the image picked
             imageUri = data.data!!
@@ -90,7 +89,6 @@ class SignUpActivity : AppCompatActivity() {
             uploadImage()
         }
     }
-
 
     private fun saveDataToFirebase() {
         //Get reference from data table Profile
@@ -103,7 +101,7 @@ class SignUpActivity : AppCompatActivity() {
         val weight = editTextWeight.text.toString().toDouble()
 
         //val id =ref.push().key
-        val user = User(name, gender, height, weight, downloadUrl)
+        val user = Profile(name, gender, height, weight, downloadUrl)
         ref.child(FirebaseAuth.getInstance().currentUser!!.uid).setValue(user)
             .addOnCompleteListener {
                 Toast.makeText(
@@ -121,8 +119,6 @@ class SignUpActivity : AppCompatActivity() {
     }
 
 }
-
-class User(val name: String, val gender: String, val height: Double, val weight: Double, val imageUri:  String)
 
 
 

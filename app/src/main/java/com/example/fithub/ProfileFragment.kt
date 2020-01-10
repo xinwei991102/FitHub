@@ -12,9 +12,9 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlin.math.pow
-
 
 class ProfileFragment:Fragment() {
     private lateinit var pref: SharedPreferences
@@ -62,6 +62,7 @@ class ProfileFragment:Fragment() {
                     textViewHeight_cm.text = profile.height.toString()
                     textViewWeight_kg.text = profile.weight.toString()
                     textViewUserGender.text = profile.gender.toString()
+                    Picasso.get().load(profile.downloadUrl).into(imageViewProfilePic)
 
                     val heightCm = profile.height
                     val weightKg = profile.weight
@@ -72,7 +73,6 @@ class ProfileFragment:Fragment() {
                     bmi = (weightKg / heightSquare)
                     textViewBMI_count.text = String.format("%.1f", bmi)
                 }
-
             })
         textViewLevelNum.text = calcLevel().toString()
         textViewPointsNum.text = pref.getInt("total_points",0).toString()
@@ -116,13 +116,6 @@ class ProfileFragment:Fragment() {
         }
         return level
     }
-
-    data class Profile(
-        var gender: String? = "",
-        var height: Double = 0.0,
-        var name: String? = "",
-        var weight: Double = 0.0
-    )
 
 
 }

@@ -1,29 +1,26 @@
 package com.example.fithub
 
+import android.app.Activity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.storage.FirebaseStorage
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_edit_profile.*
 import kotlinx.android.synthetic.main.activity_edit_profile.view.*
-import android.widget.ArrayAdapter
-import androidx.core.app.ComponentActivity.ExtraData
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-
 
 class EditProfileActivity : AppCompatActivity() {
 
-    lateinit var name: EditText
-    lateinit var gender: Spinner
-    lateinit var height: EditText
-    lateinit var weight: EditText
+    lateinit var imageUri: Uri
+    var downloadUrl = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,17 +45,19 @@ class EditProfileActivity : AppCompatActivity() {
             }
         }
 
-        name = findViewById(R.id.editTextName)
-        gender = findViewById(R.id.spinnerEditGender)
-        height = findViewById(R.id.editTextHeight)
-        weight = findViewById(R.id.editTextWeight)
-
         buttonProfileSave.setOnClickListener {
             writeProfile()
         }
 
         buttonProfileCancel.setOnClickListener {
             finish()
+        }
+
+        imageViewEditProfilePic.setOnClickListener {
+            val intent = Intent()
+            intent.type = "image/*"
+            intent.action = Intent.ACTION_GET_CONTENT
+            startActivityForResult(intent, SignUpActivity.PICK_IMAGE_REQUEST)
         }
 
         val database = FirebaseDatabase.getInstance().getReference("Profile")
@@ -69,12 +68,12 @@ class EditProfileActivity : AppCompatActivity() {
                 override fun onCancelled(p0: DatabaseError) {
                     //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
                 }
-
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     profile = dataSnapshot.getValue(Profile::class.java)!!
                     editTextName.setText(profile.name.toString())
                     editTextHeight.setText(profile.height.toString())
                     editTextWeight.setText(profile.weight.toString())
+                    Picasso.get().load(profile.downloadUrl).into(imageViewEditProfilePic)
 
                     val genderDb = profile.gender.toString()
                     var genderSelect: Int? = 0
@@ -85,20 +84,50 @@ class EditProfileActivity : AppCompatActivity() {
                     }
                     spinnerEditGender.setSelection(genderSelect)
                 }
-
             })
 
+    }
+
+    private fun uploadImage() {
+        val storage = FirebaseStorage.getInstance()
+        val storageRef = storage.reference
+        val file = imageUri
+        val imagesRef = storageRef.child("images/${file.lastPathSegment}")
+        val uploadTask = imagesRef.putFile(file)
+
+        // Register observers to listen for when the download is done or if it fails
+        uploadTask.addOnFailureListener {
+            Toast.makeText(applicationContext, it.message, Toast.LENGTH_SHORT).show()
+        }.addOnSuccessListener {
+            // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
+            // ...
+        }.addOnCompleteListener {
+            if (uploadTask.isSuccessful) {
+                downloadUrl = imagesRef.downloadUrl.toString()
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == SignUpActivity.PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.data != null) {
+            //Get back uri of the image picked
+            imageUri = data.data!!
+            //load picture to image view
+            Picasso.get().load(imageUri).into(imageViewEditProfilePic)
+            uploadImage()
+        }
     }
 
     private fun writeProfile() {
 
         val database = FirebaseDatabase.getInstance().getReference("Profile")
-        val name = name.text.toString()
-        val gender = gender.spinnerEditGender.selectedItem.toString()
-        val height = height.text.toString().toDouble()
-        val weight = weight.text.toString().toDouble()
+        val name = editTextName.text.toString()
+        val gender = spinnerEditGender.selectedItem.toString()
+        val height = textViewHeight.text.toString().toDouble()
+        val weight = textViewWeight.text.toString().toDouble()
 
-        val profile = Profile(gender, height, name, weight)
+        val profile = Profile(name, gender, height,  weight, downloadUrl)
         database.child(FirebaseAuth.getInstance().currentUser!!.uid).setValue(profile)
             .addOnCompleteListener {
                 Toast.makeText(
@@ -109,11 +138,4 @@ class EditProfileActivity : AppCompatActivity() {
             }
     }
 }
-
-data class Profile(
-    var gender: String? = "",
-    var height: Double = 0.0,
-    var name: String? = "",
-    var weight: Double = 0.0
-)
 
