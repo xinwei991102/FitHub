@@ -11,35 +11,30 @@ import kotlinx.android.synthetic.main.activity_log_in.*
 
 class LogInActivity : AppCompatActivity() {
 
+    private lateinit var auth: FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_log_in)
 
-        btnSignUp.setOnClickListener {
+        // Initialize Firebase Auth
+        auth = FirebaseAuth.getInstance()
 
+        //Check if user is logged in
+        if(auth.currentUser != null){
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+                finish()
+        }else{
+
+        }
+
+        btnSignUp.setOnClickListener {
             val animation = AnimationUtils.loadAnimation(this, R.anim.bounce_anim)
             btnSignUp.startAnimation(animation)
 
-            val email = editTextUsername.text.toString()
-            val password = editTextPassword.text.toString()
-
-            if (email.isEmpty() || password.isEmpty()) {
-                Toast.makeText(this, "Please enter email and password", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-            //Create a new user with email & password
-            FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener {
-                    if (!it.isSuccessful) {
-                        Log.d("Log In", "Sign Up failure")
-                    } else {
-                        Toast.makeText(this, "Sign Up Successfully", Toast.LENGTH_SHORT).show()
-                        val intent = Intent(this, SignUpActivity::class.java)
-                        startActivity(intent)
-                    }
-                }.addOnFailureListener {
-                    Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
-                }
+            val intent = Intent(this, SignUpActivity::class.java)
+            startActivity(intent)
         }
 
         btnLogIn.setOnClickListener {
@@ -73,4 +68,5 @@ class LogInActivity : AppCompatActivity() {
         }
 
     }
+
 }

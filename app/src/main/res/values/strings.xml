@@ -6,7 +6,6 @@
     <string name="logoDesc">FitHub Logo</string>
     <string name="btnTextLogIn">Log In</string>
     <string name="btnTextSignUp">Sign Up</string>
-
     <string name="profile_name">Ho Heu Kei</string>
     <string name="notification">Notification</string>
     <string name="profile_pic">profile picture</string>
@@ -64,6 +63,9 @@
     <string name="new_password">New Password</string>
     <string name="confirm_new_password">Confirm New Password</string>
     <string name="confirm">Confirm</string>
+    <string name="testing_exercise">testing exercise</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="choose_file">Choose File</string>
 
 
 </resources>

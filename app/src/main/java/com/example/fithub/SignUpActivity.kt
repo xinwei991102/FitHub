@@ -4,6 +4,8 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -14,12 +16,6 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_sign_up.*
 
 class SignUpActivity : AppCompatActivity() {
-
-    lateinit var username: EditText
-    lateinit var gender: Spinner
-    lateinit var height: EditText
-    lateinit var weight: EditText
-    lateinit var image: ImageView
     lateinit var imageUri: Uri
     var downloadUrl = ""
 
@@ -32,49 +28,111 @@ class SignUpActivity : AppCompatActivity() {
         spinnerGender.adapter =
             ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, genderSelection)
 
-        spinnerGender.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        btnSave.setOnClickListener {
+            val username = editTextUsername.text.toString().trim()
+            val email = editTextEmail.text.toString().trim()
+            val password = editTextPassword.toString().trim()
+            val confirmPassword = editTextConfirmPassword.text.toString().trim()
+            val gender = spinnerGender.selectedItem.toString().trim()
+            val height = editTextHeight.text.toString().trim()
+            val weight = editTextWeight.text.toString().trim()
+            var validDetails = true
+            val errorMsg = "This field must no be empty!"
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                //TODO: hello
+            //Validation
+            if(TextUtils.isEmpty(email)) {
+                validDetails = false
+                editTextEmail.error = errorMsg
+            }
+            if(TextUtils.isEmpty(username)) {
+                validDetails = false
+                editTextUsername.error = errorMsg
+            }
+            if(TextUtils.isEmpty(password) || password.length <= 5) {
+                validDetails = false
+                editTextPassword.error = "Password must not less than 6 characters"
             }
 
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
+            if(TextUtils.isEmpty(confirmPassword) || password.length <= 5) {
+                validDetails = false
+                editTextConfirmPassword.error = "Password must not less than 6 characters"
+             }else if(!editTextConfirmPassword.text.toString().equals(editTextPassword.text.toString())){
+                validDetails = false
+                editTextConfirmPassword.error = "Password does not match!"
+            }
+            if (TextUtils.isEmpty(height)) {
+                validDetails = false
+                editTextHeight.error = errorMsg
+            }
+            if (TextUtils.isEmpty(weight)) {
+                validDetails = false
+                editTextWeight.error = errorMsg
+            }
+
+
+            spinnerGender.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                    spinnerGender.setSelection(0)
+                    //Force spinner to select an item
+                }
+
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                }
+            }
+
+            //Create a new user with email & password
+            if (validDetails) {
+                FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener {
+                        if (!it.isSuccessful) {
+                            Toast.makeText(this, "Sign Up Failure", Toast.LENGTH_SHORT).show()
+                        } else {
+                            Toast.makeText(this, "Sign Up Successfully", Toast.LENGTH_SHORT).show()
+                            saveDataToFirebase()
+                            val intent = Intent(this, MainActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        }
+                    }.addOnFailureListener {
+                        Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
+                    }
             }
         }
 
-        imageViewProfilePic.setOnClickListener {
-            var intent = Intent()
+        btnChooseFile.setOnClickListener {
+            val intent = Intent()
             intent.type = "image/*"
             intent.action = Intent.ACTION_GET_CONTENT
             startActivityForResult(intent, PICK_IMAGE_REQUEST)
-        }
-
-        btnSave.setOnClickListener {
-            saveDataToFirebase()
         }
     }
 
     private fun uploadImage() {
         val storage = FirebaseStorage.getInstance()
-        var storageRef = storage.reference
-        var file = imageUri
+        val storageRef = storage.reference
+        val file = imageUri
         val imagesRef = storageRef.child("images/${file.lastPathSegment}")
-        var uploadTask = imagesRef.putFile(file)
+        val uploadTask = imagesRef.putFile(file)
+        var downloadUri: Uri
 
-        // Register observers to listen for when the download is done or if it fails
-        uploadTask.addOnFailureListener {
-            Toast.makeText(applicationContext, it.message, Toast.LENGTH_SHORT).show()
-        }.addOnSuccessListener {
-            // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
-            // ...
-        }.addOnCompleteListener{
-            if(uploadTask.isSuccessful){
-                 downloadUrl = imagesRef.downloadUrl.toString()
+        val urlTask = uploadTask.continueWithTask { task ->
+            if (!task.isSuccessful) {
+                Toast.makeText(applicationContext, task.exception?.message, Toast.LENGTH_SHORT)
+                    .show()
+            }
+            imagesRef.downloadUrl
+        }.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                downloadUri = task.result!!
+                downloadUrl = downloadUri.toString()
+            } else {
+                Toast.makeText(applicationContext, task.exception?.message, Toast.LENGTH_SHORT)
+                    .show()
             }
         }
     }
@@ -90,7 +148,7 @@ class SignUpActivity : AppCompatActivity() {
             uploadImage()
         }
     }
-    
+
     private fun saveDataToFirebase() {
         //Get reference from data table Profile
         val ref = FirebaseDatabase.getInstance().getReference("Profile")
@@ -100,9 +158,10 @@ class SignUpActivity : AppCompatActivity() {
         val gender = spinnerGender.selectedItem.toString()
         val height = editTextHeight.text.toString().toDouble()
         val weight = editTextWeight.text.toString().toDouble()
+        val points = 0
 
         //val id =ref.push().key
-        val user = User(name, gender, height, weight, downloadUrl)
+        val user = Profile(name, gender, height, weight, downloadUrl, points)
         ref.child(FirebaseAuth.getInstance().currentUser!!.uid).setValue(user)
             .addOnCompleteListener {
                 Toast.makeText(
@@ -120,8 +179,6 @@ class SignUpActivity : AppCompatActivity() {
     }
 
 }
-
-class User(val name: String, val gender: String, val height: Double, val weight: Double, val imageUri:  String)
 
 
 

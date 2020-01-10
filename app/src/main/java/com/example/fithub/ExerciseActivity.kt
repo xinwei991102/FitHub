@@ -82,6 +82,10 @@ class ExerciseActivity : AppCompatActivity(), OnInitializedListener {
                     vidId = getString(R.string._10_min_leg_vid)
                     startMillis = 17000
                 }
+                getString(R.string.testing_exercise) -> {
+                    vidId = getString(R.string.placeholder_vid)
+                    startMillis = 0
+                }
             }
             player.cueVideo(vidId, startMillis)
             player.setPlayerStyle(PlayerStyle.CHROMELESS)
