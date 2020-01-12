@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
+import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -16,6 +17,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_sign_up.*
 
+
 class SignUpActivity : AppCompatActivity() {
     lateinit var imageUri: Uri
     var downloadUrl = ""
@@ -24,6 +26,8 @@ class SignUpActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
         setSupportActionBar(findViewById(R.id.my_child_toolbar))
+        // Get a support ActionBar corresponding to this toolbar and enable the Up button
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val genderSelection = arrayOf("Male", "Female")
         spinnerGender.adapter =
@@ -32,7 +36,7 @@ class SignUpActivity : AppCompatActivity() {
         btnSave.setOnClickListener {
             val username = editTextUsername.text.toString().trim()
             val email = editTextEmail.text.toString().trim()
-            val password = editTextPassword.toString().trim()
+            val password = editTextPassword.text.toString().trim()
             val confirmPassword = editTextConfirmPassword.text.toString().trim()
             val height = editTextHeight.text.toString().trim()
             val weight = editTextWeight.text.toString().trim()
@@ -95,8 +99,9 @@ class SignUpActivity : AppCompatActivity() {
                             Toast.makeText(this, "Sign Up Successfully", Toast.LENGTH_SHORT).show()
                             saveDataToFirebase()
                             val intent = Intent(this, MainActivity::class.java)
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                             startActivity(intent)
-                            finish()
+                            //finish()
                         }
                     }.addOnFailureListener {
                         Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
@@ -104,12 +109,22 @@ class SignUpActivity : AppCompatActivity() {
             }
         }
 
-        btnChooseFile.setOnClickListener {
+        btnNewProfilePic.setOnClickListener {
             val intent = Intent()
             intent.type = "image/*"
             intent.action = Intent.ACTION_GET_CONTENT
             startActivityForResult(intent, PICK_IMAGE_REQUEST)
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item!!.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
+        }
+        return (super.onOptionsItemSelected(item))
     }
 
     private fun uploadImage() {
@@ -169,8 +184,6 @@ class SignUpActivity : AppCompatActivity() {
                     "User details saved successfully",
                     Toast.LENGTH_SHORT
                 ).show()
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
             }
     }
 

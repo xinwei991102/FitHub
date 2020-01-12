@@ -16,40 +16,39 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".MainActivity"
-            android:configChanges="orientation|screenSize">
+            android:name=".LogInActivity"
+            android:configChanges="orientation|screenSize"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
-            android:name=".ChangePasswordActivity"
-            android:label="@string/changePassword" />
-        <activity
-            android:name=".ExerciseCompleteActivity"
-            android:label="@string/exercise"
+            android:name=".SignUpActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/sign_up"
             android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".MainActivity"
+            android:configChanges="orientation|screenSize" />
+        <activity
+            android:name=".ChangePasswordActivity"
+            android:label="@string/change_password"
+            android:configChanges="orientation|screenSize"/>
+        <activity
+            android:name=".EditProfileActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/edit_profile" />
         <activity
             android:name=".ExerciseActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/exercise"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".LogInActivity"
-            android:configChanges="orientation|screenSize"
-            android:theme="@style/Theme.AppCompat.NoActionBar" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
-        <activity
-            android:name=".SignUpActivity"
-            android:configChanges="orientation|screenSize"
-            android:label="@string/sign_up_details"
-            android:parentActivityName=".MainActivity" />
-        <activity
-            android:name=".EditProfileActivity"
-            android:configChanges="orientation|screenSize"
-            android:label="@string/edit_profile" />
+            android:name=".ExerciseCompleteActivity"
+            android:label="@string/exercise"
+            android:parentActivityName=".MainActivity"
+            android:configChanges="orientation|screenSize"/>
     </application>
-
 </manifest>

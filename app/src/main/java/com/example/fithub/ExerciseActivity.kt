@@ -153,6 +153,7 @@ class ExerciseActivity : AppCompatActivity(), OnInitializedListener {
                 intent2.putExtra("burned_calories", totalCalories.toInt())
                 intent2.putExtra("exercise_name",intent.getStringExtra("exercise_name"))
                 context.startActivity(intent2)
+                context.finish()
             }
 
             override fun onError(p0: ErrorReason?) {

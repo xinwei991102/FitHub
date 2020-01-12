@@ -23,73 +23,90 @@
             android:layout_height="100dp"
             android:layout_below="@id/my_child_toolbar"
             android:layout_centerInParent="true"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="30dp"
+            android:clickable="false"
             android:contentDescription="@string/profile_pic"
             app:srcCompat="@drawable/ic_child_face" />
+
+        <Button
+            android:id="@+id/btnEditProfilePic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/imageViewEditProfilePic"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:text="@string/upload_photo" />
 
         <TextView
             android:id="@+id/textViewName"
             style="@style/editProfileAlignLeft"
-            android:layout_below="@+id/imageViewEditProfilePic"
-            android:text="@string/textViewName" />
+            android:layout_below="@+id/btnEditProfilePic"
+            android:text="@string/name" />
 
         <EditText
             android:id="@+id/editTextName"
             style="@style/editProfileAlignRight"
-            android:layout_below="@+id/imageViewEditProfilePic"
+            android:layout_below="@+id/btnEditProfilePic"
+            android:layout_toEndOf="@id/textViewName"
+            android:layout_toRightOf="@id/textViewName"
             android:ems="10"
             android:inputType="text" />
 
         <TextView
             android:id="@+id/textViewGender"
             style="@style/editProfileAlignLeft"
-            android:layout_below="@+id/textViewName"
+            android:layout_below="@+id/editTextName"
             android:text="@string/gender" />
-
 
         <Spinner
             android:id="@+id/spinnerEditGender"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
             android:layout_below="@+id/editTextName"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="28dp"
-            android:layout_marginRight="19dp"
-            android:dropDownWidth="wrap_content"
+            android:layout_marginStart="22dp"
+            android:layout_marginLeft="22dp"
+            android:layout_marginEnd="22dp"
+            android:layout_marginRight="22dp"
+            android:layout_toEndOf="@id/textViewGender"
+            android:layout_toRightOf="@id/textViewGender"
             android:scrollbarSize="4dp"
+            android:spinnerMode="dropdown"
+            android:background="@drawable/spinner_background" />
 
-            android:spinnerMode="dropdown" />
 
         <TextView
             android:id="@+id/textViewHeight"
             style="@style/editProfileAlignLeft"
-            android:layout_below="@+id/textViewGender"
+            android:layout_below="@+id/spinnerEditGender"
             android:text="@string/height" />
-
-        <TextView
-            android:id="@+id/textViewWeight"
-            style="@style/editProfileAlignLeft"
-            android:layout_below="@+id/textViewHeight"
-            android:text="@string/weight" />
 
         <EditText
             android:id="@+id/editTextHeight"
             style="@style/editProfileAlignRight"
             android:layout_below="@+id/spinnerEditGender"
+            android:layout_toEndOf="@id/textViewHeight"
+            android:layout_toRightOf="@id/textViewHeight"
             android:ems="5"
             android:inputType="numberDecimal" />
+
+        <TextView
+            android:id="@+id/textViewWeight"
+            style="@style/editProfileAlignLeft"
+            android:layout_below="@+id/editTextHeight"
+            android:text="@string/weight" />
 
         <EditText
             android:id="@+id/editTextWeight"
             style="@style/editProfileAlignRight"
             android:layout_below="@+id/editTextHeight"
-            android:ems="5"
+            android:layout_toEndOf="@id/textViewWeight"
+            android:layout_toRightOf="@id/textViewWeight"
             android:inputType="numberDecimal" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textViewWeight"
+            android:layout_below="@+id/editTextWeight"
             android:layout_centerInParent="true"
             android:layout_marginTop="32dp"
             android:layout_marginBottom="32dp"

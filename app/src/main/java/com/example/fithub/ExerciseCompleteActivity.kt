@@ -3,6 +3,7 @@ package com.example.fithub
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.animation.AnimationUtils
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_exercise_complete.*
@@ -38,6 +39,16 @@ class ExerciseCompleteActivity : AppCompatActivity() {
         editor.putInt("total_points", newTotalPoints)
         editor.putString("completed_exercise_name",intent.getStringExtra("exercise_name"))
         editor.apply()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item!!.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
+        }
+        return (super.onOptionsItemSelected(item))
     }
 
     private fun setTextViews() {

@@ -32,10 +32,8 @@ class EditProfileActivity : AppCompatActivity() {
         setContentView(R.layout.activity_edit_profile)
         // my_child_toolbar is defined in the layout file
         setSupportActionBar(findViewById(R.id.my_child_toolbar))
-
         // Get a support ActionBar corresponding to this toolbar and enable the Up button
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.title = intent.getStringExtra("exercise_name")
 
         val context = this
 
@@ -86,7 +84,7 @@ class EditProfileActivity : AppCompatActivity() {
             finish()
         }
 
-        imageViewEditProfilePic.setOnClickListener {
+        btnEditProfilePic.setOnClickListener {
             val intent = Intent()
             intent.type = "image/*"
             intent.action = Intent.ACTION_GET_CONTENT

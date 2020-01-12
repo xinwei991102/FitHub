@@ -5,4 +5,9 @@
     <color name="colorAccent">#5472d3</color>
     <color name="ic_launcher_fitness_background">#FFFFFF</color>
     <color name="unselected_color">#8c8c8c</color>
+    <color name="red">#DF0000</color>
+    <color name="amber">#E08600</color>
+    <color name="green">#217A25</color>
+    <color name="white">#FFFFFF</color>
+    <color name="darkGray">#737373</color>
 </resources>

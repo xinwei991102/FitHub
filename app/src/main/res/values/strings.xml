@@ -1,21 +1,16 @@
 <resources>
     <string name="app_name">FitHub</string>
     <string name="Email">Email</string>
-    <string name="Username">Username</string>
+    <string name="username">Username</string>
     <string name="password">Password</string>
-    <string name="logoDesc">FitHub Logo</string>
-    <string name="btnTextLogIn">Log In</string>
-    <string name="btnTextSignUp">Sign Up</string>
-    <string name="profile_name">Ho Heu Kei</string>
+    <string name="logo_desc">FitHub Logo</string>
+    <string name="log_in">Log In</string>
+    <string name="sign_up">Sign Up</string>
     <string name="notification">Notification</string>
-    <string name="profile_pic">profile picture</string>
-    <string name="calories">1200</string>
+    <string name="profile_pic">Profile Picture</string>
     <string name="height">Height(cm)</string>
-    <string name="height_cm">160</string>
     <string name="weight">Weight(kg)</string>
-    <string name="weight_kg">55</string>
     <string name="bmi">BMI</string>
-    <string name="bmiNo">20.2</string>
     <string name="setting">Setting</string>
     <string name="logout">Log Out</string>
     <string name="edit_button">Edit Button</string>
@@ -24,20 +19,17 @@
     <string name="gender">Gender</string>
     <string name="male">Male</string>
     <string name="exercise">Exercise</string>
-    <string name="fit_hub_logo">FitHub Logo</string>
-    <string name="sign_up_details">Help us know you better</string>
-    <string name="Save">Save</string>
 
-    <string name="textViewName">Name</string>
+    <string name="name">Name</string>
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
-    <string name="language">Language</string>
-    <string name="changePassword">Change Password</string>
+    <string name="change_password">Change Password</string>
 
     <string name="aerobic_exercise">10-Minutes\nAerobic Exercise</string>
     <string name="core_exercise">10-Minutes\nCore Exercise</string>
     <string name="arm_exercise">5-Minutes\nArm Exercise</string>
     <string name="leg_exercise">10-Minutes\nLeg Exercise</string>
+    <string name="testing_exercise">3-Seconds\nTesting Exercise</string>
 
     <string name="_10_min_aerobic_vid">c-xUk444SWc</string>
     <string name="_10_min_core_vid">3320EhbImLY</string>
@@ -63,9 +55,16 @@
     <string name="new_password">New Password</string>
     <string name="confirm_new_password">Confirm New Password</string>
     <string name="confirm">Confirm</string>
-    <string name="testing_exercise">testing exercise</string>
-    <string name="edit_profile">Edit Profile</string>
-    <string name="choose_file">Choose File</string>
 
+    <string name="edit_profile">Edit Profile</string>
+    <string name="upload_photo">Upload Photo</string>
+    <string name="severe_thinness">Severe Thinness</string>
+    <string name="moderate_thinness">Moderate Thinness</string>
+    <string name="mild_thinness">Mild Thinness</string>
+    <string name="normal">Normal</string>
+    <string name="overweight">Overweight</string>
+    <string name="obese_class_i">Obese Class I</string>
+    <string name="obese_class_ii">Obese Class II</string>
+    <string name="obese_class_iii">Obese Class III</string>
 
 </resources>
