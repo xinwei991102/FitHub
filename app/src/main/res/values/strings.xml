@@ -65,6 +65,10 @@
     <string name="confirm">Confirm</string>
     <string name="testing_exercise">testing exercise</string>
     <string name="edit_profile">Edit Profile</string>
+    <string name="no_date">No date selected</string>
+    <string name="no_record">No record...</string>
+    <string name="congrate">Congratulations! You done the:</string>
+    <string name="start_activity">Let\'s start do an activity now!</string>
 
 
 </resources>

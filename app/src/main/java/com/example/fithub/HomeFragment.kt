@@ -15,41 +15,52 @@ import com.github.sundeepk.compactcalendarview.CompactCalendarView
 import com.github.sundeepk.compactcalendarview.CompactCalendarView.CompactCalendarViewListener
 import com.github.sundeepk.compactcalendarview.domain.Event
 import com.google.firebase.auth.FirebaseAuth
-import kotlinx.android.synthetic.main.fragment_home.*
 import java.util.*
 import kotlin.collections.ArrayList
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.BulletSpan
-
+import android.widget.TextView
+import android.widget.Toast
+import com.google.firebase.database.*
+import java.nio.file.Files.exists
 
 class HomeFragment:Fragment() {
     private lateinit var pref: SharedPreferences
     private lateinit var editor: SharedPreferences.Editor
     private lateinit var mSSBuilder:SpannableStringBuilder
-    var eventString = "No date selected"
-
+    private lateinit var textViewEvent:TextView
+    private lateinit var textViewMonth:TextView
+    private lateinit var calendarView: CompactCalendarView
+    private lateinit var exerciseRecord:ExerciseRecord
+    // Write a message to the database
+    private val recordDB = FirebaseDatabase.getInstance()
+    private val recordRef = recordDB.getReference("ExerciseRecord")
     //array
     private val eventColor = arrayOf(Color.BLUE, Color.RED, Color.CYAN, Color.GREEN)
-    //private val eventData = arrayOf("Aerobic Exercise", "Core Exercise", "Arm Exercise", "Leg Exercise")
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+    val view = inflater.inflate(R.layout.fragment_home, container, false)
+        textViewMonth = view.findViewById(R.id.textViewMonth)
+        textViewEvent = view.findViewById(R.id.textViewEvent)
+    return view
+    }
 
-    return inflater.inflate(R.layout.fragment_home, container, false)}
-
+    lateinit var eventString:String
     @TargetApi(Build.VERSION_CODES.O)
     @RequiresApi(Build.VERSION_CODES.N)
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-        val compactCalendar: CompactCalendarView = view?.findViewById(R.id.calendarViewCalendar)!!
+        eventString = getString(R.string.no_date)
+        calendarView = view?.findViewById(R.id.calendarView)!!
+        calendarView.setUseThreeLetterAbbreviation(true)
         val dateFormatMonth = SimpleDateFormat("MM yyyy", Locale.getDefault())
-
-        compactCalendar.setUseThreeLetterAbbreviation(true)
+        val currentUId = FirebaseAuth.getInstance().currentUser?.uid
 
         //set date into 12mn in term milliseconds
         val c = GregorianCalendar()
@@ -60,64 +71,107 @@ class HomeFragment:Fragment() {
         val currentTimeInLong = c.time.time
 
         textViewMonth.text = dateFormatMonth.format(c.time)
+        pref = requireContext().getSharedPreferences(currentUId, 0) // 0 - for private mode
+        editor = pref.edit()
 
         //set event
-        val events = ArrayList<Event>()
-        val event:Event
-        val user = FirebaseAuth.getInstance().currentUser
-        pref = requireContext().getSharedPreferences(user?.uid, 0) // 0 - for private mode
-        var workout = 0
-        editor = pref.edit()
-        var eventData =""
+        var events = ArrayList<Event>()
+        var event:Event
+        var evColor = 0
+        var eventData = ""
+
+        //TODO get data from database and add into event
+        //1. get data
+        //2. write into event and events
+        //3. write into calendar
+        val eventRecordQuery = recordRef.orderByChild("uid").equalTo(currentUId)
+        eventRecordQuery.addChildEventListener(object: ChildEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+                Toast.makeText(context,p0.message,Toast.LENGTH_LONG)
+            }
+
+            override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onChildChanged(p0: DataSnapshot, p1: String?) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onChildRemoved(p0: DataSnapshot) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onChildAdded(dataSnapshot: DataSnapshot, s: String?) {
+                if(!dataSnapshot.exists()){
+                    calendarView.addEvents(events)
+                    Toast.makeText(context, "calendar", Toast.LENGTH_SHORT).show()
+                }
+                Toast.makeText(context, "onChildAdded", Toast.LENGTH_SHORT).show()
+                evColor = dataSnapshot.getValue(ExerciseRecord::class.java)?.evColor!!
+                val time = dataSnapshot.getValue(ExerciseRecord::class.java)?.millisecond!!
+                eventData = dataSnapshot.getValue(ExerciseRecord::class.java)?.data!!
+                event = Event(eventColor[evColor], time, eventData)
+                events.add(event)
+            }
+
+        })
+
         if(pref.getString("completed_exercise_name", "").isNotEmpty()){
             when (pref.getString("completed_exercise_name", "")) {
                 getString(R.string.aerobic_exercise) -> {
-                    workout = 0  //0 aerobic exercise
+                    evColor = 0
                     eventData = getString(R.string.aerobic_exercise)
                 }
                 getString(R.string.core_exercise) -> {
-                    workout = 1  //1 core exercise
+                    evColor = 1
                     eventData = getString(R.string.core_exercise)
                 }
                 getString(R.string.arm_exercise) -> {
-                    workout = 2 //2 arm exercise
+                    evColor = 2
                     eventData = getString(R.string.arm_exercise)
                 }
                 getString(R.string.leg_exercise) -> {
-                    workout = 3  //3 leg exercise
+                    evColor = 3
                     eventData = getString(R.string.leg_exercise)
                 }
                 getString(R.string.testing_exercise) -> {
                     eventData = getString(R.string.testing_exercise)
                 }
-
             }
-            event = Event(eventColor[workout], currentTimeInLong, eventData)
+            event = Event(eventColor[evColor], currentTimeInLong, eventData)
             events.add(event)
+            //log record into database
+            if (currentUId != null) {
+                logRecord(currentUId, evColor, currentTimeInLong, eventData)
+
+                calendarView.addEvents(events)
+                Toast.makeText(context, "log record - add calendar", Toast.LENGTH_SHORT).show()
+            }
+
             editor.remove("completed_exercise_name")
             editor.apply()
         }
 
-        compactCalendar.addEvents(events)
 
         //assign text into mSSBuilder
         mSSBuilder = SpannableStringBuilder(eventString)
         // Display the spannable text to TextView
         textViewEvent.text = mSSBuilder // text view display no record...
 
-        compactCalendar.setListener(object : CompactCalendarViewListener{
+        calendarView.setListener(object : CompactCalendarViewListener{
             override fun onDayClick(dateClicked: Date?) {
-                eventString = "No record..."
-                if (compactCalendar.getEvents(dateClicked?.time!!).isNotEmpty()) {
-                    eventString = "Congratulations! You done the: \n"
-                    for(event in compactCalendar.getEvents(dateClicked.time)){
+                eventString = getString(R.string.no_record)
+                if (calendarView.getEvents(dateClicked?.time!!).isNotEmpty()) {
+                    eventString = getString(R.string.congrate) + "\n"
+                    for(event in calendarView.getEvents(dateClicked.time)){
                         eventString += event.data.toString() + "\n"
                     }
-                }else if(dateClicked.time == currentTimeInLong){
-                    eventString += "\nLet's start do an activity now!"
+                }else if(calendarView.getEvents(dateClicked?.time!!).isEmpty() && dateClicked.time == currentTimeInLong){
+                    eventString += "\n" + getString(R.string.start_activity)
                 }
                 mSSBuilder = SpannableStringBuilder(eventString)
-                for(event in compactCalendar.getEvents(dateClicked.time)){
+                for(event in calendarView.getEvents(dateClicked.time)){
                     when (event.data.toString()) {
                         "Aerobic Exercise" -> {
                             showBullet("Aerobic Exercise")  // Generate bulleted list
@@ -130,6 +184,9 @@ class HomeFragment:Fragment() {
                         }
                         "Leg Exercise" -> {
                             showBullet("Leg Exercise")
+                        }
+                        "testing exercise" -> {
+                            showBullet("testing exercise")
                         }
                     }
                 }
@@ -148,16 +205,19 @@ class HomeFragment:Fragment() {
         var bulletSpan = BulletSpan(0,Color.TRANSPARENT)
         when (textToBullet) {
             "Aerobic Exercise" -> {
-                bulletSpan = BulletSpan(50, eventColor[0])
+                bulletSpan = BulletSpan(100, eventColor[0])
             }
             "Core Exercise" -> {
-                bulletSpan = BulletSpan(50, eventColor[1])
+                bulletSpan = BulletSpan(100, eventColor[1])
             }
             "Arm Exercise" -> {
-                bulletSpan = BulletSpan(50, eventColor[2])
+                bulletSpan = BulletSpan(100, eventColor[2])
             }
             "Leg Exercise" -> {
-                bulletSpan = BulletSpan(50, eventColor[3])
+                bulletSpan = BulletSpan(100, eventColor[3])
+            }
+            "testing exercise" -> {
+                bulletSpan = BulletSpan(100, eventColor[0])
             }
         }
 
@@ -169,4 +229,10 @@ class HomeFragment:Fragment() {
             Spanned.SPAN_EXCLUSIVE_EXCLUSIVE // Do not extend the span when text add later
         )
     }
+
+    private fun logRecord(uid:String, evColor:Int, time:Long, data:String){
+        exerciseRecord = ExerciseRecord(uid, evColor, time, data)
+        recordRef.push().setValue(exerciseRecord)
+    }
+
 }
