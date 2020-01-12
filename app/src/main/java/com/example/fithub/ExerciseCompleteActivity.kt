@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.animation.AnimationUtils
+import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_exercise_complete.*
 import java.util.*
 
@@ -39,6 +41,7 @@ class ExerciseCompleteActivity : AppCompatActivity() {
         editor.putInt("total_points", newTotalPoints)
         editor.putString("completed_exercise_name",intent.getStringExtra("exercise_name"))
         editor.apply()
+        writeProfile()
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -51,6 +54,20 @@ class ExerciseCompleteActivity : AppCompatActivity() {
         return (super.onOptionsItemSelected(item))
     }
 
+    private fun writeProfile() {
+        val database = FirebaseDatabase.getInstance().getReference("Profile")
+
+        //get and store points
+        val uid = FirebaseAuth.getInstance().currentUser?.uid
+        val pref = this.getSharedPreferences(uid, 0) // 0 - for private mode
+        val points = pref.getInt("total_points", 0)
+
+        val childUpdates = HashMap<String, Any>()
+        childUpdates["/$uid/points"] = points
+
+        database.updateChildren(childUpdates)
+    }
+
     private fun setTextViews() {
         val exercisedTime = intent.getIntExtra("exercised_time", 0)
         val burnedCalories = intent.getIntExtra("burned_calories", 0)
@@ -58,13 +75,13 @@ class ExerciseCompleteActivity : AppCompatActivity() {
         val exercisedMin = exercisedSec / 60
         val timeStr = java.lang.String.format(
             Locale.UK,
-            "%02d m %02d s",
+            "%d m %d s",
             exercisedMin % 60,
             exercisedSec % 60
         )
         val calStr = java.lang.String.format(
             Locale.UK,
-            "%02d calories",
+            "%d calories",
             burnedCalories
         )
         textViewExercisedTime.text = timeStr
