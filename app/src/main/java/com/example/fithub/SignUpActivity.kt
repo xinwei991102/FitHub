@@ -98,10 +98,6 @@ class SignUpActivity : AppCompatActivity() {
                         } else {
                             Toast.makeText(this, "Sign Up Successfully", Toast.LENGTH_SHORT).show()
                             saveDataToFirebase()
-                            val intent = Intent(this, MainActivity::class.java)
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                            startActivity(intent)
-                            //finish()
                         }
                     }.addOnFailureListener {
                         Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
@@ -184,6 +180,11 @@ class SignUpActivity : AppCompatActivity() {
                     "User details saved successfully",
                     Toast.LENGTH_SHORT
                 ).show()
+                //go to main activity
+                val intent = Intent(this, MainActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                startActivity(intent)
+                //finish()
             }
     }
 
