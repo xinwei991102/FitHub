@@ -59,7 +59,7 @@ class ProfileFragment:Fragment() {
             FirebaseAuth.getInstance().signOut()
             val intent = Intent(requireContext(), LogInActivity::class.java)
             startActivity(intent)
-            activity!!.finish()
+            activity?.finish()
         }
 
         imageButtonEditProfile.setOnClickListener {

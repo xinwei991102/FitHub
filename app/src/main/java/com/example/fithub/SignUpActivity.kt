@@ -5,9 +5,10 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.view.View
-import android.widget.*
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -33,7 +34,6 @@ class SignUpActivity : AppCompatActivity() {
             val email = editTextEmail.text.toString().trim()
             val password = editTextPassword.toString().trim()
             val confirmPassword = editTextConfirmPassword.text.toString().trim()
-            val gender = spinnerGender.selectedItem.toString().trim()
             val height = editTextHeight.text.toString().trim()
             val weight = editTextWeight.text.toString().trim()
             var validDetails = true
@@ -120,7 +120,7 @@ class SignUpActivity : AppCompatActivity() {
         val uploadTask = imagesRef.putFile(file)
         var downloadUri: Uri
 
-        val urlTask = uploadTask.continueWithTask { task ->
+        uploadTask.continueWithTask { task ->
             if (!task.isSuccessful) {
                 Toast.makeText(applicationContext, task.exception?.message, Toast.LENGTH_SHORT)
                     .show()
