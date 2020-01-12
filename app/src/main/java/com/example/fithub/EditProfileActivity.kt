@@ -1,7 +1,6 @@
 package com.example.fithub
 
 import android.app.Activity
-import android.app.Application
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -26,6 +25,7 @@ class EditProfileActivity : AppCompatActivity() {
     lateinit var imageUri: Uri
     var oldDownloadUrl = ""
     var newDownloadUrl = ""
+    val context = this
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +35,7 @@ class EditProfileActivity : AppCompatActivity() {
 
         // Get a support ActionBar corresponding to this toolbar and enable the Up button
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = intent.getStringExtra("exercise_name")
 
         val context = this
 
@@ -107,8 +108,13 @@ class EditProfileActivity : AppCompatActivity() {
                     editTextHeight.setText(profile.height.toString())
                     editTextWeight.setText(profile.weight.toString())
                     oldDownloadUrl = profile.downloadUrl
-                    Picasso.get().load(oldDownloadUrl).placeholder(R.drawable.ic_child_face)
-                        .into(imageViewEditProfilePic)
+                    if(profile.downloadUrl == ""){
+                        Toast.makeText(context, "Unable to retrieve profile picture", Toast.LENGTH_SHORT).show()
+                        val res = resources.getDrawable(R.drawable.ic_child_face)
+                        imageViewEditProfilePic.setImageDrawable(res)
+                    }else{
+                        Picasso.get().load(profile.downloadUrl).placeholder(R.drawable.ic_child_face).into(imageViewEditProfilePic)
+                    }
 
                     val genderDb = profile.gender.toString()
                     var genderSelect: Int? = 0
@@ -155,19 +161,6 @@ class EditProfileActivity : AppCompatActivity() {
                     .show()
             }
         }
-
-//
-//        // Register observers to listen for when the download is done or if it fails
-//        uploadTask.addOnFailureListener {
-//            Toast.makeText(applicationContext, it.message, Toast.LENGTH_SHORT).show()
-//        }.addOnSuccessListener {
-//            // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
-//            // ...
-//        }.addOnCompleteListener {
-//            if (uploadTask.isSuccessful) {
-//                newDownloadUrl = imagesRef.downloadUrl.toString()
-//            }
-//        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

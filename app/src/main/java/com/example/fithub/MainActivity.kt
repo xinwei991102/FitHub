@@ -21,11 +21,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        if (FirebaseAuth.getInstance().currentUser == null) {
-            val intent = Intent(this, LogInActivity::class.java)
-            startActivity(intent)
-        }
-
         val navListener =
             BottomNavigationView.OnNavigationItemSelectedListener { menuItem: MenuItem ->
                 when (menuItem.itemId) {

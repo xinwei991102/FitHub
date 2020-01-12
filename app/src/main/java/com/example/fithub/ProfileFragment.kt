@@ -57,6 +57,9 @@ class ProfileFragment:Fragment() {
 
         buttonLogOut.setOnClickListener{
             FirebaseAuth.getInstance().signOut()
+            val intent = Intent(requireContext(), LogInActivity::class.java)
+            startActivity(intent)
+            activity!!.finish()
         }
 
         imageButtonEditProfile.setOnClickListener {
@@ -73,7 +76,7 @@ class ProfileFragment:Fragment() {
         database.child(user!!.uid)
             .addValueEventListener(object : ValueEventListener {
                 override fun onCancelled(p0: DatabaseError) {
-                    Toast.makeText(thisContext,p0.message,Toast.LENGTH_LONG)
+                    Toast.makeText(thisContext,p0.message,Toast.LENGTH_LONG).show()
                 }
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     profile = dataSnapshot.getValue(Profile::class.java)!!
@@ -83,6 +86,14 @@ class ProfileFragment:Fragment() {
                     textViewUserGender.text = profile.gender
                     //textViewPointsNum.text = profile.points.toString()
                     Picasso.get().load(profile.downloadUrl).placeholder(R.drawable.ic_child_face).into(imageViewProfilePic)
+                    if(profile.downloadUrl == ""){
+                        Toast.makeText(requireContext(), "Unable to retrieve profile picture", Toast.LENGTH_SHORT).show()
+                        val res = resources.getDrawable(R.drawable.ic_child_face)
+                        imageViewProfilePic.setImageDrawable(res)
+                    }else{
+                        Picasso.get().load(profile.downloadUrl).placeholder(R.drawable.ic_child_face).into(imageViewProfilePic)
+                    }
+
                     val heightCm = profile.height
                     val weightKg = profile.weight
                     val bmi: Double

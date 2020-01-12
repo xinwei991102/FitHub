@@ -65,6 +65,7 @@
     <string name="confirm">Confirm</string>
     <string name="testing_exercise">testing exercise</string>
     <string name="edit_profile">Edit Profile</string>
+    <string name="choose_file">Choose File</string>
 
 
 </resources>
