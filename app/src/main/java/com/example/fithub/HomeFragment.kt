@@ -1,29 +1,30 @@
 package com.example.fithub
 
 import android.annotation.TargetApi
-import android.content.SharedPreferences
 import android.graphics.Color
 import android.icu.text.SimpleDateFormat
 import android.os.Build
 import android.os.Bundle
+import android.text.SpannableStringBuilder
+import android.text.Spanned
+import android.text.style.BulletSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.github.sundeepk.compactcalendarview.CompactCalendarView
 import com.github.sundeepk.compactcalendarview.CompactCalendarView.CompactCalendarViewListener
 import com.github.sundeepk.compactcalendarview.domain.Event
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.ChildEventListener
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
 import java.util.*
 import kotlin.collections.ArrayList
-import android.text.SpannableStringBuilder
-import android.text.Spanned
-import android.text.style.BulletSpan
-import android.widget.TextView
-import android.widget.Toast
-import com.google.firebase.database.*
-import java.nio.file.Files.exists
 
 class HomeFragment : Fragment() {
     private lateinit var mSSBuilder: SpannableStringBuilder
@@ -83,19 +84,24 @@ class HomeFragment : Fragment() {
             override fun onCancelled(p0: DatabaseError) {
                 Toast.makeText(context, p0.message, Toast.LENGTH_LONG)
             }
+
             override fun onChildMoved(p0: DataSnapshot, p1: String?) {
                 //TODO("not implemented")
             }
+
             override fun onChildChanged(p0: DataSnapshot, p1: String?) {
                 //TODO("not implemented")
             }
+
             override fun onChildRemoved(p0: DataSnapshot) {
                 //TODO("not implemented")
             }
+
             override fun onChildAdded(dataSnapshot: DataSnapshot, s: String?) {
-                if (context != null){
+                if (context != null) {
                     if (!dataSnapshot.exists()) {
-                        Toast.makeText(context, "Data snapshot does not exist", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Data snapshot does not exist", Toast.LENGTH_SHORT)
+                            .show()
                     } else {
                         evColor = dataSnapshot.getValue(ExerciseRecord::class.java)?.evColor!!
                         val time = dataSnapshot.getValue(ExerciseRecord::class.java)?.millisecond!!
@@ -120,14 +126,19 @@ class HomeFragment : Fragment() {
                 if (calendarView.getEvents(dateClicked?.time!!).isNotEmpty()) {
                     eventString = getString(R.string.congrate)
                     for (event in calendarView.getEvents(dateClicked.time)) {
-                        eventString += "\n" + event.data.toString().replace("\n"," ")
+                        val eventDataString = event.data.toString().replace("\n", " ")
+                        //if same exercise have not added before
+                        if (eventString.indexOf(eventDataString) == -1) {
+                            eventString += " \n" + event.data.toString().replace("\n", " ")
+                        }
                     }
                 } else if (calendarView.getEvents(dateClicked.time).isEmpty() && dateClicked.time == currentTimeInLong) {
                     eventString += "\n" + getString(R.string.start_activity)
                 }
                 mSSBuilder = SpannableStringBuilder(eventString)
                 for (event in calendarView.getEvents(dateClicked.time)) {
-                    showBullet(event.data.toString(),event.color)
+                    val eventDataString = event.data.toString().replace("\n", " ")
+                    showBullet(eventDataString, event.color)
                 }
                 textViewEvent.text = mSSBuilder //eventString
             }
@@ -142,14 +153,19 @@ class HomeFragment : Fragment() {
     // Custom method to generate a bullet point list
     private fun showBullet(textToBullet: String, evColor: Int) {
         // Initialize a new BulletSpan
-        var bulletSpan = BulletSpan(20, evColor)
+        val bulletSpan = BulletSpan(20, evColor)
         // Apply the bullet to the span
-        mSSBuilder.setSpan(
-            bulletSpan, // Span to add
-            eventString.indexOf(textToBullet.replace("\n"," ")), // Start of the span (inclusive)
-            eventString.indexOf(textToBullet.replace("\n"," ")) + 1,  // End of the span (exclusive)
-            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE // Do not extend the span when text add later
-        )
+        val startIndex = eventString.indexOf(textToBullet)  // Start of the span (inclusive)
+        val endIndex = startIndex + 1  // End of the span (exclusive)
+        if (startIndex != -1) {
+            mSSBuilder.setSpan(
+                bulletSpan, // Span to add
+                startIndex, // Start of the span (inclusive)
+                endIndex,  // End of the span (exclusive)
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE // Do not extend the span when text add later
+            )
+        }
+
     }
 
 }
