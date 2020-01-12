@@ -1,82 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!--
-    <CalendarView
-        android:id="@+id/calendarViewCalendar"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:background="@drawable/bg_calendar"
-        android:layout_centerHorizontal="true"
-        />
-    -->
+        android:orientation="vertical">
 
-    <ScrollView
-        android:id="@+id/ScrollViewHome"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginTop="16dp"
+            android:text="@string/exercise_records"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="30sp" />
 
-            <TextView
-                android:id="@+id/textViewMonth"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:background="@android:color/background_light"
-                android:textAlignment="center"
-                android:textColor="#000"
-                android:textSize="24sp" />
+        <TextView
+            android:id="@+id/textViewMonth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/bg_calendar"
+            android:textAlignment="center"
+            android:textColor="#000"
+            android:textSize="24sp" />
 
-            <com.github.sundeepk.compactcalendarview.CompactCalendarView
-                android:id="@+id/calendarView"
-                android:layout_width="fill_parent"
-                android:layout_height="250dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                app:compactCalendarBackgroundColor="@color/design_default_color_background"
-                app:compactCalendarCurrentDayBackgroundColor="@color/colorPrimaryDark"
-                app:compactCalendarCurrentDayTextColor="#fff"
-                app:compactCalendarCurrentSelectedDayBackgroundColor="@color/colorAccent"
-                app:compactCalendarCurrentSelectedDayIndicatorStyle="fill_large_indicator"
-                app:compactCalendarCurrentSelectedDayTextColor="#fff"
-                app:compactCalendarMultiEventIndicatorColor="@color/design_default_color_error"
-                app:compactCalendarTargetHeight="250dp"
-                app:compactCalendarTextColor="#000"
-                app:compactCalendarTextSize="12sp" />
+        <com.github.sundeepk.compactcalendarview.CompactCalendarView
+            android:id="@+id/calendarView"
+            android:layout_width="fill_parent"
+            android:layout_height="250dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/bg_calendar"
+            android:paddingStart="10dp"
+            android:paddingLeft="10dp"
+            android:paddingEnd="10dp"
+            android:paddingRight="10dp"
+            app:compactCalendarBackgroundColor="@color/design_default_color_background"
+            app:compactCalendarCurrentDayBackgroundColor="@color/colorPrimaryDark"
+            app:compactCalendarCurrentDayTextColor="#fff"
+            app:compactCalendarCurrentSelectedDayBackgroundColor="@color/colorAccent"
+            app:compactCalendarCurrentSelectedDayIndicatorStyle="fill_large_indicator"
+            app:compactCalendarCurrentSelectedDayTextColor="#fff"
+            app:compactCalendarMultiEventIndicatorColor="@color/design_default_color_error"
+            app:compactCalendarTargetHeight="250dp"
+            app:compactCalendarTextColor="#000"
+            app:compactCalendarTextSize="12sp" />
 
-            <TextView
-                android:id="@+id/textViewEvent"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginBottom="8dp"
-                android:height="100dp"
-                android:background="@drawable/bg_calendar"
-                android:textColor="#000"
-                android:textSize="16sp"
-                android:textStyle="italic" />
 
-        </LinearLayout>
-    </ScrollView>
+        <TextView
+            android:id="@+id/textViewEvent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/bg_calendar"
+            android:paddingStart="10dp"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="10dp"
+            android:textColor="#000"
+            android:textSize="16sp" />
 
-</RelativeLayout>
+    </LinearLayout>
+</ScrollView>
+

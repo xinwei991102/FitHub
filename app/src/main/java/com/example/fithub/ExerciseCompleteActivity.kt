@@ -39,9 +39,38 @@ class ExerciseCompleteActivity : AppCompatActivity() {
         val prevPoints = pref.getInt("total_points", 0)
         val newTotalPoints = prevPoints + points
         editor.putInt("total_points", newTotalPoints)
-        editor.putString("completed_exercise_name",intent.getStringExtra("exercise_name"))
         editor.apply()
         writeProfile()
+        val currentUId = FirebaseAuth.getInstance().currentUser?.uid
+        val eventData = intent.getStringExtra("exercise_name")
+        var evColor = 0
+        //set date into 12mn in term milliseconds
+        val c = GregorianCalendar()
+        c.set(Calendar.HOUR_OF_DAY, 0) //anything 0 - 23
+        c.set(Calendar.MINUTE, 0)
+        c.set(Calendar.SECOND, 0)
+        c.set(Calendar.MILLISECOND, 0)
+        val currentTimeInLong = c.time.time
+        when (eventData) {
+            getString(R.string.aerobic_exercise) -> {
+                evColor = 0
+            }
+            getString(R.string.core_exercise) -> {
+                evColor = 1
+            }
+            getString(R.string.arm_exercise) -> {
+                evColor = 2
+            }
+            getString(R.string.leg_exercise) -> {
+                evColor = 3
+            }
+            getString(R.string.testing_exercise) -> {
+                evColor = 0
+            }
+        }
+        if (currentUId != null) {
+            logRecord(currentUId, evColor, currentTimeInLong, eventData)
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -92,6 +121,13 @@ class ExerciseCompleteActivity : AppCompatActivity() {
         super.onResume()
         val animation = AnimationUtils.loadAnimation(this, R.anim.wobble_anim)
         imageViewTrophy.startAnimation(animation)
+    }
+
+    private fun logRecord(uid: String, evColor: Int, time: Long, data: String) {
+        val recordDB = FirebaseDatabase.getInstance()
+        val recordRef = recordDB.getReference("ExerciseRecord")
+        val exerciseRecord = ExerciseRecord(uid, evColor, time, data)
+        recordRef.push().setValue(exerciseRecord)
     }
 
 }

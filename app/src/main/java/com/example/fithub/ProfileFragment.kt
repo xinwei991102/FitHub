@@ -81,75 +81,74 @@ class ProfileFragment : Fragment() {
                 }
 
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    profile = dataSnapshot.getValue(Profile::class.java)!!
-                    textViewProfileName.text = profile.name
-                    textViewHeightCm.text = profile.height.toString()
-                    textViewWeightKg.text = profile.weight.toString()
-                    textViewUserGender.text = profile.gender
-                    if (profile.downloadUrl == "") {
-                        Toast.makeText(
-                            requireContext(),
-                            "Unable to retrieve profile picture",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        val res = resources.getDrawable(R.drawable.ic_child_face)
-                        imageViewProfilePic.setImageDrawable(res)
-                    } else {
-                        Picasso.get().load(profile.downloadUrl)
-                            .placeholder(R.drawable.ic_child_face).into(imageViewProfilePic)
+                    if (isAdded){
+                        profile = dataSnapshot.getValue(Profile::class.java)!!
+                        textViewProfileName.text = profile.name
+                        textViewHeightCm.text = profile.height.toString()
+                        textViewWeightKg.text = profile.weight.toString()
+                        textViewUserGender.text = profile.gender
+                        if (profile.downloadUrl == "") {
+                            Toast.makeText(
+                                thisContext,
+                                "Unable to retrieve profile picture",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            val res = resources.getDrawable(R.drawable.ic_child_face)
+                            imageViewProfilePic.setImageDrawable(res)
+                        } else {
+                            Picasso.get().load(profile.downloadUrl)
+                                .placeholder(R.drawable.ic_child_face).into(imageViewProfilePic)
+                        }
+                        val heightCm = profile.height
+                        val weightKg = profile.weight
+                        val bmi: Double
+                        val heightM = (heightCm / 100.0)
+                        val heightSquare = heightM.pow(2)
+                        bmi = (weightKg / heightSquare)
+                        //show BMI classification
+                        when {
+                            bmi < 16.0 -> {
+                                textViewBMICount.text =
+                                    String.format("%.1f (%s)", bmi, getString(R.string.severe_thinness))
+                                textViewBMICount.setTextColor(resources.getColor(R.color.red))
+                            }
+                            bmi >= 16.0 && bmi < 17.0 -> {
+                                textViewBMICount.text =
+                                    String.format("%.1f (%s)", bmi, getString(R.string.moderate_thinness))
+                                textViewBMICount.setTextColor(resources.getColor(R.color.amber))
+                            }
+                            bmi >= 17.0 && bmi < 18.5 -> {
+                                textViewBMICount.text =
+                                    String.format("%.1f (%s)", bmi, getString(R.string.mild_thinness))
+                                textViewBMICount.setTextColor(resources.getColor(R.color.amber))
+                            }
+                            bmi >= 18.5 && bmi < 25.0 -> {
+                                textViewBMICount.text =
+                                    String.format("%.1f (%s)", bmi, getString(R.string.normal))
+                                textViewBMICount.setTextColor(resources.getColor(R.color.green))
+                            }
+                            bmi >= 25.0 && bmi < 30.0 -> {
+                                textViewBMICount.text =
+                                    String.format("%.1f (%s)", bmi, getString(R.string.overweight))
+                                textViewBMICount.setTextColor(resources.getColor(R.color.amber))
+                            }
+                            bmi >= 30.0 && bmi < 35.0 -> {
+                                textViewBMICount.text =
+                                    String.format("%.1f (%s)", bmi, getString(R.string.obese_class_i))
+                                textViewBMICount.setTextColor(resources.getColor(R.color.red))
+                            }
+                            bmi in 35.0..40.0 -> {
+                                textViewBMICount.text =
+                                    String.format("%.1f (%s)", bmi, getString(R.string.obese_class_ii))
+                                textViewBMICount.setTextColor(resources.getColor(R.color.red))
+                            }
+                            bmi > 40.0 -> {
+                                textViewBMICount.text =
+                                    String.format("%.1f (%s)", bmi, getString(R.string.obese_class_iii))
+                                textViewBMICount.setTextColor(resources.getColor(R.color.red))
+                            }
+                        }
                     }
-
-                    val heightCm = profile.height
-                    val weightKg = profile.weight
-                    val bmi: Double
-                    val heightM = (heightCm / 100.0)
-                    val heightSquare = heightM.pow(2)
-                    bmi = (weightKg / heightSquare)
-
-                    //show BMI classification
-                    when {
-                        bmi < 16.0 -> {
-                            textViewBMICount.text =
-                                String.format("%.1f (%s)", bmi, getString(R.string.severe_thinness))
-                            textViewBMICount.setTextColor(resources.getColor(R.color.red))
-                        }
-                        bmi >= 16.0 && bmi < 17.0 -> {
-                            textViewBMICount.text =
-                                String.format("%.1f (%s)", bmi, getString(R.string.moderate_thinness))
-                            textViewBMICount.setTextColor(resources.getColor(R.color.amber))
-                        }
-                        bmi >= 17.0 && bmi < 18.5 -> {
-                            textViewBMICount.text =
-                                String.format("%.1f (%s)", bmi, getString(R.string.mild_thinness))
-                            textViewBMICount.setTextColor(resources.getColor(R.color.amber))
-                        }
-                        bmi >= 18.5 && bmi < 25.0 -> {
-                            textViewBMICount.text =
-                                String.format("%.1f (%s)", bmi, getString(R.string.normal))
-                            textViewBMICount.setTextColor(resources.getColor(R.color.green))
-                        }
-                        bmi >= 25.0 && bmi < 30.0 -> {
-                            textViewBMICount.text =
-                                String.format("%.1f (%s)", bmi, getString(R.string.overweight))
-                            textViewBMICount.setTextColor(resources.getColor(R.color.amber))
-                        }
-                        bmi >= 30.0 && bmi < 35.0 -> {
-                            textViewBMICount.text =
-                                String.format("%.1f (%s)", bmi, getString(R.string.obese_class_i))
-                            textViewBMICount.setTextColor(resources.getColor(R.color.red))
-                        }
-                        bmi in 35.0..40.0 -> {
-                            textViewBMICount.text =
-                                String.format("%.1f (%s)", bmi, getString(R.string.obese_class_ii))
-                            textViewBMICount.setTextColor(resources.getColor(R.color.red))
-                        }
-                        bmi > 40.0 -> {
-                            textViewBMICount.text =
-                                String.format("%.1f (%s)", bmi, getString(R.string.obese_class_iii))
-                            textViewBMICount.setTextColor(resources.getColor(R.color.red))
-                        }
-                    }
-
                 }
             })
         textViewLevelNum.text = calcLevel().toString()
