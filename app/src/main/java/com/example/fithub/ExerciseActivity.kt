@@ -55,7 +55,7 @@ class ExerciseActivity : AppCompatActivity(), OnInitializedListener {
 
         val user = FirebaseAuth.getInstance().currentUser
         val database = FirebaseDatabase.getInstance().getReference("Profile")
-        var profile: Profile
+        var profile: Profile?
         weight = 0.0
         database.child(user!!.uid)
             .addValueEventListener(object : ValueEventListener {
@@ -63,8 +63,9 @@ class ExerciseActivity : AppCompatActivity(), OnInitializedListener {
                     Toast.makeText(context, p0.message, Toast.LENGTH_LONG).show()
                 }
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    profile = dataSnapshot.getValue(Profile::class.java)!!
-                    weight = profile.weight
+                    profile = dataSnapshot.getValue(Profile::class.java)
+                    if (profile!=null)
+                        weight = profile!!.weight
                 }
             })
     }

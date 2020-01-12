@@ -15,7 +15,10 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.activity_edit_profile.*
 import kotlinx.android.synthetic.main.activity_sign_up.*
+import kotlinx.android.synthetic.main.activity_sign_up.editTextHeight
+import kotlinx.android.synthetic.main.activity_sign_up.editTextWeight
 
 
 class SignUpActivity : AppCompatActivity() {
@@ -41,28 +44,28 @@ class SignUpActivity : AppCompatActivity() {
             val height = editTextHeight.text.toString().trim()
             val weight = editTextWeight.text.toString().trim()
             var validDetails = true
-            val errorMsg = "This field must no be empty!"
+            val errorMsg = "This field cannot be empty"
 
             //Validation
-            if(TextUtils.isEmpty(email)) {
+            if (TextUtils.isEmpty(email)) {
                 validDetails = false
                 editTextEmail.error = errorMsg
             }
-            if(TextUtils.isEmpty(username)) {
+            if (TextUtils.isEmpty(username)) {
                 validDetails = false
                 editTextUsername.error = errorMsg
             }
-            if(TextUtils.isEmpty(password) || password.length <= 5) {
+            if (TextUtils.isEmpty(password) || password.length <= 5) {
                 validDetails = false
-                editTextPassword.error = "Password must not less than 6 characters"
+                editTextPassword.error = "Password cannot be shorter than 6 characters"
             }
 
-            if(TextUtils.isEmpty(confirmPassword) || password.length <= 5) {
+            if (TextUtils.isEmpty(confirmPassword) || password.length <= 5) {
                 validDetails = false
-                editTextConfirmPassword.error = "Password must not less than 6 characters"
-             }else if(!editTextConfirmPassword.text.toString().equals(editTextPassword.text.toString())){
+                editTextConfirmPassword.error = "Password cannot be shorter than 6 characters"
+            } else if (!editTextConfirmPassword.text.toString().equals(editTextPassword.text.toString())) {
                 validDetails = false
-                editTextConfirmPassword.error = "Password does not match!"
+                editTextConfirmPassword.error = "Password does not match"
             }
             if (TextUtils.isEmpty(height)) {
                 validDetails = false
@@ -72,7 +75,14 @@ class SignUpActivity : AppCompatActivity() {
                 validDetails = false
                 editTextWeight.error = errorMsg
             }
-
+            if (height.toDouble() <= 0.0) {
+                validDetails = false
+                editTextHeight.error = "Height must be greater than 0"
+            }
+            if (weight.toDouble() <= 0.0) {
+                validDetails = false
+                editTextHeight.error = "Weight must be greater than 0"
+            }
 
             spinnerGender.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onNothingSelected(parent: AdapterView<*>?) {

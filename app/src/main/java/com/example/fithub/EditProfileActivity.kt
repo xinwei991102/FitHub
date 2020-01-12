@@ -45,6 +45,7 @@ class EditProfileActivity : AppCompatActivity() {
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
+
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,
@@ -57,23 +58,27 @@ class EditProfileActivity : AppCompatActivity() {
 
         buttonProfileSave.setOnClickListener {
             var isValid = true
-
             if (TextUtils.isEmpty(editTextName.text.toString().trim())) {
                 isValid = false
                 editTextName.error = "This field cannot be empty"
             }
-
             if (TextUtils.isEmpty(editTextHeight.text.toString().trim())) {
                 isValid = false
                 editTextHeight.error = "This field cannot be empty"
             }
-
             if (TextUtils.isEmpty(editTextWeight.text.toString().trim())) {
                 isValid = false
                 editTextWeight.error = "This field cannot be empty"
             }
-
-            if(isValid){
+            if (editTextHeight.text.toString().toDouble() <= 0) {
+                isValid = false
+                editTextHeight.error = "Height must be greater than 0"
+            }
+            if (editTextWeight.text.toString().toDouble() <= 0) {
+                isValid = false
+                editTextWeight.error = "Height must be greater than 0"
+            }
+            if (isValid) {
                 writeProfile()
                 finish()
             }
@@ -99,6 +104,7 @@ class EditProfileActivity : AppCompatActivity() {
                 override fun onCancelled(p0: DatabaseError) {
                     Toast.makeText(context, p0.message, Toast.LENGTH_LONG).show()
                 }
+
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     //update fields from firebase
                     profile = dataSnapshot.getValue(Profile::class.java)!!
@@ -106,14 +112,18 @@ class EditProfileActivity : AppCompatActivity() {
                     editTextHeight.setText(profile.height.toString())
                     editTextWeight.setText(profile.weight.toString())
                     oldDownloadUrl = profile.downloadUrl
-                    if(profile.downloadUrl == ""){
-                        Toast.makeText(context, "Unable to retrieve profile picture", Toast.LENGTH_SHORT).show()
+                    if (profile.downloadUrl == "") {
+                        Toast.makeText(
+                            context,
+                            "Unable to retrieve profile picture",
+                            Toast.LENGTH_SHORT
+                        ).show()
                         val res = resources.getDrawable(R.drawable.ic_child_face)
                         imageViewEditProfilePic.setImageDrawable(res)
-                    }else{
-                        Picasso.get().load(profile.downloadUrl).placeholder(R.drawable.ic_child_face).into(imageViewEditProfilePic)
+                    } else {
+                        Picasso.get().load(profile.downloadUrl)
+                            .placeholder(R.drawable.ic_child_face).into(imageViewEditProfilePic)
                     }
-
                     val genderDb = profile.gender.toString()
                     var genderSelect: Int? = 0
                     genderSelect = if (genderDb == "Male") {
