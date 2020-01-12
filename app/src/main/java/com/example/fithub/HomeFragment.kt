@@ -114,7 +114,6 @@ class HomeFragment:Fragment() {
                 event = Event(eventColor[evColor], time, eventData)
                 events.add(event)
             }
-
         })
 
         if(pref.getString("completed_exercise_name", "").isNotEmpty()){
@@ -157,17 +156,17 @@ class HomeFragment:Fragment() {
         //assign text into mSSBuilder
         mSSBuilder = SpannableStringBuilder(eventString)
         // Display the spannable text to TextView
-        textViewEvent.text = mSSBuilder // text view display no record...
+        textViewEvent.text = mSSBuilder // text view display no date selected
 
         calendarView.setListener(object : CompactCalendarViewListener{
             override fun onDayClick(dateClicked: Date?) {
-                eventString = getString(R.string.no_record)
+                eventString = getString(R.string.no_record) //no record...
                 if (calendarView.getEvents(dateClicked?.time!!).isNotEmpty()) {
-                    eventString = getString(R.string.congrate) + "\n"
+                    eventString = getString(R.string.congrate)
                     for(event in calendarView.getEvents(dateClicked.time)){
-                        eventString += event.data.toString() + "\n"
+                        eventString += "\n" + event.data.toString()
                     }
-                }else if(calendarView.getEvents(dateClicked?.time!!).isEmpty() && dateClicked.time == currentTimeInLong){
+                }else if(calendarView.getEvents(dateClicked.time).isEmpty() && dateClicked.time == currentTimeInLong){
                     eventString += "\n" + getString(R.string.start_activity)
                 }
                 mSSBuilder = SpannableStringBuilder(eventString)
