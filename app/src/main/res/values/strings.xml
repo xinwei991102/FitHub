@@ -67,4 +67,10 @@
     <string name="obese_class_ii">Obese Class II</string>
     <string name="obese_class_iii">Obese Class III</string>
 
+    <string name="no_date">No date selected</string>
+    <string name="no_record">No record</string>
+    <string name="congrate">Congratulations! You have done the following exercises:</string>
+    <string name="start_activity">Let\'s start doing an activity now!</string>
+
+
 </resources>
